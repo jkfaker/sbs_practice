@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "社会实践",
+  "usingComponents": {
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "u-swiper": "/uni_modules/uview-ui/components/u-swiper/u-swiper",
+    "u-notice-bar": "/uni_modules/uview-ui/components/u-notice-bar/u-notice-bar",
+    "five-buttons": "/components/indexAFiveButtons/indexAFiveButtons",
+    "notice-list": "/components/indexBNoticeList/indexBNoticeList"
+  }
+}

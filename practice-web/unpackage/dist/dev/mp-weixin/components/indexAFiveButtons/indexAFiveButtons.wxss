@@ -1,0 +1,62 @@
+.title.data-v-73a424c6 {
+  font-size: 16px;
+}
+.left .top.data-v-73a424c6 {
+  height: 150px;
+  background-image: url('https://sbs-practice.oss-cn-shanghai.aliyuncs.com/uploads/btn_bgi1.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.left .top .title.data-v-73a424c6 {
+  padding: 20px 0;
+  width: 80%;
+  margin: auto;
+}
+.left .bottom.data-v-73a424c6 {
+  height: 70px;
+  background-image: url('https://sbs-practice.oss-cn-shanghai.aliyuncs.com/uploads/btn_bgi2.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.left .bottom .title.data-v-73a424c6 {
+  width: 80%;
+  margin: auto;
+}
+.right .title.data-v-73a424c6 {
+  width: 70px;
+  margin-left: 20px;
+  text-align: center;
+}
+.right .top.data-v-73a424c6 {
+  margin-left: 0;
+  height: 70px;
+  background-image: url('https://sbs-practice.oss-cn-shanghai.aliyuncs.com/uploads/btn_bgi3.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.right .middle.data-v-73a424c6 {
+  height: 70px;
+  background-image: url('https://sbs-practice.oss-cn-shanghai.aliyuncs.com/uploads/btn_bgi4.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.right .bottom.data-v-73a424c6 {
+  height: 70px;
+  background-image: url('https://sbs-practice.oss-cn-shanghai.aliyuncs.com/uploads/btn_bgi5.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+

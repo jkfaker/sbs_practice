@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "中期材料",
+  "usingComponents": {
+    "u-action-sheet": "/uni_modules/uview-ui/components/u-action-sheet/u-action-sheet",
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
+    "u-loading-page": "/uni_modules/uview-ui/components/u-loading-page/u-loading-page",
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "uploads-history": "/components/midTermBUploadsHistory/midTermBUploadsHistory"
+  }
+}

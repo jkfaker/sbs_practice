@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  practice-jar:
+    build: 
+      context: .
+      dockerfile: practice_dockerfile
+    container_name: practice-jar
+    ports:
+      - "8082:8080"
+    volumes:
+      - "./static/uploads:/root/uploads"
+    networks:
+      - practice-net
+      - global-net
+    depends_on:
+      - mysql
+
+
+  mysql:
+    image: mysql
+    container_name: practice-mysql
+    ports:
+      - "3308:3306"
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: lqd31415926
+    volumes:
+      - "./mysql/conf:/etc/mysql/conf.d"
+      - "./mysql/data:/var/lib/mysql"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+    networks:
+      - practice-net
+
+
+networks:
+  practice-net:
+    name: practice
+  global-net:
+    name: global

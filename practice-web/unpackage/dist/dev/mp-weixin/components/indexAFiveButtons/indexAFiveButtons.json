@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "u-row": "/uni_modules/uview-ui/components/u-row/u-row",
+    "u-col": "/uni_modules/uview-ui/components/u-col/u-col",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap"
+  },
+  "component": true
+}

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "u-sticky": "/uni_modules/uview-ui/components/u-sticky/u-sticky",
+    "uni-section": "/uni_modules/uni-section/components/uni-section/uni-section",
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap"
+  },
+  "component": true
+}

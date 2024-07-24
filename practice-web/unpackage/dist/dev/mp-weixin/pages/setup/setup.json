@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "立项上传",
+  "usingComponents": {
+    "u-action-sheet": "/uni_modules/uview-ui/components/u-action-sheet/u-action-sheet",
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
+    "u-loading-page": "/uni_modules/uview-ui/components/u-loading-page/u-loading-page",
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "u-input": "/uni_modules/uview-ui/components/u-input/u-input",
+    "u-text": "/uni_modules/uview-ui/components/u-text/u-text",
+    "u-row": "/uni_modules/uview-ui/components/u-row/u-row",
+    "u-col": "/uni_modules/uview-ui/components/u-col/u-col",
+    "u-line": "/uni_modules/uview-ui/components/u-line/u-line"
+  }
+}

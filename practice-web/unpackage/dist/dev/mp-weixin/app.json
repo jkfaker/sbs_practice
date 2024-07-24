@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/setup/setup",
+    "pages/date/date",
+    "pages/midTerm/midTerm",
+    "pages/finish/finish",
+    "pages/show/show",
+    "pages/mine/mine",
+    "pages/news/news",
+    "pages/endTerm/endTerm",
+    "pages/crop/crop"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "社会实践",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "backgroundColor": "#fcefd6",
+    "color": "#000",
+    "selectedColor": "#e59494",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/icon/index.png",
+        "selectedIconPath": "static/icon/index_selected.png",
+        "text": "活动"
+      },
+      {
+        "pagePath": "pages/show/show",
+        "iconPath": "static/icon/show.png",
+        "selectedIconPath": "static/icon/show_selected.png",
+        "text": "风采"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "static/icon/mine.png",
+        "selectedIconPath": "static/icon/mine_selected.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

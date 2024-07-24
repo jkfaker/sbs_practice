@@ -1,0 +1,10 @@
+.item-content.data-v-ef49ef78 {
+  white-space: pre-wrap;
+  background-color: white;
+}
+.link.data-v-ef49ef78 {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  color: blue;
+}
+

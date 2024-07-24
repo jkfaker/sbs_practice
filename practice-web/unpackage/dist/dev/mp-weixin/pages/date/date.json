@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "安全打卡",
+  "usingComponents": {
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
+    "u-loading-page": "/uni_modules/uview-ui/components/u-loading-page/u-loading-page",
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "uni-calendar": "/uni_modules/uni-calendar/components/uni-calendar/uni-calendar",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "u-button": "/uni_modules/uview-ui/components/u-button/u-button"
+  }
+}

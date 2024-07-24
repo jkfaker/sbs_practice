@@ -1,0 +1,41 @@
+{
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "projectname": "SBS_practice_vue",
+  "setting": {
+    "compileHotReLoad": true
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "finish",
+          "pathName": "pages/finish/finish",
+          "query": "title=\"百年老字号——匠人精神传承\"&members=[{memberName: \"刘奇铎\"}]",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "midTerm",
+          "pathName": "pages/midTerm/midTerm",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "date",
+          "pathName": "pages/date/date",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "setup",
+          "pathName": "pages/setup/setup",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

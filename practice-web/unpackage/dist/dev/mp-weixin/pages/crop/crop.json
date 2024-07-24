@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "qf-cropper": "/uni_modules/qf-image-cropper/components/qf-image-cropper/qf-image-cropper"
+  }
+}

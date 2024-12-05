@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "风采详情",
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap"
+  }
+}

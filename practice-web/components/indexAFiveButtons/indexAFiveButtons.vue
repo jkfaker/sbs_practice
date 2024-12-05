@@ -3,25 +3,24 @@
 		<u-row gutter="17">
 			<u-col span="6">
 				<view class="left">
-					<view class="top margin" @click="linkTo(0)">
+					<view class="top margin" @click="linkTo('setup')">
 						<view class="title">
-							{{ list[0].title }}
+							{{ list.setup }}
 						</view>
 					</view>
-
 				</view>
 			</u-col>
 			<u-col span="6">
 				<view class="right">
-					<view class="top margin" @click="linkTo(2)">
+					<view class="top margin" @click="linkTo('midTerm')">
 						<view class="title">
-							{{ list[2].title }}
+							{{ list.midTerm }}
 						</view>
 					</view>
 					<u-gap height="10"></u-gap>
-					<view class="middle margin" @click="linkTo(3)">
+					<view class="middle margin" @click="linkTo('endTerm')">
 						<view class="title">
-							{{ list[3].title }}
+							{{ list.endTerm }}
 						</view>
 					</view>
 				</view>
@@ -31,9 +30,9 @@
 		<u-row gutter="17">
 			<u-col span="6">
 				<view class="left">
-					<view class="bottom margin" @click="linkTo(1)">
+					<view class="bottom margin" @click="linkTo('date')">
 						<view class="title">
-							{{ list[1].title }}
+							{{ list.date }}
 						</view>
 					</view>
 				</view>
@@ -41,9 +40,9 @@
 			</u-col>
 			<u-col span="6">
 				<view class="right">
-					<view class="bottom margin" @click="linkTo(4)">
+					<view class="bottom margin" @click="linkTo('news')">
 						<view class="title">
-							{{ list[4].title }}
+							{{ list.news }}
 						</view>
 					</view>
 				</view>
@@ -58,35 +57,25 @@
 		name: "indexAFiveButtons",
 		data() {
 			return {
-				list: [{
-						title: '立项填报',
-						url: '/pages/setup/setup'
-					},
-					{
-						title: '安全打卡',
-						url: '/pages/date/date'
-					}, {
-						title: '中期材料上报',
-						url: '/pages/midTerm/midTerm'
-					}, {
-						title: '结项材料上报',
-						url: '/pages/endTerm/endTerm'
-					},
-					{
-						title: '发布新闻稿',
-						url: '/pages/news/news'
-					}
-				]
-			};
+				list: {
+					setup: '立项填报',
+
+					date: '安全打卡',
+
+					midTerm: '中期材料上报',
+
+					endTerm: '结项材料上报',
+
+					news: '发布新闻稿',
+				}
+			}
 		},
 		methods: {
-			linkTo(index) {
-				// 获取对应url
-				const url = this.list[index].url;
+			linkTo(page) {
+				const url = getApp().globalData.pagePath[page];
 				uni.navigateTo({
 					url,
 				})
-
 			}
 		}
 	}
@@ -98,8 +87,6 @@
 	}
 
 	.left {
-
-
 		.top {
 			height: 150px;
 			background-image: url('@/static/uploads/btn_bgi1.png');

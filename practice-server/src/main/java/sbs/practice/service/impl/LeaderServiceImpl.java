@@ -9,8 +9,6 @@ import sbs.practice.pojo.dto.UserDTO;
 import sbs.practice.pojo.vo.LeaderVO;
 import sbs.practice.service.ILeaderService;
 
-import static sbs.practice.common.utils.EnumStringToValue.getEnumByValue;
-
 @Service
 @Slf4j
 public class LeaderServiceImpl implements ILeaderService  {
@@ -27,5 +25,14 @@ public class LeaderServiceImpl implements ILeaderService  {
                 .leaderDepart(depart)
                 .build();
         return leaderVO;
+    }
+
+    /**
+     * 获取当前用户id
+     * @return
+     */
+    @Override
+    public String getUserId() {
+        return BaseContext.getCurrentUser().getCampusId();
     }
 }

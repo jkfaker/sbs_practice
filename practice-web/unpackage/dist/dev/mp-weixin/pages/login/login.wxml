@@ -1,0 +1,1 @@
+<view class="container"><u-notify class="vue-ref" vue-id="35a7246c-1" data-ref="uNotify" bind:__l="__l"></u-notify><block wx:if="{{!src}}"><view class="text">正在登录，请稍后...</view></block><block wx:if="{{src}}"><view class="web-view"><web-view webview-styles="{{webviewStyles}}" src="{{src}}"></web-view></view></block></view>

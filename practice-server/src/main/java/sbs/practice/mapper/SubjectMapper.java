@@ -1,8 +1,8 @@
 package sbs.practice.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import sbs.practice.pojo.entity.Subject;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

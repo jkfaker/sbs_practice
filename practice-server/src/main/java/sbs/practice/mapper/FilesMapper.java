@@ -1,8 +1,10 @@
 package sbs.practice.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import sbs.practice.pojo.entity.Files;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +18,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 @Mapper
 public interface FilesMapper extends BaseMapper<Files> {
 
+    List<String> selectFileName(Integer departId, Integer subjectId, Integer fileType);
 }

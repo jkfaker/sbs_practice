@@ -1,15 +1,34 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/setup/setup",
-    "pages/date/date",
-    "pages/midTerm/midTerm",
-    "pages/finish/finish",
-    "pages/show/show",
-    "pages/mine/mine",
-    "pages/news/news",
-    "pages/endTerm/endTerm",
-    "pages/crop/crop"
+    "pages/login/login",
+    "pages/student/index/index",
+    "pages/student/setup/setup",
+    "pages/student/date/date",
+    "pages/student/midTerm/midTerm",
+    "pages/student/finish/finish",
+    "pages/student/show/show",
+    "pages/student/mine/mine",
+    "pages/student/news/news",
+    "pages/student/endTerm/endTerm",
+    "pages/student/crop/crop",
+    "pages/student/preview/preview",
+    "pages/student/newsDetail/newsDetail",
+    "pages/student/newsFinish/newsFinish",
+    "pages/teacher/tIndex/tIndex",
+    "pages/teacher/tDate/tDate",
+    "pages/teacher/tSetup/tSetup",
+    "pages/teacher/tMidTerm/tMidTerm",
+    "pages/teacher/tNews/tNews",
+    "pages/teacher/tNewsDetail/tNewsDetail",
+    "pages/teacher/tSubject/tSubject",
+    "pages/teacher/tManage/tManage",
+    "pages/teacher/tMine/tMine",
+    "pages/teacher/tShow/tShow",
+    "pages/teacher/tNotice/tNotice",
+    "pages/teacher/tEndTerm/tEndTerm",
+    "pages/teacher/tNoticeEditor/tNoticeEditor",
+    "pages/student/noticeDetail/noticeDetail",
+    "pages/student/newsEditor/newsEditor"
   ],
   "subPackages": [],
   "window": {
@@ -24,19 +43,19 @@
     "selectedColor": "#e59494",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/student/index/index",
         "iconPath": "static/icon/index.png",
         "selectedIconPath": "static/icon/index_selected.png",
         "text": "活动"
       },
       {
-        "pagePath": "pages/show/show",
+        "pagePath": "pages/student/show/show",
         "iconPath": "static/icon/show.png",
         "selectedIconPath": "static/icon/show_selected.png",
         "text": "风采"
       },
       {
-        "pagePath": "pages/mine/mine",
+        "pagePath": "pages/student/mine/mine",
         "iconPath": "static/icon/mine.png",
         "selectedIconPath": "static/icon/mine_selected.png",
         "text": "我的"

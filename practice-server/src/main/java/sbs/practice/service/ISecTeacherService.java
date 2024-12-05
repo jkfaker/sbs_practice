@@ -1,9 +1,8 @@
 package sbs.practice.service;
 
-import org.apache.catalina.User;
+import com.baomidou.mybatisplus.extension.service.IService;
 import sbs.practice.common.enums.UserType;
 import sbs.practice.pojo.entity.SecTeacher;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -16,4 +15,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ISecTeacherService extends IService<SecTeacher> {
 
     UserType login();
+
+    Integer findDepartId();
+
+    void add(SecTeacher secTeacher);
+
+    void delete(SecTeacher secTeacher);
+
+    void renew(SecTeacher secTeacher);
+
+    String getTeacherId();
+
+    String getTeacherName(String teacherId);
 }

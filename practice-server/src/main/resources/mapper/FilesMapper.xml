@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sbs.practice.mapper.FilesMapper">
-
+    <select id="selectFileName" resultType="java.lang.String">
+        select
+            file_name
+        from
+        sbs_practice.project
+        join
+        sbs_practice.files
+        on
+        project.id = files.project_id
+        and project.depart_id = #{departId}
+        and project.subject_id = #{subjectId}
+        and files.type = #{fileType}
+    </select>
 </mapper>

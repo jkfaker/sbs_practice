@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "发送通告",
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty"
+  }
+}

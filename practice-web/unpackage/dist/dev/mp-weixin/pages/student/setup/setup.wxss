@@ -1,0 +1,76 @@
+.background.data-v-1b57f42e {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-image: linear-gradient(to bottom, #ffe0dd, #fdecdc, #fcf9da);
+}
+.content.data-v-1b57f42e {
+  width: 90%;
+  margin: auto;
+}
+.leader.data-v-1b57f42e {
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+.project-name.data-v-1b57f42e,
+.leader.data-v-1b57f42e,
+.teammate.data-v-1b57f42e,
+.upload.data-v-1b57f42e {
+  background-color: white;
+  border-radius: 10px;
+}
+.teammate.data-v-1b57f42e {
+  min-height: 200px;
+  padding-top: 20px;
+}
+.teammate .person.data-v-1b57f42e {
+  width: 90%;
+  margin: auto;
+  border-bottom: 1px solid black;
+}
+.teammate .id_phone.data-v-1b57f42e {
+  display: flex;
+  flex-direction: row;
+}
+.teammate .add-button-view.data-v-1b57f42e {
+  width: 90%;
+  margin: auto;
+}
+.teammate .add-button.data-v-1b57f42e {
+  border-radius: 50%;
+  width: 30px;
+}
+.upload-text.data-v-1b57f42e {
+  font-family: '';
+}
+.upload .box.data-v-1b57f42e {
+  width: -webkit-fit-content;
+  width: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+.upload .upload-title.data-v-1b57f42e {
+  color: grey;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+}
+.upload-img.data-v-1b57f42e {
+  width: 120px;
+}
+.submit-button.data-v-1b57f42e {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45px;
+  z-index: 100;
+  background-color: #df805b;
+  color: white;
+}
+

@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Builder
 @ApiModel(description = "学生上传新闻稿类型")
 public class NewsDTO implements Serializable {
+    @ApiModelProperty("新闻稿id，供更新使用")
+    private Integer id;
     @ApiModelProperty("标题")
     private String title;
     @ApiModelProperty("封面图名称")

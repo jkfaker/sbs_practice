@@ -1,11 +1,11 @@
 package sbs.practice.service;
 
-import sbs.practice.common.enums.JudgeExist;
+import com.baomidou.mybatisplus.extension.service.IService;
 import sbs.practice.pojo.dto.NewsDTO;
+import sbs.practice.pojo.dto.NewsVerifyDTO;
 import sbs.practice.pojo.dto.PageDTO;
 import sbs.practice.pojo.dto.ShowDTO;
 import sbs.practice.pojo.entity.News;
-import com.baomidou.mybatisplus.extension.service.IService;
 import sbs.practice.pojo.vo.NewsVO;
 
 import java.util.List;
@@ -22,11 +22,19 @@ public interface INewsService extends IService<News> {
 
     PageDTO<NewsVO> getShows(ShowDTO showDTO);
 
-    void upload(NewsDTO newsDTO);
+    Integer upload(NewsDTO newsDTO);
 
-    News detail(Integer projectId);
+    News detail(Integer newsId);
+
+    News teacherDetail(Integer newsId);
 
     NewsVO getMyself();
 
-    JudgeExist judge();
+    Integer judge();
+
+    PageDTO<NewsVO> teacherGetShows(ShowDTO showDTO);
+
+    void verify(NewsVerifyDTO newsVerifyDTO);
+
+    List<NewsVO> getMine();
 }

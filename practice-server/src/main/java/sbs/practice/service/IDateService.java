@@ -1,9 +1,11 @@
 package sbs.practice.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import sbs.practice.pojo.dto.DateDTO;
 import sbs.practice.pojo.entity.Date;
-import com.baomidou.mybatisplus.extension.service.IService;
+import sbs.practice.pojo.vo.DateVO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -19,4 +21,6 @@ public interface IDateService extends IService<Date> {
     void clockIn(DateDTO dateDTO);
 
     List<Date> show();
+
+    List<DateVO> teacher(LocalDate date, Integer subjectId);
 }

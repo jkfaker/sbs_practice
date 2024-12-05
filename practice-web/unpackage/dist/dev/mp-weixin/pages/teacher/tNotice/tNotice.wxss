@@ -1,0 +1,57 @@
+.background.data-v-2024d933 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: #efeded;
+}
+.list.data-v-2024d933 {
+  width: 90%;
+  margin: auto;
+}
+.item.data-v-2024d933 {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+.item .title.data-v-2024d933,
+.item .text.data-v-2024d933,
+.item .time.data-v-2024d933,
+.item .delete.data-v-2024d933 {
+  margin-bottom: 10px;
+}
+.item .title.data-v-2024d933 {
+  color: orange;
+}
+.item .text.data-v-2024d933 {
+  color: black;
+  font-size: 14px;
+}
+.item .time.data-v-2024d933 {
+  color: grey;
+  font-size: 10px;
+}
+.item .delete.data-v-2024d933 {
+  color: red;
+  font-size: 14px;
+  text-decoration: underline;
+}
+.add.data-v-2024d933 {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: orange;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 35px;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+

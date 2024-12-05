@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "编辑新闻稿",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "u-line": "/uni_modules/uview-ui/components/u-line/u-line",
+    "uni-nav-bar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar"
+  }
+}

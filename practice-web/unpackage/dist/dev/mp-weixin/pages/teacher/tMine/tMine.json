@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-toast": "/uni_modules/uview-ui/components/u-toast/u-toast",
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "user-picture": "/components/mineAUserPicture/mineAUserPicture",
+    "tabbar": "/components/teacherATabbar/teacherATabbar",
+    "setting-list": "/components/mineCSettingList/mineCSettingList"
+  }
+}

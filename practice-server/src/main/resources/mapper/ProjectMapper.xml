@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sbs.practice.mapper.ProjectMapper">
-
+    <select id="selectFiles"  resultType="sbs.practice.pojo.vo.ProjectAndFileVO">
+        select
+            files.label as fileLabel, files.id as fileId,
+            files.type, files.file_name, files.upload_time,files.examine_time,
+            project.*
+        from
+            sbs_practice.files
+        inner join
+            sbs_practice.project
+        on
+            files.project_id = project.id
+            and files.type = #{fileType}
+            and project.depart_id = #{departId}
+            and project.subject_id = #{subjectId}
+        order by
+            files.label asc,
+            files.upload_time asc,
+            files.examine_time desc
+    </select>
 </mapper>

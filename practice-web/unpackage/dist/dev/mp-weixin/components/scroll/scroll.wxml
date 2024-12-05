@@ -1,0 +1,1 @@
+<view><block wx:if="{{$root.g0>=15}}"><view class="_notice" id="scroll_div"><view class="_noticeF"><view style="{{(styleName)}}" id="srcoll-item">{{text}}</view></view></view></block><block wx:else><view class="title">{{''+text+''}}</view></block></view>

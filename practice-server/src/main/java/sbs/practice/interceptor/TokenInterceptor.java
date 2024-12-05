@@ -2,11 +2,8 @@ package sbs.practice.interceptor;
 
 
 import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Component;
-
 import org.springframework.web.servlet.HandlerInterceptor;
 import sbs.practice.common.constant.LoginConstant;
 import sbs.practice.common.context.BaseContext;

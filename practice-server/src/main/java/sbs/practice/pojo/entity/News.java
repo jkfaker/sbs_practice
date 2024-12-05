@@ -1,18 +1,17 @@
 package sbs.practice.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import sbs.practice.common.enums.NewsLabel;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -22,8 +21,10 @@ import sbs.practice.common.enums.NewsLabel;
  * @author LiuQIDuo
  * @since 2024-07-22
  */
-@Data
 @Builder
+@NoArgsConstructor
+@Data
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("news")
@@ -63,4 +64,8 @@ public class News implements Serializable {
     @TableField("examine_time")
     @ApiModelProperty("审核时间")
     private LocalDateTime examineTime;
+
+    @TableField("reject_reason")
+    @ApiModelProperty("驳回理由")
+    private String rejectReason;
 }

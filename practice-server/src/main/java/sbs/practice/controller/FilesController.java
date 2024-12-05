@@ -6,12 +6,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.common.enums.FileType;
 import sbs.practice.common.result.Result;
 import sbs.practice.common.utils.FileIO;
-import sbs.practice.pojo.dto.FileDownloadDTO;
+import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.entity.Files;
 import sbs.practice.service.IFilesService;
 
@@ -21,7 +20,6 @@ import java.util.List;
  * <p>
  *  前端控制器
  * </p>
- *
  * @author author
  * @since 2024-06-26
  */
@@ -38,10 +36,10 @@ public class FilesController {
      * 后端提供文件下载路径
      * @return
      */
-    @ApiOperation("教师下载文件")
+    @ApiOperation("教师批量下载文件")
     @GetMapping
-    public Result<String> download(@PathVariable FileDownloadDTO fileDownload) {
-        String filename = filesService.selectFilename(fileDownload);
+    public Result<String> download(@RequestParam Integer subjectId, @RequestParam Integer fileType) {
+        String filename = filesService.selectFilename(subjectId, fileType);
         return Result.success(filename);
     }
 
@@ -54,7 +52,7 @@ public class FilesController {
     @ApiOperation("项目中期上传文件")
     @PostMapping("/middle")
     public Result<String> uploadMidTerm(MultipartFile file) {
-        filesService.uploadMidTerm(file, FileType.MIDDLE);
+        filesService.uploadFile(file, FileType.MIDDLE);
         return Result.success();
     }
 
@@ -66,7 +64,7 @@ public class FilesController {
     @GetMapping("/middle")
     public Result<List<Files>> readMidTerm() {
         //TODO:
-        List<Files> files = filesService.readMidTerm(FileType.MIDDLE);
+        List<Files> files = filesService.readFiles(FileType.MIDDLE);
         log.info("中期材料返回：{}",files);
         return Result.success(files);
     }
@@ -79,7 +77,7 @@ public class FilesController {
     @ApiOperation("项目结项上传文件")
     @PostMapping("/end")
     public Result<String> uploadEndTerm(MultipartFile file) {
-        filesService.uploadMidTerm(file, FileType.END);
+        filesService.uploadFile(file, FileType.END);
         return Result.success();
     }
 
@@ -92,7 +90,7 @@ public class FilesController {
     @GetMapping("/end")
     public Result<List<Files>> readEndTerm() {
         //TODO:
-        List<Files> files = filesService.readMidTerm(FileType.END);
+        List<Files> files = filesService.readFiles(FileType.END);
         log.info("结项材料返回：{}",files);
         return Result.success(files);
     }
@@ -108,5 +106,12 @@ public class FilesController {
         String imgName = FileIO.uploadImage(img);
         log.info("图片上传路径：{}",imgName);
         return Result.success(imgName);
+    }
+
+    @ApiOperation("老师审核中期后期文件")
+    @PostMapping("/label")
+    public Result<String> examine(@RequestBody LabelDTO labelDTO) {
+        filesService.examine(labelDTO);
+        return Result.success();
     }
 }

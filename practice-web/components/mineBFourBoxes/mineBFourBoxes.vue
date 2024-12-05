@@ -6,8 +6,12 @@
 			</view>
 		</view>
 
+
 		<view class="content my-yellow">
-			<view class="item" v-for="(item,index) in members" :key="index">
+			<view v-if="!members.length" class="no-team">
+				暂无团队，请先进行立项填报
+			</view>
+			<view class="item" v-if="members.length" v-for="(item,index) in members" :key="index">
 
 				<image class="icon" :src="items[index].icon">
 				</image>
@@ -73,6 +77,10 @@
 	.content {
 		display: flex;
 
+		.no-team {
+			margin: auto;
+			line-height: 90px;
+		}
 	}
 
 	.item {

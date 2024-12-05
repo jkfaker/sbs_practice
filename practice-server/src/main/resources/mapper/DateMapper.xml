@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sbs.practice.mapper.DateMapper">
+    <select id="teacher" resultType="sbs.practice.pojo.vo.DateVO">
+        select
+            project.id as projectId, project.leader_id, project.leader_name, project.leader_phone, date.info, date.date
+        from
+            sbs_practice.date
+        right outer join
+            sbs_practice.project
+        on
+            date.project_id = project.id
+            and date.date = #{date}
+        <where>
 
+            project.depart_id = #{departId}
+            <if test="subjectId != null">
+                and project.subject_id = #{subjectId}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -6,12 +6,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 import sbs.practice.common.result.Result;
 import sbs.practice.pojo.vo.MemberVO;
 import sbs.practice.service.IMemberService;
-import sbs.practice.service.IProjectService;
 
 import java.util.List;
 

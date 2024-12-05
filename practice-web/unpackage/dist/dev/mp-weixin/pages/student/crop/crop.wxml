@@ -1,0 +1,1 @@
+<view class="container data-v-ba64b99c"><qf-cropper vue-id="923177d8-1" src="{{src}}" width="1280" height="720" data-event-opts="{{[['^crop',[['crop',['$event']]]]]}}" bind:crop="__e" class="data-v-ba64b99c" bind:__l="__l"></qf-cropper></view>

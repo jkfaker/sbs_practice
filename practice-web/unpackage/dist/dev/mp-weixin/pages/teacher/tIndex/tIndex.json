@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "社会实践",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "u-swiper": "/uni_modules/uview-ui/components/u-swiper/u-swiper",
+    "u-notice-bar": "/uni_modules/uview-ui/components/u-notice-bar/u-notice-bar",
+    "seven-buttons": "/components/tIndexASevenButtons/tIndexASevenButtons",
+    "tabbar": "/components/teacherATabbar/teacherATabbar"
+  }
+}

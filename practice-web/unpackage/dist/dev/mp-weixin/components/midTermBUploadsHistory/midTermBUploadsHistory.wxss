@@ -1,5 +1,5 @@
 .item-content.data-v-ef49ef78 {
-  white-space: pre-wrap;
+  white-space: nowrap;
   background-color: white;
 }
 .link.data-v-ef49ef78 {

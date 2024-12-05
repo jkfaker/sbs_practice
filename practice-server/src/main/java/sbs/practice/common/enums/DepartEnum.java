@@ -11,6 +11,7 @@ import sbs.practice.common.exception.EnumFindException;
 @Getter
 @AllArgsConstructor
 public enum DepartEnum {
+    ADMIN(0, "管理员"),
     GRAMMAR(1, "文法学院"),
     INFO(2, "商务信息学院"),
     ECONOMY(3, "商务经济学院"),
@@ -18,6 +19,8 @@ public enum DepartEnum {
     ART(5, "艺术设计学院"),
     HOTEL(6, "酒店管理学院"),
     BUSINESS(7, "工商管理学院");
+
+
 
     @EnumValue
     private final Integer departId;

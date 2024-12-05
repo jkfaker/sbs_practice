@@ -3,22 +3,23 @@ package sbs.practice.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.toolkit.Db;
-
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import sbs.practice.common.constant.MessageConstant;
-import sbs.practice.common.context.BaseContext;
 import sbs.practice.common.exception.InsertDatabaseException;
 import sbs.practice.common.exception.SelectException;
-import sbs.practice.pojo.dto.DateDTO;
-import sbs.practice.pojo.dto.UserDTO;
-import sbs.practice.pojo.entity.Date;
 import sbs.practice.mapper.DateMapper;
-import sbs.practice.pojo.entity.Project;
+import sbs.practice.pojo.dto.DateDTO;
+import sbs.practice.pojo.entity.Date;
+import sbs.practice.pojo.vo.DateVO;
+import sbs.practice.service.IBaseService;
 import sbs.practice.service.IDateService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+import sbs.practice.service.IProjectService;
+import sbs.practice.service.ISecTeacherService;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements IDateService {
 
     /**
@@ -38,22 +40,17 @@ public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements ID
      * @param dateDTO
      */
 
+    private final ISecTeacherService secTeacherService;
+    private final IBaseService baseService;
+    private final DateMapper dateMapper;
+
+
+
+
     @Override
     public void clockIn(DateDTO dateDTO) {
-        // 根据token查campusId
-        UserDTO user = BaseContext.getCurrentUser();
-        String userId = user.getCampusId();
-        // 查询project，根据负责人获得projectId，
-        LambdaQueryWrapper<Project> wrapper = Wrappers.lambdaQuery(Project.class)
-                .eq(Project::getLeaderId, userId);
-        Project project = Db.getOne(wrapper);
-        Integer projectId;
-        // 如果非项目负责人打卡
-        try {
-            projectId = project.getId();
-        }catch (RuntimeException e) {
-            throw new SelectException(MessageConstant.PROJECT_NOT_EXIST);
-        }
+        // 查询和验证 projectId
+        Integer projectId = baseService.getProjectIdByCurrentUser();
         // copy属性至Date类中
         Date date = new Date();
         BeanUtil.copyProperties(dateDTO,date);
@@ -70,39 +67,38 @@ public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements ID
             throw new SelectException(MessageConstant.DATE_CONFLICT_ERROR);
         }
         log.info("插入date数据:{}",date);
-        // 插入至date
-        boolean save;
-        try {
-            save = save(date);
-        }catch (Exception e) {
-            throw new InsertDatabaseException(MessageConstant.SELECT_FAILED);
-        }
-        if (!save)
+        if (!save(date))
             throw new InsertDatabaseException(MessageConstant.SELECT_FAILED);
     }
 
     /**
+     * 负责人 显示所有打卡日期
      * 要求：
      * 非负责人报错
-     * @return
      */
     @Override
     public List<Date> show() {
-        UserDTO user = BaseContext.getCurrentUser();
-        String userId = user.getCampusId();
-        LambdaQueryWrapper<Project> wrapper = Wrappers.lambdaQuery(Project.class)
-                .eq(Project::getLeaderId, userId);
-        Project project = Db.getOne(wrapper);
-        Integer projectId;
-        try {
-            projectId = project.getId();
-        }catch (RuntimeException e) {
-            throw new SelectException(MessageConstant.PROJECT_NOT_EXIST);
-        }
+        // 查询和验证 projectId
+        Integer projectId = baseService.getProjectIdByCurrentUser();
+
         LambdaQueryWrapper<Date> dateWrapper = new QueryWrapper<Date>()
                 .lambda()
                 .eq(Date::getProjectId, projectId);
         return list(dateWrapper);
     }
 
+    /**
+     * 要求：
+     * @param date
+     * @param subjectId
+     * @return
+     */
+    @Override
+    public List<DateVO> teacher(LocalDate date, Integer subjectId) {
+        Integer departId = secTeacherService.findDepartId();
+        // 联合查询： project + date，其中info check(0,1)
+        log.info("departId:{}", departId);
+        List<DateVO> dateVOList = dateMapper.teacher(date, subjectId, departId);
+        return dateVOList;
+    }
 }

@@ -1,0 +1,11 @@
+.buttons.data-v-41cc6c4d {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+}
+.input-box.data-v-41cc6c4d {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+

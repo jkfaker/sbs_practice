@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: root
+    password: lqd31415926
+    url: jdbc:mysql://127.0.0.1:3306/sbs_practice
+
+
+# 开发环境配置
+file:
+  uploadPath: C:\\Users\\29443\\Documents\\GitHub\\practice\\practice-web\\static\\uploads\\files\\
+  imageUploadPath: C:\\Users\\29443\\Documents\\GitHub\\practice\\practice-web\\static\\uploads\\images\\
+  zipFileName: files.zip
+  teacher:
+    filePath: C:\\Users\\29443\\Documents\\GitHub\\practice\\practice-web\\static\\uploads\\teacher\\files\\
+

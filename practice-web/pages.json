@@ -1,85 +1,197 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
+	"pages": [{
+			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "社会实践"
+				"navigationBarTitleText": "登录中.."
 			}
 		},
 		{
-			"path": "pages/setup/setup",
+			"path": "pages/student/index/index",
+			"style": {
+				"navigationBarTitleText": "社会实践",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/student/setup/setup",
 			"style": {
 				"navigationBarTitleText": "立项上传"
 			}
 		},
 		{
-			"path": "pages/date/date",
+			"path": "pages/student/date/date",
 			"style": {
 				"navigationBarTitleText": "安全打卡"
 			}
 		},
 		{
-			"path": "pages/midTerm/midTerm",
+			"path": "pages/student/midTerm/midTerm",
 			"style": {
 				"navigationBarTitleText": "中期材料"
 			}
 		},
 		{
-			"path": "pages/finish/finish",
+			"path": "pages/student/finish/finish",
 			"style": {
 				"navigationBarTitleText": "立项上传"
 			}
 		},
 		{
-			"path": "pages/show/show",
+			"path": "pages/student/show/show",
 			"style": {
 				"navigationBarTitleText": "风采展示",
 				"enablePullDownRefresh": true
 			}
 		},
 		{
-			"path": "pages/mine/mine",
+			"path": "pages/student/mine/mine",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
 			}
 		},
 
 		{
-			"path": "pages/news/news",
+			"path": "pages/student/news/news",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "新闻稿管理",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
-			"path": "pages/endTerm/endTerm",
+			"path": "pages/student/endTerm/endTerm",
 			"style": {
-				"navigationBarTitleText": "结项材料"
+				"navigationBarTitleText": "结项材料",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/crop/crop",
+			"path": "pages/student/crop/crop",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/preview/preview",
+			"path": "pages/student/preview/preview",
 			"style": {
 				"navigationBarTitleText": "新闻稿预览",
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/newsDetail/newsDetail",
+			"path": "pages/student/newsDetail/newsDetail",
 			"style": {
 				"navigationBarTitleText": "风采详情"
 			}
 		},
 		{
-			"path" : "pages/newsFinish/newsFinish",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/student/newsFinish/newsFinish",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/teacher/tIndex/tIndex",
+			"style": {
+				"navigationBarTitleText": "社会实践",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/teacher/tDate/tDate",
+			"style": {
+				"navigationBarTitleText": "安全打卡审核",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/teacher/tSetup/tSetup",
+			"style": {
+				"navigationBarTitleText": "报名审核",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/teacher/tMidTerm/tMidTerm",
+			"style": {
+				"navigationBarTitleText": "中期材料审核",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/teacher/tNews/tNews",
+			"style": {
+				"navigationBarTitleText": "新闻稿审核",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/teacher/tNewsDetail/tNewsDetail",
+			"style": {
+				"navigationBarTitleText": "新闻稿审核"
+			}
+		},
+		{
+			"path": "pages/teacher/tSubject/tSubject",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/teacher/tManage/tManage",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/teacher/tMine/tMine",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/teacher/tShow/tShow",
+			"style": {
+				"navigationBarTitleText": "风采展示",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/teacher/tNotice/tNotice",
+			"style": {
+				"navigationBarTitleText": "发送通告"
+			}
+		},
+		{
+			"path": "pages/teacher/tEndTerm/tEndTerm",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/teacher/tNoticeEditor/tNoticeEditor",
+			"style": {
+				"navigationBarTitleText": "编辑通告",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/student/noticeDetail/noticeDetail",
+			"style": {
+				"navigationBarTitleText": "通告详情"
+			}
+		},
+		{
+			"path": "pages/student/newsEditor/newsEditor",
+			"style": {
+				"navigationBarTitleText": "编辑新闻稿",
+				"navigationStyle": "custom"
 			}
 		}
 	],
@@ -96,17 +208,17 @@
 		"color": "#000",
 		"selectedColor": "#e59494",
 		"list": [{
-			"pagePath": "pages/index/index",
+			"pagePath": "pages/student/index/index",
 			"iconPath": "static/icon/index.png",
 			"selectedIconPath": "static/icon/index_selected.png",
 			"text": "活动"
 		}, {
-			"pagePath": "pages/show/show",
+			"pagePath": "pages/student/show/show",
 			"iconPath": "static/icon/show.png",
 			"selectedIconPath": "static/icon/show_selected.png",
 			"text": "风采"
 		}, {
-			"pagePath": "pages/mine/mine",
+			"pagePath": "pages/student/mine/mine",
 			"iconPath": "static/icon/mine.png",
 			"selectedIconPath": "static/icon/mine_selected.png",
 			"text": "我的"
@@ -120,5 +232,4 @@
 			"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 		}
 	}
-
 }

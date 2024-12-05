@@ -1,0 +1,110 @@
+.background.data-v-039cce79 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: #efeded;
+}
+.popup-content.data-v-039cce79 {
+  height: 120px;
+  width: 250px;
+  white-space: pre-wrap;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.content.data-v-039cce79 {
+  width: 90%;
+  margin: auto;
+}
+.content .item.data-v-039cce79 {
+  background-color: white;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  border-radius: 5px;
+}
+.content .item .info.data-v-039cce79 {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px 5px 0 0;
+  padding: 2px 5px;
+}
+.content .item .info .title.data-v-039cce79 {
+  font-size: 14px;
+  font-weight: bold;
+}
+.content .item .info .file.data-v-039cce79 {
+  white-space: nowrap;
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 超出部分用省略号表示 */
+}
+.content .item .info .leader-name.data-v-039cce79,
+.content .item .info .leader-class.data-v-039cce79,
+.content .item .info .leader-phone.data-v-039cce79,
+.content .item .info .create-time.data-v-039cce79,
+.content .item .info .file.data-v-039cce79 {
+  font-size: 12px;
+}
+.content .item .info .create-time.data-v-039cce79 {
+  color: gray;
+}
+.content .item .buttons.data-v-039cce79 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.content .item .buttons view.data-v-039cce79 {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.15);
+  width: 35%;
+  text-align: center;
+  text-indent: 14px;
+  letter-spacing: 14px;
+  padding: 5px 0;
+  box-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
+}
+.bottom.data-v-039cce79 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 10;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.bottom view.data-v-039cce79 {
+  border-radius: 10px;
+  width: 35%;
+  height: 50%;
+  background-color: #eebda1;
+  text-align: center;
+  text-indent: 14px;
+  letter-spacing: 14px;
+  padding: 5px 0;
+  box-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
+}
+.download.data-v-039cce79 {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #eebda1;
+  width: 60px;
+  height: 60px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+

@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "风采展示",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "uni-search-bar": "/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar",
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "uni-load-more": "/uni_modules/uni-load-more/components/uni-load-more/uni-load-more",
+    "scroll-vue": "/components/scroll/scroll"
+  }
+}

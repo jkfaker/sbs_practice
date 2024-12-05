@@ -8,10 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.context.BaseContext;
+import sbs.practice.common.enums.DepartEnum;
 import sbs.practice.common.exception.AuthenticationException;
 import sbs.practice.common.properties.CampushoyProperties;
 import sbs.practice.pojo.dto.UserDTO;
 import sbs.practice.pojo.entity.SecTeacher;
+
+import java.util.Objects;
 
 
 @Slf4j
@@ -38,6 +41,8 @@ public class TokenUtils {
         return result;
     }
 
+
+
     /**
      * 在上面的基础上将JSON转换成Student类
      * @param json
@@ -54,7 +59,7 @@ public class TokenUtils {
     /**
      * 验证是否为老师
      */
-    public static Boolean verifyTeacher() {
+    public static void verifyTeacher() {
         String userId  = BaseContext.getCurrentUser().getCampusId();
         try {
             SecTeacher teacher = Db.getById(userId, SecTeacher.class);
@@ -62,16 +67,22 @@ public class TokenUtils {
         } catch (Exception e) {
             throw new AuthenticationException(MessageConstant.AUTHENTICATION_FAILED);
         }
-
-        return true;
     }
 
-    public static Boolean verifyTeacher(Integer departId) {
+    public static Boolean verifyTeacher(DepartEnum departEnum) {
         String userId  = BaseContext.getCurrentUser().getCampusId();
         verifyTeacher();
-        if (departId != Db.getById(userId, SecTeacher.class).getDepartId()) {
+        if (!Objects.equals(departEnum.getDepartId(), Db.getById(userId, SecTeacher.class).getDepartId())) {
             throw new AuthenticationException(MessageConstant.AUTHENTICATION_FAILED);
         }
         return true;
+    }
+
+
+    /**
+     * 验证是否为管理员
+     */
+    public static Boolean verifyAdmin() {
+        return verifyTeacher(DepartEnum.ADMIN);
     }
 }

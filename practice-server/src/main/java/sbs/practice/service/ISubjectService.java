@@ -1,7 +1,7 @@
 package sbs.practice.service;
 
-import sbs.practice.pojo.entity.Subject;
 import com.baomidou.mybatisplus.extension.service.IService;
+import sbs.practice.pojo.entity.Subject;
 
 /**
  * <p>

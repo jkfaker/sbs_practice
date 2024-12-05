@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "通告详情",
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "uni-link": "/uni_modules/uni-link/components/uni-link/uni-link"
+  }
+}

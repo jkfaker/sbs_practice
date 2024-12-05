@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "新闻稿预览",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify",
+    "u-gap": "/uni_modules/uview-ui/components/u-gap/u-gap",
+    "u-sticky": "/uni_modules/uview-ui/components/u-sticky/u-sticky",
+    "uni-section": "/uni_modules/uni-section/components/uni-section/uni-section",
+    "uni-nav-bar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "scroll-vue": "/components/scroll/scroll"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "登录中..",
+  "usingComponents": {
+    "u-notify": "/uni_modules/uview-ui/components/u-notify/u-notify"
+  }
+}

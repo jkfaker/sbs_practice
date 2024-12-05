@@ -25,12 +25,12 @@
 			return {
 				list: [{
 						icon: '/static/icon/myMessage.png',
-						text: '我的消息',
+						text: '二级学院教师管理',
 						path: '/'
 					}, {
 						icon: '/static/icon/activity.png',
-						text: '我的活动报名',
-						path: '/'
+						text: '活动主题管理',
+						path: '/pages/tSubject/tSubject'
 					}, {
 						icon: '/static/icon/record.png',
 						text: '上传材料记录',
@@ -48,6 +48,7 @@
 				]
 			};
 		},
+		methods: {}
 	}
 </script>
 

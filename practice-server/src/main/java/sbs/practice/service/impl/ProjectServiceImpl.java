@@ -4,11 +4,12 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.Update;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.fasterxml.jackson.databind.ser.Serializers;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.common.constant.MessageConstant;
@@ -16,25 +17,27 @@ import sbs.practice.common.context.BaseContext;
 import sbs.practice.common.enums.DepartEnum;
 import sbs.practice.common.enums.FileType;
 import sbs.practice.common.enums.JudgeExist;
-import sbs.practice.common.exception.AuthenticationException;
+import sbs.practice.common.enums.ProjectLabel;
 import sbs.practice.common.exception.InsertDatabaseException;
+import sbs.practice.common.exception.NotExistException;
 import sbs.practice.common.exception.SelectException;
-import sbs.practice.common.utils.FileIO;
+import sbs.practice.common.utils.TokenUtils;
+import sbs.practice.mapper.ProjectMapper;
 import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.dto.MemberDTO;
 import sbs.practice.pojo.dto.ProjectDTO;
 import sbs.practice.pojo.dto.UserDTO;
-import sbs.practice.pojo.entity.*;
-import sbs.practice.mapper.ProjectMapper;
+import sbs.practice.pojo.entity.Files;
+import sbs.practice.pojo.entity.Member;
+import sbs.practice.pojo.entity.Project;
+import sbs.practice.pojo.entity.Subject;
+import sbs.practice.pojo.vo.ProjectAndFileVO;
 import sbs.practice.pojo.vo.ProjectVO;
 import sbs.practice.service.IProjectService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+import sbs.practice.service.ISecTeacherService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static sbs.practice.common.utils.EnumStringToValue.getEnumByValue;
 
 /**
  * <p>
@@ -46,9 +49,15 @@ import static sbs.practice.common.utils.EnumStringToValue.getEnumByValue;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements IProjectService {
 
+    private final ProjectMapper projectMapper;
+    private final FilesServiceImpl filesService;
+    private final ISecTeacherService secTeacherService;
+
     /**
+     * 组长立项上传
      * 要求：
      * 1，
      * @param membersDTO
@@ -94,20 +103,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
             if (!result3)
                 throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
-
-        // 文件上传到本地
-        String fileName = FileIO.uploadFile(file);
-        // 2, insert file
-        Files files = Files.builder()
-                .projectId(projectId)
-                .type(FileType.START)
-                .fileName(fileName)
-                .uploadTime(LocalDateTime.now())
-                .build();
-        log.info("files: {}", files);
-        boolean result2 = Db.save(files);
-        if (!result2)
-            throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
+        // 上传文件
+        filesService.uploadFile(file, FileType.START);
     }
 
     /**
@@ -115,43 +112,38 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
      * @return
      */
     @Override
-    public List<Project> selectByDepart() {
-        // 当前老师
-        UserDTO userDTO = BaseContext.getCurrentUser();
-        // 拿到当前老师工号
-        String userId = userDTO.getCampusId();
-        // 数据库查找对应学院
-        SecTeacher teacher = Db.getById(userId, SecTeacher.class);
-        Integer departId = teacher.getDepartId();
+    public List<Project> getAllInDepart(Integer subjectId) {
+        Integer departId = secTeacherService.findDepartId();
         // 数据库查找对应学院所有项目
-        QueryWrapper<Project> queryWrapper = new QueryWrapper<Project>();
-        List<Project> projects = list(queryWrapper
+        LambdaQueryWrapper<Project> queryWrapper = new QueryWrapper<Project>()
                 .lambda()
-                .eq(Project::getDepartId, departId));
+                .eq(Project::getDepartId, departId);
+        if (subjectId != null) {
+            queryWrapper.eq(Project::getSubjectId, subjectId);
+        }
+        List<Project> projects = list(queryWrapper);
         return projects;
     }
 
     /**
-     * 同时验证老师学院id，避免漏洞
      * @param labelDTO
      */
     @Override
     public void labelUpdate(LabelDTO labelDTO) {
+        TokenUtils.verifyTeacher();
         UpdateWrapper<Project> updateWrapper = new UpdateWrapper<Project>();
-        // 得到老师工号
-        String teacherId = BaseContext.getCurrentUser().getCampusId();
-        // 查询老师学院
-        SecTeacher teacher = Db.getById(teacherId, SecTeacher.class);
-        // 比对DepartId,如果不是抛出错误
-        if (labelDTO.getDepartId().getDepartId() != teacher.getDepartId())
-            throw new AuthenticationException(MessageConstant.AUTHENTICATION_FAILED);
         updateWrapper.lambda()
                 .eq(Project::getId, labelDTO.getId())
                 .set(Project::getLabel, labelDTO.getLabel());
-        update(updateWrapper);
+        this.update(updateWrapper);
         return;
     }
 
+    /**
+     * 获取当前用户作为项目负责人所负责的项目名称
+     * @return ProjectVO 包含项目名称和学科名称的对象
+     * @throws SelectException 如果找不到项目，则抛出选择异常
+     */
     @Override
     public ProjectVO getName() {
         UserDTO user = BaseContext.getCurrentUser();
@@ -188,9 +180,73 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 .eq(Project::getLeaderId, userId);
         Project project = Db.getOne(projectWrapper);
         // 判断project是否为空
-        if (project.getId() == null || project.getId().toString().isEmpty())
+        if (project == null || project.getId() == null || project.getId().toString().isEmpty())
             return JudgeExist.NOT_EXIST;
         else
             return JudgeExist.EXIST;
+    }
+
+    /**
+     * 从project中departId
+     * @param departId
+     * @return
+     */
+
+    @Override
+    public List<Project> findByDepartId(Integer departId) {
+        LambdaQueryWrapper<Project> projectQueryWrapper = new QueryWrapper<Project>()
+                .lambda()
+                .eq(Project::getDepartId, departId);
+        return this.list(projectQueryWrapper);
+    }
+
+    @Override
+    public List<ProjectAndFileVO> getMidTerm(List<Project> projects, Integer fileType) {
+           return projects.stream()
+                .map(((project) -> {
+                    LambdaQueryWrapper<Files> filesWrapper = Wrappers.lambdaQuery(Files.class)
+                            .eq(Files::getProjectId, project.getId())
+                            .eq(Files::getType, fileType);
+                    Files files = Db.getOne(filesWrapper);
+                    ProjectAndFileVO projectAndFileVO = new ProjectAndFileVO();
+                    // 将project 属性 copy to projectAndFileVO
+                    BeanUtil.copyProperties(project, projectAndFileVO);
+                    if (files != null) {
+                        projectAndFileVO.setType(files.getType());
+                        projectAndFileVO.setUploadTime(files.getUploadTime());
+                        projectAndFileVO.setFileLabel(files.getLabel());
+                        projectAndFileVO.setExamineTime(files.getExamineTime());
+                    }
+                    return projectAndFileVO;
+                })).toList();
+    }
+
+    @Override
+    public List<ProjectAndFileVO> getFiles(Integer subjectId, Integer fileType) {
+        // 查找教师学院
+        Integer departId = secTeacherService.findDepartId();
+        return projectMapper.selectFiles(subjectId, fileType, departId);
+    }
+
+    /**
+     * 判断项目是否属于校级立项
+     * 是返回1，否返回0
+     */
+    @Override
+    public boolean isSchoolLabel(Integer projectId) {
+        Project project = this.getById(projectId);
+        return project.getLabel() == ProjectLabel.SCHOOL;
+    }
+
+    /**
+     * 老师查询单个的项目
+     * @param projectId
+     * @return
+     */
+    @Override
+    public Project getByProjectId(Integer projectId) {
+        TokenUtils.verifyTeacher();
+        Project project = this.getById(projectId);
+        return project;
     }
 }

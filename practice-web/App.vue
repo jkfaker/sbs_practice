@@ -1,60 +1,69 @@
 <script>
 	export default {
 		globalData: {
-			URL: '/practice/api',
-			token: 'wbgsip900wkuUEcPHUExBe1716947239',
+			// URL: '/practice/api',
+			URL: 'http://127.0.0.1:8080',
+			// token1: ' ',
+			// token2: '6Y8wNHSHjiCruw1WXRT7js1731404576',
+			// token3: 'R8qnHrP3cZBzY42XrdkutJ1731457639',
 			imgPath: '/static/uploads/images/',
-			filePath: '/static/uploads/files/'
+			filePath: '/static/uploads/files/',
+			teacherFilePath: '/static/uploads/teacher/files/',
+			// Oauth2 回调地址
+			redirectUrl: 'https://yzs.sbs.edu.cn/practice/pages/login/login',
+			// Oauth2 api调用地址
+			api: 'https://api.campushoy.com',
+			// Oauth2 clientId 应用id
+			clientId: 17313155825670722,
+			// 页面跳转路径
+			pagePath: {
+				// 全局
+				login: '/pages/login/login',
+				webView: '/pages/webView/webView',
+
+				// 学生
+				index: '/pages/student/index/index',
+				setup: '/pages/student/setup/setup',
+				midTerm: '/pages/student/midTerm/midTerm',
+				endTerm: '/pages/student/endTerm/endTerm',
+				date: '/pages/student/date/date',
+				news: '/pages/student/news/news',
+				newsEditor: '/pages/student/newsEditor/newsEditor',
+				preview: '/pages/student/preview/preview',
+				newsFinish: '/pages/student/newsFinish/newsFinish',
+				newsDetail: '/pages/student/newsDetail/newsDetail',
+				finish: '/pages/student/finish/finish',
+				crop: '/pages/student/crop/crop',
+				show: '/pages/student/show/show',
+				mine: '/pages/student/mine/mine',
+				noticeDetail: '/pages/student/noticeDetail/noticeDetail',
+
+				// 老师
+				tIndex: '/pages/teacher/tIndex/tIndex',
+				tSetup: '/pages/teacher/tSetup/tSetup',
+				tMidTerm: '/pages/teacher/tMidTerm/tMidTerm',
+				tEndTerm: '/pages/teacher/tEndTerm/tEndTerm',
+				tDate: '/pages/teacher/tDate/tDate',
+				tNews: '/pages/teacher/tNews/tNews',
+				tNewsDetail: '/pages/teacher/tNewsDetail/tNewsDetail',
+				tSubject: '/pages/teacher/tSubject/tSubject',
+				tManage: '/pages/teacher/tManage/tManage',
+				tMine: '/pages/teacher/tMine/tMine',
+				tShow: '/pages/teacher/tShow/tShow',
+				tNotice: '/pages/teacher/tNotice/tNotice',
+				tNoticeEditor: '/pages/teacher/tNoticeEditor/tNoticeEditor',
+			}
 		},
 		onLaunch: function() {
-			const token1 = 'wbgsip900wkuUEcPHUExBe1716947239';
-			// const token2 = 'hdS7fivWq99rSqgkuIVMpj1717031362';
-			// const api = 'https://api.campushoy.com/user/campus/get_user_info?access_token=';
-			// const url = 'https://82n826t960.vicp.fun';
-			// const url2 = 'https://8t282696k0.zicp.fun';
-			const url3 = '/practice/api';
-			// 小程序向后端发送token，后端验证后，携带data传回
-			const path = '/teacher/login';
-			const token = token1;
-			uni.request({
-				method: 'POST',
-				url: url3 + path,
-				header: {
-					'token': token
-				},
-				success: (res) => {
-					console.log(res);
-					if (res.data.code === 0) {
-						console.log("未登录，跳转到登录界面");
-						// uni.redirectTo({
-						// 	url: "/pages/login/login?msg='未登录，跳转到登录界面'",
-						// });
-						return;
-					}
-					// 小程序记录后端传回的token
-					uni.setStorageSync('token', token);
-					// 老师端
-					if (res.data.data === 1) {
-						uni.reLaunch({
-							url: "/pages/examine/examine"
-						})
-					};
-					// 学生端
-					if (res.data.data === 2) {
-						// TODO: 上线时恢复注释
-						// uni.reLaunch({
-						// 	url: "/pages/index/index"
-						// })
-					};
-				},
-				fail: (error) => {
-					// console.log(error);
-					// console.log("登录超时，请返回i上商跳转！");
-					// uni.redirectTo({
-					// 	url: "/pages/login/login?msg='登录超时，请返回i上商跳转！'"
-					// });
-				}
-			})
+			// 测试token
+			// const token = 'bccg0-n-WYF8m-2qGYMUmv1730254660';
+
+			const url3 = 'http://127.0.0.1:8080';
+			// const url3 = '/practice/api';
+			const teacherPage = '/pages/teacher/tIndex/tIndex';
+			const studentPage = '/pages/student/index/index';
+			// TODO: 上线删除
+			uni.setStorageSync('token', '6Y8wNHSHjiCruw1WXRT7js1731404576');
 		}
 	}
 </script>

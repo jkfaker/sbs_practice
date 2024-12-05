@@ -1,0 +1,18 @@
+.background.data-v-551fd729 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-image: linear-gradient(to bottom, #FEC7AB, #FCEAC9, #FBFDDA, #FBFDDA);
+}
+.content.data-v-551fd729 {
+  width: 90%;
+  margin: auto;
+}
+.little-text.data-v-551fd729 {
+  color: grey;
+  font-size: 12px;
+}
+

@@ -1,8 +1,7 @@
 spring:
-  datasource:
-    username: root
-    password: lqd31415926
-    url: jdbc:mysql://mysql:3306/sbs_practice
+  profiles:
+    active: dev
+
   servlet:
     multipart:
       enabled: true

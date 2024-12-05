@@ -39,5 +39,5 @@ public class UserDTO implements Serializable {
     @ApiModelProperty("用户所在班级")
     private String userClass;
     @ApiModelProperty("用户背景图片")
-    private String BackgroundImg;
+    private String userBackgroundImg;
 }

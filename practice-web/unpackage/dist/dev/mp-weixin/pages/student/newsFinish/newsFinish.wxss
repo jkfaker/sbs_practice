@@ -1,0 +1,116 @@
+.background.data-v-f7274c9c {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -10;
+  background-color: #f3f2f2;
+}
+.bgc.data-v-f7274c9c {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  z-index: -1;
+  background-image: linear-gradient(to bottom, #f39c7a, white);
+}
+.content.data-v-f7274c9c {
+  width: 90%;
+  margin: auto;
+}
+.success.data-v-f7274c9c {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.success .icon.data-v-f7274c9c {
+  margin-right: 3px;
+}
+.success .title.data-v-f7274c9c {
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+}
+.box.data-v-f7274c9c {
+  background-color: white;
+  border-radius: 5px;
+}
+.box .projects.data-v-f7274c9c {
+  width: 90%;
+  margin: auto;
+}
+.box .projects .subject.data-v-f7274c9c {
+  font-weight: bold;
+  font-size: 18px;
+}
+.box .projects .title.data-v-f7274c9c {
+  font-weight: bold;
+  font-size: 16px;
+}
+.box .projects .time.data-v-f7274c9c {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+}
+.box .projects .time .icon.data-v-f7274c9c {
+  margin-right: 7px;
+}
+.box .projects .address.data-v-f7274c9c {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: start;
+}
+.box .projects .address .icon.data-v-f7274c9c {
+  margin-right: 7px;
+}
+.members-box.data-v-f7274c9c {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.members-box .members.data-v-f7274c9c {
+  width: 90%;
+  margin: auto;
+}
+.members-box .members .title.data-v-f7274c9c {
+  font-weight: bold;
+  font-size: 16px;
+}
+.members-box .members .people.data-v-f7274c9c {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+.members-box .members .people .person.data-v-f7274c9c {
+  margin-right: 14px;
+}
+.members-box .members .people .person .icon.data-v-f7274c9c {
+  border-radius: 50%;
+  background-color: lightgray;
+}
+.members-box .members .people .person .name.data-v-f7274c9c {
+  color: gray;
+  font-size: 12px;
+  text-align: center;
+}
+.reUpload.data-v-f7274c9c {
+  color: #f39c7a;
+  font-style: italic;
+  padding: 10px;
+}
+.home.data-v-f7274c9c {
+  height: 50px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.2);
+}
+

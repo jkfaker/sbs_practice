@@ -39,7 +39,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("开始注册自定义拦截器...");
         registry.addInterceptor(tokenInterceptor)
-                .addPathPatterns("/project/**","/leader/**","/teacher/**", "/date/**", "/files/**", "/member/**","/subject/**", "/news/**")
+                .addPathPatterns("/project/**","/leader/**","/teacher/**", "/date/**", "/files/**", "/member/**", "/news/**", "/notice/**")
                 .excludePathPatterns("/doc.html/**");
 
     }
@@ -54,7 +54,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .build();
 
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .groupName("管理端接口")
+                .groupName("教师端接口")
                 .apiInfo(apiInfo)
                 .select()
                 //指定生成接口需要扫描的包
@@ -65,7 +65,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         return docket;
     }
 
-/*    @Bean
+    @Bean
     public Docket docket2(){
         log.info("准备生成接口文档...");
         ApiInfo apiInfo = new ApiInfoBuilder()
@@ -75,7 +75,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .build();
 
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .groupName("用户端接口")
+                .groupName("学生端接口")
                 .apiInfo(apiInfo)
                 .select()
                 //指定生成接口需要扫描的包
@@ -84,7 +84,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .build();
 
         return docket;
-    }*/
+    }
 
     /**
      * 设置静态资源映射，主要是访问接口文档（html、js、css）

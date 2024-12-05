@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: root
+    password: lqd31415926
+    url: jdbc:mysql://mysql:3306/sbs_practice
+
+
+# 生产环境配置
+file:
+  uploadPath: /root/uploads/files/
+  imageUploadPath: /root/uploads/images/
+  zipFileName: files.zip
+  teacher:
+    filePath: /root/uploads/teacher/files/
+

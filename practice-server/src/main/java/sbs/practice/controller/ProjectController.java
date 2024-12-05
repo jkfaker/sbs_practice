@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.enums.JudgeExist;
@@ -17,6 +16,7 @@ import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.dto.MemberDTO;
 import sbs.practice.pojo.dto.ProjectDTO;
 import sbs.practice.pojo.entity.Project;
+import sbs.practice.pojo.vo.ProjectAndFileVO;
 import sbs.practice.pojo.vo.ProjectVO;
 import sbs.practice.service.IProjectService;
 
@@ -37,7 +37,6 @@ import java.util.List;
 public class ProjectController {
     @Autowired
     private IProjectService projectService;
-
 
     /**
      * 立项时，负责人上传成员,数据以及文件
@@ -76,9 +75,26 @@ public class ProjectController {
 
     @ApiOperation("老师查询项目")
     @GetMapping("/select")
-    public Result<List<Project>> selectByDepart(){
-        List<Project> projects = projectService.selectByDepart();
+    public Result<List<Project>> getByDepart(@RequestParam(required = false) Integer subjectId){
+        List<Project> projects = projectService.getAllInDepart(subjectId);
         return Result.success(projects);
+    }
+
+    @ApiOperation("老师查询某个人的项目")
+    @GetMapping("/get/one")
+    public Result<Project> getByProjectId(@RequestParam(value = "id") Integer projectId){
+        Project project = projectService.getByProjectId(projectId);
+        return Result.success(project);
+    }
+
+
+    @ApiOperation("老师查询当前专题所有项目及文件")
+    @GetMapping("/files")
+    public Result<List<ProjectAndFileVO>> getFiles(@RequestParam(required = false) Integer subjectId, @RequestParam Integer fileType){
+        // 将Project join files
+        List<ProjectAndFileVO> results = projectService.getFiles(subjectId, fileType);
+        log.info("projectAndFile:{}", results);
+        return Result.success(results);
     }
 
     /**
@@ -93,10 +109,13 @@ public class ProjectController {
         return Result.success();
     }
 
+
+
     /**
      * 在立项提交后或者负责人再次点击立项时的finish界面
      * @return
      */
+
     @ApiOperation("负责人回显项目名与主题名")
     @GetMapping("/name")
     public Result<ProjectVO> getName() {
@@ -107,6 +126,7 @@ public class ProjectController {
 
     /**
      * 验证负责人是否已经存在项目，如果已存在则跳转至finish界面
+     * @return
      */
     @ApiOperation("判断该负责人是否已存在项目")
     @GetMapping("/judge")
@@ -115,5 +135,6 @@ public class ProjectController {
         log.info("isExist:{}", isExist);
         return Result.success(isExist);
     }
+
 
 }

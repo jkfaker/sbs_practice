@@ -1,11 +1,10 @@
 package sbs.practice.service;
 
-import org.springframework.transaction.annotation.Transactional;
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.common.enums.FileType;
-import sbs.practice.pojo.dto.FileDownloadDTO;
+import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.entity.Files;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
@@ -19,9 +18,11 @@ import java.util.List;
  */
 public interface IFilesService extends IService<Files> {
 
-    String selectFilename(FileDownloadDTO fileDownload);
+    String selectFilename(Integer subjectId,  Integer fileType);
 
-    void uploadMidTerm(MultipartFile file, FileType type);
+    void uploadFile(MultipartFile file, FileType type);
 
-    List<Files> readMidTerm(FileType type);
+    List<Files> readFiles(FileType type);
+
+    void examine(LabelDTO labelDTO);
 }

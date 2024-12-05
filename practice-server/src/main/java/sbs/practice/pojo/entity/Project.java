@@ -1,16 +1,17 @@
 package sbs.practice.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.*;
-import sbs.practice.common.enums.DepartEnum;
-import sbs.practice.common.enums.ProjectLabel;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 import lombok.experimental.Accessors;
+import sbs.practice.common.enums.DepartEnum;
+import sbs.practice.common.enums.ProjectLabel;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>

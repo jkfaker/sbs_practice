@@ -15,6 +15,8 @@ import sbs.practice.pojo.query.PageQuery;
 @Builder
 @ApiModel("风采展示查询DTO")
 public class ShowDTO extends PageQuery {
-    @ApiModelProperty("查询条件(leaderNameOrNewsTitle)")
+    @ApiModelProperty("查询条件")
     private String condition;
+    @ApiModelProperty("筛选newsLabel")
+    private Integer newsLabel;
 }

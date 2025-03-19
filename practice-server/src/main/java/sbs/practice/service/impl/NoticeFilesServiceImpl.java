@@ -2,6 +2,7 @@ package sbs.practice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.constant.StudentOrTeacherConstant;
@@ -25,7 +26,10 @@ import java.time.LocalDateTime;
  * @since 2024-12-01
  */
 @Service
+@RequiredArgsConstructor
 public class NoticeFilesServiceImpl extends ServiceImpl<NoticeFilesMapper, NoticeFiles> implements INoticeFilesService {
+
+    private final FileIO fileIO;
 
     /**
      * 老师上传通知附件
@@ -35,7 +39,7 @@ public class NoticeFilesServiceImpl extends ServiceImpl<NoticeFilesMapper, Notic
     @Override
     public String uploadFiles(MultipartFile file) {
         TokenUtils.verifyTeacher();
-        String fileName = FileIO.uploadFile(file, StudentOrTeacherConstant.TEACHER);
+        String fileName = fileIO.uploadFile(file, StudentOrTeacherConstant.TEACHER);
         return fileName;
     }
 

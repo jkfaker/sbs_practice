@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+import sbs.practice.common.enums.FileLabel;
 import sbs.practice.common.enums.FileType;
 import sbs.practice.common.enums.NewsLabel;
 
@@ -45,7 +46,7 @@ public class Files implements Serializable {
     @ApiModelProperty("上传时间")
     private LocalDateTime uploadTime;
     @ApiModelProperty("审核状态")
-    private NewsLabel label;
+    private FileLabel label;
     @ApiModelProperty("审核时间")
     private LocalDateTime examineTime;
 }

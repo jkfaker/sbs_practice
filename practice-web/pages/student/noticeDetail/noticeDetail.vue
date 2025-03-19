@@ -55,7 +55,7 @@
 				return '/practice' + getApp().globalData.teacherFilePath + item.fileName;
 			},
 			getData() {
-				const PATH = '/notice/detail';
+				const PATH = '/user/notice/detail';
 				uni.request({
 					url: `${getApp().globalData.URL}${PATH}?id=${this.id}`,
 					method: 'GET',

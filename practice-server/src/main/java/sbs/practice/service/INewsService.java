@@ -36,5 +36,5 @@ public interface INewsService extends IService<News> {
 
     void verify(NewsVerifyDTO newsVerifyDTO);
 
-    List<NewsVO> getMine();
+    List<NewsVO> getMine(Integer projectId);
 }

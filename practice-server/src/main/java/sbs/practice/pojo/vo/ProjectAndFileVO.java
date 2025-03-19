@@ -10,10 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sbs.practice.common.enums.DepartEnum;
-import sbs.practice.common.enums.FileType;
-import sbs.practice.common.enums.NewsLabel;
-import sbs.practice.common.enums.ProjectLabel;
+import org.apache.tomcat.jni.File;
+import sbs.practice.common.enums.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -50,7 +48,7 @@ public class ProjectAndFileVO implements Serializable {
     private LocalDateTime uploadTime;
     @ApiModelProperty("文件审核状态")
     @TableField("label")
-    private NewsLabel fileLabel;
+    private FileLabel fileLabel;
     @ApiModelProperty("审核时间")
     private LocalDateTime examineTime;
     @ApiModelProperty("文件id")

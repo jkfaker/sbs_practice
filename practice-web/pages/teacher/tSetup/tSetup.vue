@@ -14,11 +14,12 @@
 					本专题所有学生上传文件
 				</view>
 				<view class="">
-					点击下载：<uni-link color="green" :href="download()" :text="fileName"></uni-link>
+					点击下载：<uni-link color="green" :href="download()" text="点我下载"></uni-link>
 				</view>
 				<view class="">
-					点击周围蒙版可取消
+					10分钟内有效，过期请刷新。
 				</view>
+				<view>点击周围蒙版可取消</view>
 			</view>
 		</uni-popup>
 		<uni-segmented-control @clickItem="clickSegment($event)" :values="items" styleType="text"
@@ -126,9 +127,9 @@
 			},
 			// 点击批量下载下载本专题所有项目文件
 			showPopup() {
-				const path = '/files';
+				const PATH = '/teacher/files/download';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?subjectId=${this.subjectId}&fileType=1`,
+					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=1`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -168,9 +169,9 @@
 			},
 			// 获取主题
 			async getSubject() {
-				const path = '/subject';
+				const PATH = '/teacher/subject';
 				const res = await uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -184,15 +185,19 @@
 			},
 
 			getData() {
-				const path = '/project/files';
+				uni.showLoading({
+					title: '正在加载'
+				})
+				const PATH = '/teacher/project/files';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?subjectId=${this.subjectId}&fileType=1`,
+					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=1`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
 					},
 					success: (res) => {
 						console.log(res);
+						uni.hideLoading();
 						if (res.data.code === 0) {
 							this.notify('error', res.data.msg);
 							return;
@@ -212,9 +217,12 @@
 			},
 			// 更新院级校级标签
 			async changeLabel(item, label) {
-				const path = '/project/label';
+				uni.showLoading({
+					title: '正在加载'
+				})
+				const PATH = '/teacher/project/label';
 				const res = await uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'POST',
 					data: {
 						id: item.id,
@@ -224,6 +232,7 @@
 						'token': uni.getStorageSync('token'),
 					},
 				})
+				uni.hideLoading();
 				if (res.data.code === 0) {
 					this.notify('error', res.data.msg);
 					return;
@@ -234,7 +243,7 @@
 			},
 			// 处理点击下载事件
 			download() {
-				return '/practice' + getApp().globalData.filePath + this.fileName;
+				return this.fileName;
 			}
 		}
 	}

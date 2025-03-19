@@ -131,9 +131,9 @@
 			},
 			// 从后端获取成员列表
 			getMembers() {
-				const path = '/member';
+				const PATH = '/user/member';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					methods: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -146,9 +146,9 @@
 			},
 			// 从后端获取项目主题和项目名称
 			getProjectInfo() {
-				const path = '/news/detail';
+				const PATH = '/user/news/detail';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?id=${this.id}`,
+					url: `${getApp().globalData.URL}${PATH}?id=${this.id}`,
 					methods: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),

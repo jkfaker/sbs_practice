@@ -72,9 +72,9 @@
 			},
 			// 添加老师
 			submit(teacher) {
-				const path = '/teacher/update';
+				const PATH = '/teacher/info/update';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					header: {
 						'token': uni.getStorageSync('token'),
 					},
@@ -109,9 +109,9 @@
 			},
 			// 获取所有老师
 			getAllTeacher() {
-				const path = '/teacher';
+				const PATH = '/teacher/info/all';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					header: {
 						'token': uni.getStorageSync('token'),
 					},
@@ -132,10 +132,10 @@
 			},
 			// 老师删除
 			subDelete() {
-				const path = '/teacher/delete';
+				const PATH = '/teacher/info/delete';
 				console.log(this.deleteId);
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					header: {
 						'token': uni.getStorageSync('token'),
 					},

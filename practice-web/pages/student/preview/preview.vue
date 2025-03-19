@@ -124,9 +124,9 @@
 				console.log(res);
 				if (res.data.data != 0)
 					this.news.id = res.data.data; */
-				const path = '/news/upload';
+				const PATH = '/user/news/upload';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'POST',
 					data: this.news,
 					header: {

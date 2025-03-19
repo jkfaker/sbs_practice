@@ -77,9 +77,8 @@ public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements ID
      * 非负责人报错
      */
     @Override
-    public List<Date> show() {
-        // 查询和验证 projectId
-        Integer projectId = baseService.getProjectIdByCurrentUser();
+    public List<Date> show(Integer projectId) {
+
 
         LambdaQueryWrapper<Date> dateWrapper = new QueryWrapper<Date>()
                 .lambda()

@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Builder
 @ApiModel(description = "给项目打标签")
 public class LabelDTO implements Serializable {
-    @ApiModelProperty("文件id")
+    @ApiModelProperty("项目或文件id")
     private Integer id;
     @ApiModelProperty("标签")
     private Integer label;

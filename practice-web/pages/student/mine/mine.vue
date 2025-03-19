@@ -52,15 +52,15 @@
 				leader: {}
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.getLeader();
 			this.getMembers();
 		},
 		methods: {
 			getLeader() {
-				const path = '/leader';
+				const PATH = '/user/leader';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -80,9 +80,9 @@
 				})
 			},
 			getMembers() {
-				const path = '/member';
+				const PATH = '/user/member';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -103,15 +103,32 @@
 				console.log(index);
 				this.index = index;
 				switch (index) {
-
+					case 0:
+						uni.navigateTo({
+							url: getApp().globalData.pagePath.setup,
+						})
+						break;
 					case 1:
-						this.title = '联系我们';
+						uni.navigateTo({
+							url: getApp().globalData.pagePath.date,
+						})
+						break;
+					case 2:
+						uni.navigateTo({
+							url: getApp().globalData.pagePath.endTerm,
+						})
+						break;
+					case 3:
+						uni.navigateTo({
+							url: getApp().globalData.pagePath.news,
+						})
 						break;
 					case 4:
 						this.title = '小程序使用反馈';
+						this.showToast = true;
 						break;
 				}
-				this.showToast = true;
+
 			},
 			stay(type, message) {
 				console.log(message);

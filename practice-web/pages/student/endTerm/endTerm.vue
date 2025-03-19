@@ -89,7 +89,10 @@
 		methods: {
 			// 获取历史
 			getData() {
-				const PATH = '/files/end';
+				uni.showLoading({
+					title: '正在加载'
+				})
+				const PATH = '/user/files/end';
 				uni.request({
 					url: getApp().globalData.URL + PATH,
 					method: 'GET',
@@ -97,6 +100,8 @@
 						'token': uni.getStorageSync('token'),
 					},
 					success: (res) => {
+						uni.hideLoading();
+
 						console.log(res);
 						if (res.data.code === 0) {
 							this.notify('error', res.data.msg);
@@ -105,6 +110,8 @@
 						this.data = res.data.data;
 					},
 					fail: (error) => {
+						uni.hideLoading();
+
 						console.log(error);
 						this.notify('error', '网络异常,请稍后重试');
 					}
@@ -152,7 +159,7 @@
 			},
 			// 上传数据
 			uploadData() {
-				const PATH = '/files/end';
+				const PATH = '/user/files/end';
 				// const formData = new FormData();
 
 				// formData.append('project', JSON.stringify(this.project.project));

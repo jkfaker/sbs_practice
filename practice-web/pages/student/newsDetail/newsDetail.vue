@@ -43,9 +43,9 @@
 		},
 		methods: {
 			getData() {
-				const path = '/news/detail';
+				const PATH = '/user/news/detail';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?id=${this.newsId}`,
+					url: `${getApp().globalData.URL}${PATH}?id=${this.newsId}`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),

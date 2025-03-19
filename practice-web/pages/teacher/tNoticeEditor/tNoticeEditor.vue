@@ -168,7 +168,7 @@
 				})
 			},
 			uploadFile() {
-				const PATH = '/notice/files/upload';
+				const PATH = '/teacher/notice/files/upload';
 				// const formData = new FormData();
 
 				// formData.append('project', JSON.stringify(this.project.project));
@@ -207,36 +207,9 @@
 				this.text = uni.removeStorageSync('text');
 				this.fileName = uni.removeStorageSync('fileName');
 			},
-			// 判断是否存在
-			async judge() {
-				const path = '/news/judge';
-				const res = await uni.request({
-					url: getApp().globalData.URL + path,
-					method: 'GET',
-					header: {
-						'token': uni.getStorageSync('token'),
-					},
-
-				})
-
-				console.log(res);
-				// 是否有权限上传新闻稿
-				if (res.data.code === 0) {
-					this.notify('error', res.data.msg);
-					return;
-				}
-				const judge = res.data.data;
-				// 不存在 judge = 0
-				// 新闻稿已存在
-				if (judge != 0) {
-					uni.redirectTo({
-						url: getApp().globalData.pagePath.newsFinish,
-					})
-				}
-			},
 			// 处理点击发送
 			handleSend() {
-				const PATH = '/notice/add';
+				const PATH = '/teacher/notice/add';
 				uni.request({
 					url: getApp().globalData.URL + PATH,
 					method: 'POST',
@@ -275,27 +248,6 @@
 				uni.navigateBack();
 			},
 
-			// 实现选择并上传图片的功能
-			async uploadImage() {
-				const path = '/files/images';
-				let imgData = await uni.chooseImage({
-					count: 1,
-				})
-				console.log(imgData);
-				const tempFilePath = imgData.tempFilePaths[0];
-				console.log(tempFilePath);
-				let uploadData = await uni.uploadFile({
-					url: getApp().globalData.URL + path,
-					filePath: tempFilePath,
-					name: 'img',
-					header: {
-						'token': uni.getStorageSync('token'),
-					},
-				})
-				console.log(uploadData);
-				const imgName = JSON.parse(uploadData.data).data;
-				return imgName;
-			},
 			// 获取富文本html内容
 			getEditorContent() {
 				let html;

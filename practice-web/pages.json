@@ -2,14 +2,17 @@
 	"pages": [{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "登录中.."
+				"navigationBarTitleText": "登录中..",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/student/index/index",
 			"style": {
 				"navigationBarTitleText": "社会实践",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+
 			}
 		},
 		{
@@ -90,6 +93,27 @@
 			"path": "pages/student/newsFinish/newsFinish",
 			"style": {
 				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/student/noticeDetail/noticeDetail",
+			"style": {
+				"navigationBarTitleText": "通告详情"
+			}
+		},
+		{
+			"path": "pages/student/newsEditor/newsEditor",
+			"style": {
+				"navigationBarTitleText": "编辑新闻稿",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/student/announce/announce",
+			"style": {
+				"navigationBarTitleText": "通知",
+				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
 			}
 		},
@@ -182,16 +206,9 @@
 			}
 		},
 		{
-			"path": "pages/student/noticeDetail/noticeDetail",
+			"path": "pages/teacher/tAnnounce/tAnnounce",
 			"style": {
-				"navigationBarTitleText": "通告详情"
-			}
-		},
-		{
-			"path": "pages/student/newsEditor/newsEditor",
-			"style": {
-				"navigationBarTitleText": "编辑新闻稿",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "发送消息"
 			}
 		}
 	],

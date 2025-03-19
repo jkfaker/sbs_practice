@@ -12,6 +12,8 @@
         project.id = files.project_id
         and project.depart_id = #{departId}
         and project.subject_id = #{subjectId}
-        and files.type = #{fileType}
+        <if test="subjectId != null">
+            and files.type = #{fileType}
+        </if>
     </select>
 </mapper>

@@ -77,7 +77,7 @@
 			},
 			// 点击删除按钮。
 			deleteById() {
-				const PATH = '/notice/delete';
+				const PATH = '/teacher/notice/delete';
 				this.modalShow = false;
 				uni.request({
 					url: getApp().globalData.URL + PATH,
@@ -105,7 +105,7 @@
 			},
 			// 获取notice数据
 			getData() {
-				const PATH = '/notice/getAll';
+				const PATH = '/teacher/notice/all';
 				uni.request({
 					url: getApp().globalData.URL + PATH,
 					method: 'GET',

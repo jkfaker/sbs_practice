@@ -57,9 +57,9 @@
 			},
 			// 添加主题
 			submit(subject) {
-				const path = '/subject/update';
+				const PATH = '/teacher/subject/update';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					header: {
 						'token': uni.getStorageSync('token'),
 					},
@@ -88,9 +88,9 @@
 			},
 			// 获取所有主题
 			getAllSubject() {
-				const path = '/subject';
+				const PATH = '/teacher/subject';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					header: {
 						'token': uni.getStorageSync('token'),
 					},
@@ -111,10 +111,10 @@
 			},
 			// 主题删除
 			subDelete() {
-				const path = '/subject/delete';
+				const PATH = '/teacher/subject/delete';
 				console.log(this.deleteId);
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					header: {
 						'token': uni.getStorageSync('token'),
 					},

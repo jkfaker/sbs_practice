@@ -13,6 +13,7 @@ import sbs.practice.common.utils.TokenUtils;
 import sbs.practice.mapper.SecTeacherMapper;
 import sbs.practice.pojo.dto.UserDTO;
 import sbs.practice.pojo.entity.SecTeacher;
+import sbs.practice.pojo.vo.TeacherInfoVO;
 import sbs.practice.service.ISecTeacherService;
 
 /**
@@ -96,5 +97,19 @@ public class SecTeacherServiceImpl extends ServiceImpl<SecTeacherMapper, SecTeac
     public String getTeacherName(String teacherId) {
         SecTeacher secTeacher = this.getById(teacherId);
         return secTeacher.getName();
+    }
+
+    /**
+     * 获取教师工号 姓名、部门
+     * @return
+     */
+    @Override
+    public TeacherInfoVO selectIdAndName() {
+        TeacherInfoVO teacherInfoVO = new TeacherInfoVO();
+        String teacherId = getTeacherId();
+        String teacherName = getTeacherName(teacherId);
+        teacherInfoVO.setTeacherId(teacherId);
+        teacherInfoVO.setTeacherName(teacherName);
+        return teacherInfoVO;
     }
 }

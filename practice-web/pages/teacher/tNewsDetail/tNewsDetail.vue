@@ -58,9 +58,9 @@
 		},
 		methods: {
 			getData() {
-				const path = '/news/tDetail';
+				const PATH = '/teacher/news/verify/detail';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?id=${this.newsId}`,
+					url: `${getApp().globalData.URL}${PATH}?id=${this.newsId}`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -80,10 +80,10 @@
 				})
 			},
 			passOrReject(label) {
-				const path = '/news/verify';
+				const PATH = '/teacher/news/verify';
 
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'POST',
 					header: {
 						'token': uni.getStorageSync('token'),

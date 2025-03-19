@@ -24,5 +24,8 @@ public interface IFilesService extends IService<Files> {
 
     List<Files> readFiles(FileType type);
 
-    void examine(LabelDTO labelDTO);
+    void examineMid(LabelDTO labelDTO);
+
+    List<Files> listAllFilesOfOne(Integer projectId);
+
 }

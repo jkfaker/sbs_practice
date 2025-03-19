@@ -30,7 +30,7 @@
 		methods: {
 			// 裁剪完后上传后端，获取图片名
 			async crop(e) {
-				const path = '/files/images';
+				const PATH = '/user/files/images';
 				// 临时文件，base64
 				console.log(e.tempFilePath);
 				// 创建文件系统管理器
@@ -38,7 +38,7 @@
 				// #ifdef MP-WEIXIN || APP || MP-QQ 
 				const fs = uni.getFileSystemManager();
 				// 定义文件保存的临时路径
-				const tempPath = uni.env.USER_DATA_PATH + '/tempImage.jpg';
+				let tempPath = uni.env.USER_DATA_PATH + '/tempImage.jpg';
 				const fsRes = await fs.writeFile({
 					filePath: tempFilePath, // 文件保存路径
 					data: e.tempFilePath.replace(/^data:image\/\w+;base64,/, ""), // 移除前缀
@@ -78,7 +78,7 @@
 
 				// 上传至服务器，返回imgName
 				let uploadData = await uni.uploadFile({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					filePath: tempPath,
 					name: 'img',
 					header: {

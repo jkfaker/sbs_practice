@@ -9,15 +9,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import sbs.practice.annotation.SystemMessage;
 import sbs.practice.common.constant.FileConstant;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.constant.StudentOrTeacherConstant;
+import sbs.practice.common.enums.AnnounceLabel;
+import sbs.practice.common.enums.FileLabel;
 import sbs.practice.common.enums.FileType;
-import sbs.practice.common.enums.NewsLabel;
 import sbs.practice.common.exception.FileStorageException;
 import sbs.practice.common.exception.InsertDatabaseException;
 import sbs.practice.common.utils.FileIO;
 import sbs.practice.common.utils.TokenUtils;
+import sbs.practice.config.MinIOInfo;
 import sbs.practice.mapper.FilesMapper;
 import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.entity.Files;
@@ -49,17 +52,22 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
     private final ISecTeacherService secTeacherService;
     private final FilesMapper filesMapper;
     private final IBaseService baseService;
-
+    private final FileIO fileIO;
+    private final MinIOInfo minIOInfo;
 
     /**
      * 老师 打包所有文件 (某学院，某类型)
      * @param subjectId
      * @param fileType
      * @return
+     * 要求： 将
      */
     @Override
     public String selectFilename(Integer subjectId, Integer fileType) {
+        String teacherId = secTeacherService.getTeacherId();
         Integer departId = secTeacherService.findDepartId();
+        String filename = teacherId + FileConstant.ZIP_FILE_EXTENSION;
+
         // 获取List<文件名>
         List<String> fileNameList = filesMapper.selectFileName(departId, subjectId, fileType);
         // 获取文件列表
@@ -69,15 +77,21 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
                 .filter(Objects::nonNull)
                 .toList();
         // 创建临时文件用于压缩
-        Path tempZipFilePath = Paths.get(FileConstant.UPLOAD_PATH, FileConstant.ZIP_FILE_NAME);
+        // Path tempZipFilePath = Paths.get(FileConstant.UPLOAD_PATH, FileConstant.ZIP_FILE_NAME);
         // 压缩文件
         try {
-            FileIO.compressFiles(files, tempZipFilePath);
+            // fileIO.compressFiles(files, tempZipFilePath);
+            fileIO.zipAndUploadToMinIO(files, filename);
+            // 返回临时签名文件URL
+            String fileUrl = fileIO.getSignFilesFromMinIO(minIOInfo.getTeacherBucket(), filename);
+            return fileUrl;
         } catch (Exception e) {
             throw new FileStorageException(MessageConstant.FILE_COMPRESS_ERROR);
         }
-        // 返回压缩文件名称
-        return FileConstant.ZIP_FILE_NAME;
+
+
+
+//        return FileConstant.ZIP_FILE_NAME;
     }
 
 
@@ -97,13 +111,13 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
         // 查询和验证projectId
         Integer projectId = baseService.getProjectIdByCurrentUser();
         // 文件保存本地
-        String fileName = FileIO.uploadFile(file, StudentOrTeacherConstant.STUDENT);
+        String fileName = fileIO.uploadFile(file, StudentOrTeacherConstant.STUDENT);
         Files files = Files.builder()
                 .uploadTime(LocalDateTime.now())
                 .projectId(projectId)
                 .type(type)
                 .fileName(fileName)
-                .label(NewsLabel.PENDING)
+                .label(FileLabel.PENDING)
                 .build();
         boolean isSave;
         try {
@@ -141,16 +155,35 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
      * @param labelDTO
      */
     @Override
-    public void examine(LabelDTO labelDTO) {
+    @SystemMessage(AnnounceLabel.MID_TERM_PROJECT)
+    public void examineMid(LabelDTO labelDTO) {
         // 验证老师
         TokenUtils.verifyTeacher();
 
-        LambdaUpdateWrapper<Files> filesWrapper = new LambdaUpdateWrapper<>();
+        LambdaUpdateWrapper<Files> filesWrapper = new LambdaUpdateWrapper<Files>();
         log.info("labelDTO：{}",labelDTO);
         filesWrapper
                 .set(Files::getLabel, labelDTO.getLabel())
                 .set(Files::getExamineTime, LocalDateTime.now())
                 .eq(Files::getId, labelDTO.getId());
         this.update(filesWrapper);
+    }
+
+    /**
+     * 获取某个人所有文件
+     * @param projectId
+     * @return
+     */
+    @Override
+    public List<Files> listAllFilesOfOne(Integer projectId) {
+        TokenUtils.verifyTeacher();
+        LambdaQueryWrapper<Files> filesQueryWrapper = new QueryWrapper<Files>()
+                .lambda()
+                .eq(Files::getProjectId, projectId)
+                .orderByAsc(Files::getType)
+                .orderByAsc(Files::getLabel)
+                .orderByDesc(Files::getUploadTime);
+        List<Files> filesList = this.list(filesQueryWrapper);
+        return filesList;
     }
 }

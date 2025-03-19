@@ -25,19 +25,19 @@
 			return {
 				list: [{
 						icon: '/static/icon/myMessage.png',
-						text: '二级学院教师管理',
+						text: '活动立项申请',
 						path: '/'
 					}, {
 						icon: '/static/icon/activity.png',
-						text: '活动主题管理',
-						path: '/pages/tSubject/tSubject'
+						text: '每日安全打卡',
+						path: ''
 					}, {
 						icon: '/static/icon/record.png',
-						text: '上传材料记录',
+						text: '消息发送记录',
 						path: '/'
 					}, {
 						icon: '/static/icon/date.png',
-						text: '安全打卡记录',
+						text: '我的新闻稿管理',
 						path: '/'
 					},
 					{

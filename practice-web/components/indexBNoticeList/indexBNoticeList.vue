@@ -51,7 +51,7 @@
 			};
 		},
 		created() {
-			const PATH = '/notice/getAll';
+			const PATH = '/user/notice/all';
 			uni.request({
 				url: getApp().globalData.URL + PATH,
 				method: 'GET',
@@ -134,7 +134,5 @@
 		color: grey;
 		font-size: 10px;
 	}
-
-
 	}
 </style>

@@ -65,7 +65,7 @@
 		},
 		methods: {
 			getData() {
-				const PATH = '/date/show';
+				const PATH = '/user/date/show';
 				uni.request({
 					url: getApp().globalData.URL + PATH,
 					method: 'GET',
@@ -98,13 +98,13 @@
 			},
 			// 点击打卡按钮触发
 			handleClick() {
-				const path = '/date/clock';
+				const PATH = '/user/date/clock';
 				if (!this.modalShow) {
 					this.modalShow = true;
 					return;
 				}
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'POST',
 					header: {
 						'token': uni.getStorageSync('token'),

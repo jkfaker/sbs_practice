@@ -117,9 +117,9 @@
 		},
 		methods: {
 			async getData() {
-				const path = '/news/tShows';
+				const PATH = '/teacher/news/verify/shows';
 				const res = await uni.request({
-					url: `${getApp().globalData.URL}${path}?pageNo=${this.pageNo}&pageSize=${this.pageSize}&newsLabel=${this.label}`,
+					url: `${getApp().globalData.URL}${PATH}?pageNo=${this.pageNo}&pageSize=${this.pageSize}&newsLabel=${this.label}`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),

@@ -12,12 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import sbs.practice.annotation.SystemMessage;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.context.BaseContext;
-import sbs.practice.common.enums.DepartEnum;
-import sbs.practice.common.enums.FileType;
-import sbs.practice.common.enums.JudgeExist;
-import sbs.practice.common.enums.ProjectLabel;
+import sbs.practice.common.enums.*;
 import sbs.practice.common.exception.InsertDatabaseException;
 import sbs.practice.common.exception.NotExistException;
 import sbs.practice.common.exception.SelectException;
@@ -126,9 +124,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     /**
+     * 教师评判项目为 `院级` 还是 `校级`
      * @param labelDTO
      */
     @Override
+    @SystemMessage(AnnounceLabel.SET_UP_PROJECT)
     public void labelUpdate(LabelDTO labelDTO) {
         TokenUtils.verifyTeacher();
         UpdateWrapper<Project> updateWrapper = new UpdateWrapper<Project>();

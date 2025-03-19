@@ -12,11 +12,12 @@
 					本专题所有学生上传文件
 				</view>
 				<view class="">
-					点击下载：<uni-link color="green" :href="download()" :text="fileName"></uni-link>
+					<uni-link color="green" :href="download()" text="点我下载"></uni-link>
 				</view>
 				<view class="">
-					点击周围蒙版可取消
+					10分钟内有效，过期请刷新。
 				</view>
+				<view>点击周围蒙版可取消</view>
 			</view>
 		</uni-popup>
 		<uni-segmented-control @clickItem="clickSegment($event)" :values="items" styleType="text"
@@ -117,9 +118,9 @@
 		methods: {
 			// 点击批量下载下载本专题所有项目文件
 			showPopup() {
-				const path = '/files';
+				const PATH = '/teacher/files/download';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?subjectId=${this.subjectId}&fileType=2`,
+					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=2`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -160,9 +161,9 @@
 			},
 			// 获取主题
 			async getSubject() {
-				const path = '/subject';
+				const PATH = '/teacher/subject';
 				const res = await uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -176,9 +177,9 @@
 			},
 
 			getData() {
-				const path = '/project/files';
+				const PATH = '/teacher/project/files';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?subjectId=${this.subjectId}&fileType=2`,
+					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=2`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -206,9 +207,9 @@
 			// 更新通过和驳回标签
 			async changeLabel(item, label) {
 				console.log(item.fileId);
-				const path = '/files/label';
+				const PATH = '/teacher/files/mid/label';
 				const res = await uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'POST',
 					data: {
 						id: item.fileId,
@@ -228,7 +229,7 @@
 			},
 			// 处理批量文件点击下载事件
 			download() {
-				return '/practice' + getApp().globalData.filePath + this.fileName;
+				return this.fileName;
 			},
 			// 错误提示
 			notify(type, message) {

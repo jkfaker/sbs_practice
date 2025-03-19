@@ -22,7 +22,6 @@ public class NewsVerifyDTO {
     @ApiModelProperty("标签")
     private Integer label;
 
-
     @TableField("reject_reason")
     @ApiModelProperty("驳回理由")
     private String rejectReason;

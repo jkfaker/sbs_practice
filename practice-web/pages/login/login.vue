@@ -25,6 +25,16 @@
 				},
 			}
 		},
+		async onLoad(options) {
+			// 验证成功直接跳转，验证失败向下执行
+			await this.verify();
+			console.log(options.code);
+			// 如果没有code，调用getCode();
+			// 如果有code, 调用getToken();
+			options.code ? await this.getToken(options.code) : this.getCode();
+			console.log(options.code);
+			console.log(this.code);
+		},
 		methods: {
 			// 跳转到Oauth2获取code
 			getCode() {
@@ -46,34 +56,28 @@
 				// })
 			},
 			// 将code返回到后端，由后端取token
-			getToken(code) {
-				const PATH = '/oauth/getToken';
+			async getToken(code) {
+				const PATH = '/oauth/token';
 				console.log("getToken");
-				uni.request({
+				const res = await uni.request({
 					url: `${getApp().globalData.URL}${PATH}?code=${code}&redirect_uri=${getApp().globalData.redirectUrl}`,
 					method: 'GET',
 					header: {},
-					// token 获取成功
-					success: (res) => {
-						// 保存token
-
-						const token = res.data.data;
-						console.log(`token:${token}`)
-						uni.setStorageSync('token', token);
-						uni.redirectTo({
-							url: getApp().globalData.pagePath.login
-						})
-					},
-					fail: (error) => {
-						console.log("token获取失败");
-						this.notify('error', '网络异常！');
-					}
 				})
+				if (res.data.code === 0) {
+					console.log("token获取失败");
+					this.notify('error', res.data.msg);
+					return;
+				}
+				const token = res.data.data;
+				console.log(`token:${token}`)
+				await uni.setStorageSync('token', token);
+				await this.verify();
 			},
 
 			// 验证身份
 			async verify() {
-				const PATH = '/teacher/login';
+				const PATH = '/teacher/info/login';
 				console.log(`token:${uni.getStorageSync('token')}`);
 				const res = await uni.request({
 					method: 'POST',
@@ -91,7 +95,7 @@
 				// 老师端
 				if (res.data.data === 1) {
 					console.log("教师端");
-					await uni.reLaunch({
+					uni.reLaunch({
 						url: getApp().globalData.pagePath.tIndex,
 					})
 				};
@@ -99,13 +103,13 @@
 				if (res.data.data === 2) {
 					// TODO: 上线时恢复注释
 					console.log("学生端");
-					await uni.reLaunch({
+					uni.reLaunch({
 						url: getApp().globalData.pagePath.index,
 					})
 				};
 				// 失败后返回
-				console.log("登录失败");
-				this.notify('error', res.data.msg);
+				// console.log("登录失败");
+				// this.notify('error', res.data.msg);
 				return;
 			},
 			// 错误提示
@@ -120,16 +124,7 @@
 			}
 
 		},
-		async onLoad(options) {
-			// 验证成功直接跳转，验证失败向下执行
-			await this.verify();
-			console.log(options.code);
-			// 如果没有code，调用getCode();
-			// 如果有code, 调用getToken();
-			options.code ? this.getToken(options.code) : this.getCode();
-			console.log(options.code);
-			console.log(this.code);
-		},
+
 	}
 </script>
 

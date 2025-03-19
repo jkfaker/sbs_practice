@@ -10,6 +10,14 @@ file:
   uploadPath: /root/uploads/files/
   imageUploadPath: /root/uploads/images/
   zipFileName: files.zip
+  zipFileExtension: .zip
   teacher:
     filePath: /root/uploads/teacher/files/
+
+minio:
+  endpoint: http://172.100.48.84:9000
+  accessKey: root
+  secretKey: lqd31415926
+  teacher-bucket: teacher
+  student-bucket: user
 

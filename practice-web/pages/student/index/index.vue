@@ -3,6 +3,7 @@
 		<view class="background">
 		</view>
 		<u-notify ref="uNotify"></u-notify>
+		<headerBar></headerBar>
 		<view class="content">
 			<u-gap height="20"></u-gap>
 			<!-- 轮播图 -->
@@ -27,12 +28,17 @@
 </template>
 
 <script>
+	import headerBar from '@/components/indexAAHeaderBar/indexAAHeaderBar.vue';
 	import fiveButtons from '@/components/indexAFiveButtons/indexAFiveButtons.vue';
 	import noticeList from '@/components/indexBNoticeList/indexBNoticeList.vue';
+
 	export default {
 		components: {
+			headerBar,
 			fiveButtons,
 			noticeList
+
+
 		},
 		data() {
 			return {
@@ -54,6 +60,12 @@
 			noticeClick() {
 				// TODO
 				return;
+			},
+
+			clickRightNavbar() {
+				uni.navigateTo({
+					url: getApp().globalData.pagePath.announce
+				})
 			},
 
 			// 错误提示
@@ -81,6 +93,17 @@
 		background-color: #efeded;
 	}
 
+	.uni-badge-left-margin {
+		margin-right: 10px;
+	}
+
+	.nav-bar-title {
+		line-height: 44px;
+		text-align: center;
+		margin: auto;
+		font-size: 12px;
+
+	}
 
 	.content {
 		width: 90%;

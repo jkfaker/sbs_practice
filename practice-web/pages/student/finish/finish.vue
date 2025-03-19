@@ -110,14 +110,19 @@
 
 			// 从后端获取成员列表
 			getMembers() {
-				const path = '/member';
+				uni.showLoading({
+					title: '正在加载'
+				})
+				const PATH = '/user/member';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					methods: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
 					},
 					success: (res) => {
+						uni.hideLoading();
+
 						if (res.data.code == 0) {
 							this.notify('error', res.data.msg);
 							return;
@@ -126,6 +131,8 @@
 						this.members = res.data.data;
 					},
 					fail: (error) => {
+						uni.hideLoading();
+
 						console.log(error);
 						this.notify('error', '网络异常！');
 					}
@@ -133,14 +140,19 @@
 			},
 			// 从后端获取项目主题和项目名称
 			getProjectInfo() {
-				const path = '/project/name';
+				uni.showLoading({
+					title: '正在加载'
+				})
+				const PATH = '/user/project/name';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					methods: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
 					},
 					success: (res) => {
+						uni.hideLoading();
+
 						if (res.data.code == 0) {
 							this.notify('error', res.data.msg);
 							return;
@@ -149,6 +161,8 @@
 						this.project = res.data.data;
 					},
 					fail: (error) => {
+						uni.hideLoading();
+
 						console.log(error);
 						this.notify('error', '网络异常！');
 					}

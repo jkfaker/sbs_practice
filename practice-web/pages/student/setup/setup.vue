@@ -205,10 +205,10 @@
 		onLoad() {
 			// 判断项目是否已存在，如果存在立即跳转至finish
 			this.judgeExist();
-			const path1 = '/leader';
+			const PATH1 = '/user/leader';
 			// 获取负责人(本人)信息
 			uni.request({
-				url: getApp().globalData.URL + path1,
+				url: getApp().globalData.URL + PATH1,
 				method: 'GET',
 				header: {
 					'token': uni.getStorageSync('token'),
@@ -227,9 +227,9 @@
 				}
 			})
 			// 获取主题列表
-			const path2 = '/subject'
+			const PATH2 = '/user/subject'
 			uni.request({
-				url: getApp().globalData.URL + path2,
+				url: getApp().globalData.URL + PATH2,
 				method: 'GET',
 				header: {
 					'token': uni.getStorageSync('token'),
@@ -251,9 +251,9 @@
 		methods: {
 			// 判断项目是否已存在，如果存在立即跳转至finish
 			judgeExist() {
-				const path = '/project/judge';
+				const PATH = '/user/project/judge';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -393,7 +393,7 @@
 			},
 			// 点击确定，上传数据
 			uploadData() {
-				const PATH = '/project/upload';
+				const PATH = '/user/project/upload';
 				// const formData = new FormData();
 
 				// formData.append('project', JSON.stringify(this.project.project));

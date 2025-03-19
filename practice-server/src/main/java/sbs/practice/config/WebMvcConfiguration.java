@@ -39,8 +39,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("开始注册自定义拦截器...");
         registry.addInterceptor(tokenInterceptor)
-                .addPathPatterns("/project/**","/leader/**","/teacher/**", "/date/**", "/files/**", "/member/**", "/news/**", "/notice/**")
-                .excludePathPatterns("/doc.html/**");
+                .addPathPatterns("/teacher/**", "/user/**")
+                .excludePathPatterns("/doc.html/**", "/oauth/**");
 
     }
 
@@ -58,7 +58,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .apiInfo(apiInfo)
                 .select()
                 //指定生成接口需要扫描的包
-                .apis(RequestHandlerSelectors.basePackage("sbs.practice.controller"))
+                .apis(RequestHandlerSelectors.basePackage("sbs.practice.controller.teacher"))
                 .paths(PathSelectors.any())
                 .build();
 
@@ -79,7 +79,28 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .apiInfo(apiInfo)
                 .select()
                 //指定生成接口需要扫描的包
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.user"))
+                .apis(RequestHandlerSelectors.basePackage("sbs.practice.controller.user"))
+                .paths(PathSelectors.any())
+                .build();
+
+        return docket;
+    }
+
+    @Bean
+    public Docket docket3(){
+        log.info("准备生成接口文档...");
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("暑期社会实践小程序接口文档")
+                .version("1.0")
+                .description("暑期社会实践小程序接口文档")
+                .build();
+
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("用户认证")
+                .apiInfo(apiInfo)
+                .select()
+                //指定生成接口需要扫描的包
+                .apis(RequestHandlerSelectors.basePackage("sbs.practice.controller.oauth"))
                 .paths(PathSelectors.any())
                 .build();
 

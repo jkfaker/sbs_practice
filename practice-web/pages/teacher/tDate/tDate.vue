@@ -105,7 +105,7 @@
 		},
 		methods: {
 			projectDetails(item) {
-				const PATH = '/project/get/one';
+				const PATH = '/teacher/project/one';
 				uni.request({
 					url: `${getApp().globalData.URL}${PATH}?id=${item.projectId}`,
 					method: 'GET',
@@ -159,9 +159,9 @@
 				this.date = y + '-' + m + '-' + d;
 			},
 			getData() {
-				const path = '/date/teacher';
+				const PATH = '/teacher/date';
 				uni.request({
-					url: `${getApp().globalData.URL}${path}?date=${this.date}`,
+					url: `${getApp().globalData.URL}${PATH}?date=${this.date}`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),

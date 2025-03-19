@@ -20,7 +20,7 @@ public interface IDateService extends IService<Date> {
 
     void clockIn(DateDTO dateDTO);
 
-    List<Date> show();
+    List<Date> show(Integer projectId);
 
     List<DateVO> teacher(LocalDate date, Integer subjectId);
 }

@@ -60,9 +60,9 @@
 			</u-col>
 			<u-col span="6">
 				<view class="right">
-					<view class="end margin" @click="linkTo('tReport')">
+					<view class="end margin" @click="linkTo('tAnnounce')">
 						<view class="title">
-							{{ list.tReport }}
+							{{ list.tAnnounce }}
 						</view>
 					</view>
 				</view>
@@ -83,7 +83,7 @@
 					tDate: '安全打卡审核',
 					tNews: '新闻稿审核',
 					tNotice: '发送通告',
-					tReport: '情况上报',
+					tAnnounce: '提醒同学',
 				}
 			};
 		},

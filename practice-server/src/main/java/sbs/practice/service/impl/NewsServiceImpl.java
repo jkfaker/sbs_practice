@@ -13,8 +13,10 @@ import com.baomidou.mybatisplus.extension.toolkit.Db;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import sbs.practice.annotation.SystemMessage;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.context.BaseContext;
+import sbs.practice.common.enums.AnnounceLabel;
 import sbs.practice.common.enums.NewsLabel;
 import sbs.practice.common.exception.AuthenticationException;
 import sbs.practice.common.exception.NewsPermissionException;
@@ -327,6 +329,11 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
         return newsVOPageDTO;
     }
 
+    /**
+     * 老师 审核新闻稿
+     * @param newsVerifyDTO
+     */
+    @SystemMessage(AnnounceLabel.NEWS)
     @Override
     public void verify(NewsVerifyDTO newsVerifyDTO) {
         TokenUtils.verifyTeacher();
@@ -344,9 +351,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
      * @return
      */
     @Override
-    public List<NewsVO> getMine() {
-        String userId = leaderService.getUserId();
-        Integer projectId = baseService.getProjectId(userId);
+    public List<NewsVO> getMine(Integer projectId) {
         List<News> list = getList(projectId);
         List result = new ArrayList<NewsVO>();
         for (News news : list) {

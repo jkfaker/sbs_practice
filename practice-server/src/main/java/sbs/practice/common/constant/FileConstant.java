@@ -13,6 +13,7 @@ public class FileConstant {
     public static String IMAGE_UPLOAD_PATH;
     public static String ZIP_FILE_NAME;
     public static String TEACHER_FILE_PATH;
+    public static String ZIP_FILE_EXTENSION;
 
     @Value("${file.teacher.filePath}")
     public void setTeacherFilePath(String teacherFilePath) {
@@ -32,5 +33,10 @@ public class FileConstant {
     @Value("${file.zipFileName}")
     public void setZipFileName(String zipFileName) {
         ZIP_FILE_NAME = zipFileName;
+    }
+
+    @Value("${file.zipFileExtension}")
+    public void setZipFileExtension(String zipFileExtension) {
+        ZIP_FILE_EXTENSION = zipFileExtension;
     }
 }

@@ -156,9 +156,9 @@
 					this.text = uni.getStorageSync('text');
 				} else {
 					this.reEdit = 1;
-					const path = '/news/myself';
+					const PATH = '/user/news/myself';
 					const res = await uni.request({
-						url: getApp().globalData.URL + path,
+						url: getApp().globalData.URL + PATH,
 						method: 'GET',
 						header: {
 							'token': uni.getStorageSync('token'),
@@ -182,9 +182,9 @@
 			},
 			// 判断是否存在
 			async judge() {
-				const path = '/news/judge';
+				const PATH = '/user/news/judge';
 				const res = await uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -239,7 +239,7 @@
 			},
 			// 实现选择并上传图片的功能
 			async uploadImage() {
-				const path = '/files/images';
+				const PATH = '/user/files/images';
 				let imgData = await uni.chooseImage({
 					count: 1,
 				})
@@ -247,7 +247,7 @@
 				const tempFilePath = imgData.tempFilePaths[0];
 				console.log(tempFilePath);
 				let uploadData = await uni.uploadFile({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					filePath: tempFilePath,
 					name: 'img',
 					header: {

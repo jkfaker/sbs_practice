@@ -3,7 +3,7 @@
 		<view class="background"></view>
 		<u-notify ref="uNotify"></u-notify>
 		<u-toast ref="stay"></u-toast>
-		<u-modal :show="showToast" closeOnClickOverlay="true" @close="showToast = false" @confirm="showToast = false"
+		<u-modal :show="showToast" :closeOnClickOverlay="true" @close="showToast = false" @confirm="showToast = false"
 			:title="title">
 			<view>
 				<!-- 小程序使用反馈 -->
@@ -16,7 +16,7 @@
 		</u-modal>
 		<view class="content">
 			<u-gap height="70"></u-gap>
-			<userPicture :leader="leader"></userPicture>
+			<userPicture :teacher="teacher"></userPicture>
 			<u-gap height="40"></u-gap>
 			<u-gap height="20"></u-gap>
 			<settingList @handleClick="toast($event)"></settingList>
@@ -29,8 +29,8 @@
 </template>
 
 <script>
-	import userPicture from '@/components/mineAUserPicture/mineAUserPicture.vue';
-	import settingList from '@/components/mineCSettingList/mineCSettingList.vue';
+	import userPicture from '@/components/tMineAUserPicture/tMineAUserPicture.vue';
+	import settingList from '@/components/tMineCSettingList/tMineCSettingList.vue';
 	import tabbar from '@/components/teacherATabbar/teacherATabbar.vue';
 	export default {
 		components: {
@@ -47,19 +47,19 @@
 				// 我的成员信息
 				members: [],
 				// 我的信息
-				leader: {},
+				teacher: {},
 
 			}
 		},
 		onLoad() {
 			this.getLeader();
-			this.getMembers();
+
 		},
 		methods: {
 			getLeader() {
-				const path = '/leader';
+				const PATH = '/teacher/info';
 				uni.request({
-					url: getApp().globalData.URL + path,
+					url: getApp().globalData.URL + PATH,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -70,7 +70,7 @@
 							this.notify('error', res.data.msg);
 							return;
 						}
-						this.leader = res.data.data;
+						this.teacher = res.data.data;
 					},
 					fail: (error) => {
 						console.log(error);
@@ -92,12 +92,17 @@
 							url: getApp().globalData.pagePath.tSubject,
 						})
 						break;
+					case 2:
+						uni.navigateTo({
+							url: getApp().globalData.pagePath.tIndex,
+						})
+						break;
 					case 3:
 						uni.navigateTo({
 							url: getApp().globalData.pagePath.tDate,
 						})
 						break;
-					case 2:
+
 					case 4:
 						this.title = '小程序使用反馈';
 						this.showToast = true;

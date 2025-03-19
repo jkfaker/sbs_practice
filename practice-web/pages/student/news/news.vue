@@ -89,7 +89,7 @@
 		methods: {
 			// 判断是否为校级立项
 			async isSchoolJudge() {
-				const PATH = '/news/judge';
+				const PATH = '/user/news/judge';
 				const res = await uni.request({
 					url: `${getApp().globalData.URL}${PATH}`,
 					method: 'GET',
@@ -137,7 +137,10 @@
 
 			},
 			async getData() {
-				const PATH = '/news/mine';
+				uni.showLoading({
+					title: '正在加载'
+				})
+				const PATH = '/user/news/mine';
 				const res = await uni.request({
 					url: `${getApp().globalData.URL}${PATH}`,
 					method: 'GET',
@@ -145,6 +148,7 @@
 						'token': uni.getStorageSync('token'),
 					},
 				})
+				uni.hideLoading();
 				if (res.data.code === 0) {
 					this.allow = 0;
 					this.notify('error', res.data.msg);

@@ -3,6 +3,7 @@ package sbs.practice.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import sbs.practice.common.enums.UserType;
 import sbs.practice.pojo.entity.SecTeacher;
+import sbs.practice.pojo.vo.TeacherInfoVO;
 
 /**
  * <p>
@@ -27,4 +28,6 @@ public interface ISecTeacherService extends IService<SecTeacher> {
     String getTeacherId();
 
     String getTeacherName(String teacherId);
+
+    TeacherInfoVO selectIdAndName();
 }

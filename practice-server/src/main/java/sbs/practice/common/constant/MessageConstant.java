@@ -13,7 +13,7 @@ public class MessageConstant {
     public static final String DELETE_FAILED = "数据删除失败";
     public static final String SELECT_FAILED = "数据查找失败";
 
-    public  static  final String AUTHENTICATION_FAILED = "身份验证失败";
+    public static final String AUTHENTICATION_FAILED = "身份验证失败";
     public static final String ENUM_FIND_FAILED = "非法枚举类型";
     public static final String PARSE_OBJECT_FAILED = "JSON数据序列化失败";
     public static final String PROJECT_NOT_EXIST = "项目不存在，仅项目负责人可上传";

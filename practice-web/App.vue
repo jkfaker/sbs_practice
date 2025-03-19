@@ -1,11 +1,14 @@
 <script>
 	export default {
 		globalData: {
-			// URL: '/practice/api',
-			URL: 'http://127.0.0.1:8080',
+			URL: '/practice/api',
+			// URL: 'http://127.0.0.1:8080',
+			// TEACHER_MINIO: 'http://localhost:9000/data/teacher/',
+			TEACHER_MINIO: 'http://localhost:9000/teacher/',
+			STUDENT_MINIO: 'http://localhost:9000/data/user/',
 			// token1: ' ',
-			// token2: '6Y8wNHSHjiCruw1WXRT7js1731404576',
-			// token3: 'R8qnHrP3cZBzY42XrdkutJ1731457639',
+			// token2: 'k5HqiUSRaQfzkbn9VQJDhZ1731411349',
+			// token3: 'fqEfjt9hIKqeJxPe7dh57N1734755511',
 			imgPath: '/static/uploads/images/',
 			filePath: '/static/uploads/files/',
 			teacherFilePath: '/static/uploads/teacher/files/',
@@ -20,7 +23,6 @@
 				// 全局
 				login: '/pages/login/login',
 				webView: '/pages/webView/webView',
-
 				// 学生
 				index: '/pages/student/index/index',
 				setup: '/pages/student/setup/setup',
@@ -37,13 +39,14 @@
 				show: '/pages/student/show/show',
 				mine: '/pages/student/mine/mine',
 				noticeDetail: '/pages/student/noticeDetail/noticeDetail',
-
+				announce: '/pages/student/announce/announce',
 				// 老师
 				tIndex: '/pages/teacher/tIndex/tIndex',
 				tSetup: '/pages/teacher/tSetup/tSetup',
 				tMidTerm: '/pages/teacher/tMidTerm/tMidTerm',
 				tEndTerm: '/pages/teacher/tEndTerm/tEndTerm',
 				tDate: '/pages/teacher/tDate/tDate',
+				tAnnounce: '/pages/teacher/tAnnounce/tAnnounce',
 				tNews: '/pages/teacher/tNews/tNews',
 				tNewsDetail: '/pages/teacher/tNewsDetail/tNewsDetail',
 				tSubject: '/pages/teacher/tSubject/tSubject',
@@ -55,15 +58,16 @@
 			}
 		},
 		onLaunch: function() {
-			// 测试token
+			// 测试toke1
+
 			// const token = 'bccg0-n-WYF8m-2qGYMUmv1730254660';
 
-			const url3 = 'http://127.0.0.1:8080';
-			// const url3 = '/practice/api';
+			// const url3 = 'http://127.0.0.1:8080';
+			const url3 = '/practice/api';
 			const teacherPage = '/pages/teacher/tIndex/tIndex';
 			const studentPage = '/pages/student/index/index';
-			// TODO: 上线删除
-			uni.setStorageSync('token', '6Y8wNHSHjiCruw1WXRT7js1731404576');
+			// TODO: 上线删除 KSt3vtR17x0Q6MsgykDQWs1740549732
+			// uni.setStorageSync('token', 'fqEfjt9hIKqeJxPe7dh57N1734755511');
 		}
 	}
 </script>

@@ -24,13 +24,14 @@ public class LeaderController {
 
     /**
      * 立项回显负责人信息
+     *
      * @return
      */
     @ApiOperation("回显负责人信息")
     @GetMapping
     public Result<LeaderVO> selectIdAndName() {
         LeaderVO leader = leaderService.selectIdAndName();
-        log.info("回调负责人信息：{}",leader);
+        log.info("回调负责人信息：{}", leader);
         return Result.success(leader);
     }
 }

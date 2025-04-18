@@ -23,7 +23,9 @@
 									负责人：{{ item.leaderName }}
 								</text>
 								{{ ' ' }}
-								<text :style="item.label === '校级立项' ? 'color:green' : 'color:yellow'"> {{ item.label }}
+								<text
+									:style="{ color: item.label === '校级立项' ? 'green' : item.label === '院级立项' ? 'blue' : 'red' }">
+									{{ item.label }} <!-- 显示 label 的文本 -->
 								</text>
 							</view>
 						</view>

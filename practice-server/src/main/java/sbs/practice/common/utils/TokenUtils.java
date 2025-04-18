@@ -24,6 +24,7 @@ public class TokenUtils {
 
     /**
      * 发送api请求，并解析为json
+     *
      * @param token
      * @return
      */
@@ -40,7 +41,6 @@ public class TokenUtils {
                 .block();
         return result;
     }
-
 
 
     /**
@@ -60,7 +60,7 @@ public class TokenUtils {
      * 验证是否为老师
      */
     public static void verifyTeacher() {
-        String userId  = BaseContext.getCurrentUser().getCampusId();
+        String userId = BaseContext.getCurrentUser().getCampusId();
         try {
             SecTeacher teacher = Db.getById(userId, SecTeacher.class);
             teacher.getId();
@@ -70,7 +70,7 @@ public class TokenUtils {
     }
 
     public static Boolean verifyTeacher(DepartEnum departEnum) {
-        String userId  = BaseContext.getCurrentUser().getCampusId();
+        String userId = BaseContext.getCurrentUser().getCampusId();
         verifyTeacher();
         if (!Objects.equals(departEnum.getDepartId(), Db.getById(userId, SecTeacher.class).getDepartId())) {
             throw new AuthenticationException(MessageConstant.AUTHENTICATION_FAILED);

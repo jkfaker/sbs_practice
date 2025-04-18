@@ -10,8 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.File;
-import sbs.practice.common.enums.*;
+import sbs.practice.common.enums.DepartEnum;
+import sbs.practice.common.enums.FileLabel;
+import sbs.practice.common.enums.FileType;
+import sbs.practice.common.enums.ProjectLabel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,9 +23,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @ApiModel(description = "返回项目与文件合并的对象")
-@TableName("files")
 public class ProjectAndFileVO implements Serializable {
-    @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty("项目id")
     private Integer id;
     @ApiModelProperty("负责人学号")
     private String leaderId;

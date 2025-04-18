@@ -1,12 +1,12 @@
 package sbs.practice.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.pojo.entity.NoticeFiles;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author LiuQIDuo

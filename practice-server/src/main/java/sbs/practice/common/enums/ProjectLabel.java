@@ -1,4 +1,5 @@
 package sbs.practice.common.enums;
+
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
@@ -12,13 +13,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ProjectLabel {
     SCHOOL(1, "校级立项"),
-    DEPART(2, "院级立项");
+    DEPART(2, "院级立项"),
+    REJECT(3, "驳回");
 
     @EnumValue
     private final Integer label;
     @JsonValue
     private final String info;
-
 
 
     /**

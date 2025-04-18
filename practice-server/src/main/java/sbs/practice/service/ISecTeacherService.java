@@ -7,7 +7,7 @@ import sbs.practice.pojo.vo.TeacherInfoVO;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author author

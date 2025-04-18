@@ -11,12 +11,12 @@ import sbs.practice.service.ILeaderService;
 
 @Service
 @Slf4j
-public class LeaderServiceImpl implements ILeaderService  {
+public class LeaderServiceImpl implements ILeaderService {
 
     @Override
     public LeaderVO selectIdAndName() {
         UserDTO userDTO = BaseContext.getCurrentUser();
-        log.info("所属部门：{}",userDTO.getUserDepart());
+        log.info("所属部门：{}", userDTO.getUserDepart());
         DepartEnum depart = DepartEnum.getDepartByName(userDTO.getUserDepart());
 
         LeaderVO leaderVO = LeaderVO.builder()
@@ -29,6 +29,7 @@ public class LeaderServiceImpl implements ILeaderService  {
 
     /**
      * 获取当前用户id
+     *
      * @return
      */
     @Override

@@ -1,6 +1,6 @@
 package sbs.practice.common.exception;
 
-public class NewsPermissionException extends BaseException{
+public class NewsPermissionException extends BaseException {
     public NewsPermissionException() {
     }
 

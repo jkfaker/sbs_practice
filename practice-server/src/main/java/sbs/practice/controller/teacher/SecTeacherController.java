@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import sbs.practice.common.enums.UserType;
 import sbs.practice.common.result.Result;
 import sbs.practice.pojo.entity.SecTeacher;
-import sbs.practice.pojo.vo.LeaderVO;
 import sbs.practice.pojo.vo.TeacherInfoVO;
 import sbs.practice.service.ISecTeacherService;
 
@@ -17,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author author
@@ -40,13 +39,14 @@ public class SecTeacherController {
 
     /**
      * 立项回显负责人信息
+     *
      * @return
      */
     @ApiOperation("获取老师姓名工号")
     @GetMapping
     public Result<TeacherInfoVO> selectIdAndName() {
         TeacherInfoVO teacher = secTeacherService.selectIdAndName();
-        log.info("回调负责人信息：{}",teacher);
+        log.info("回调负责人信息：{}", teacher);
         return Result.success(teacher);
     }
 
@@ -60,6 +60,7 @@ public class SecTeacherController {
 
     /**
      * 管理新增学院负责人
+     *
      * @param secTeacher
      * @return
      */
@@ -73,7 +74,7 @@ public class SecTeacherController {
     @PostMapping("/delete")
     @ApiOperation("删除老师")
     public Result<String> delete(@RequestBody SecTeacher secTeacher) {
-        log.info("subject:{}",secTeacher);
+        log.info("subject:{}", secTeacher);
         secTeacherService.delete(secTeacher);
         return Result.success();
     }

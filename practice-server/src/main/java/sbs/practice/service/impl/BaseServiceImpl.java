@@ -18,6 +18,7 @@ public class BaseServiceImpl extends ServiceImpl<ProjectMapper, Project> impleme
     /**
      * 通过leaderId获取projectId
      * 要求：项目抛出异常
+     *
      * @param leaderId
      * @return projectId
      */
@@ -37,6 +38,7 @@ public class BaseServiceImpl extends ServiceImpl<ProjectMapper, Project> impleme
 
     /**
      * 通过当前用户获取projectId
+     *
      * @return
      */
     @Override

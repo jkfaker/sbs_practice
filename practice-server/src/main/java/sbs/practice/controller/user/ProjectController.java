@@ -12,11 +12,9 @@ import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.enums.JudgeExist;
 import sbs.practice.common.exception.ParseObjectException;
 import sbs.practice.common.result.Result;
-import sbs.practice.pojo.dto.LabelDTO;
+import sbs.practice.pojo.dto.InstructorDTO;
 import sbs.practice.pojo.dto.MemberDTO;
 import sbs.practice.pojo.dto.ProjectDTO;
-import sbs.practice.pojo.entity.Project;
-import sbs.practice.pojo.vo.ProjectAndFileVO;
 import sbs.practice.pojo.vo.ProjectVO;
 import sbs.practice.service.IProjectService;
 
@@ -24,7 +22,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author LiuQiDuo
@@ -40,6 +38,7 @@ public class ProjectController {
 
     /**
      * 立项时，负责人上传成员,数据以及文件
+     *
      * @param projectJson
      * @param file
      * @param membersJson
@@ -48,27 +47,32 @@ public class ProjectController {
     @ApiOperation("立项上传信息")
     @PostMapping("/upload")
     public Result<String> upload(@RequestParam("project") String projectJson,
-                         @RequestParam("file") MultipartFile file,
-                         @RequestParam("members") String membersJson) {
+                                 @RequestParam("members") String membersJson,
+                                 @RequestParam("instructors")String instructorsJSON,
+                                 @RequestParam("file") MultipartFile file
+                                 ) {
         List<MemberDTO> members;
         ProjectDTO project;
+        List<InstructorDTO> instructors;
         try {
             log.info("projectJSON:{}", projectJson);
             // 反序列化ProjectDTO
             project = JSON.parseObject(projectJson, ProjectDTO.class);
-
             // 反序列化解MemberDTO列表
             members = JSON.parseArray(membersJson, MemberDTO.class);
+            // 反序列化解MemberInstructor列表
+            instructors = JSON.parseArray(instructorsJSON, InstructorDTO.class);
         } catch (Exception e) {
             throw new ParseObjectException(MessageConstant.PARSE_OBJECT_FAILED);
         }
         // 现在你可以使用project、file和members进行业务逻辑处理了
-        projectService.upload(members, project, file);
+        projectService.upload(project, members, instructors, file);
         return Result.success();
     }
 
     /**
      * 在立项提交后或者负责人再次点击立项时的finish界面
+     *
      * @return
      */
 
@@ -82,6 +86,7 @@ public class ProjectController {
 
     /**
      * 验证负责人是否已经存在项目，如果已存在则跳转至finish界面
+     *
      * @return
      */
     @ApiOperation("判断该负责人是否已存在项目")

@@ -4,22 +4,22 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 import sbs.practice.common.constant.AnnounceReadConstant;
 import sbs.practice.common.constant.AnnounceTypeConstant;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.exception.AuthenticationException;
 import sbs.practice.common.exception.InsertDatabaseException;
 import sbs.practice.common.exception.SelectException;
+import sbs.practice.mapper.AnnounceMapper;
 import sbs.practice.pojo.dto.AnnounceDTO;
 import sbs.practice.pojo.entity.Announce;
-import sbs.practice.mapper.AnnounceMapper;
 import sbs.practice.pojo.vo.AnnounceVO;
 import sbs.practice.service.IAnnounceService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 import sbs.practice.service.IBaseService;
 import sbs.practice.service.ISecTeacherService;
 
@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author LiuQIDuo
@@ -47,7 +47,8 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
     /**
      * 统计当前学生未读消息总数
      * 要求： 1， 当前学生
-     *  2，未读消息
+     * 2，未读消息
+     *
      * @return 消息总数
      */
     @Override
@@ -74,7 +75,6 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
      * 学生 获得发给自己所有消息
      * 要求： 1，当前学生
      * 2，时间倒序排列
-     *
      */
     @Override
     public List<AnnounceVO> getAllAnnounceOfUser() {
@@ -107,8 +107,9 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
 
     /**
      * 老师 向学生发送消息
+     *
      * @param announceDTO :porjectId text
-     * 要求：1，插入数据失败报错
+     *                    要求：1，插入数据失败报错
      */
     @Override
     public void sentMessageToStudent(AnnounceDTO announceDTO) {
@@ -130,14 +131,15 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
         if (!this.save(announce)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
-        return ;
+        return;
     }
 
 
     /**
      * 系统 向学生发送消息
+     *
      * @param announceDTO :porjectId text
-     * 要求：1，插入数据失败报错
+     *                    要求：1，插入数据失败报错
      */
     @Override
     public void sentSystemMessage(AnnounceDTO announceDTO) {
@@ -158,7 +160,7 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
         if (!this.save(announce)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
-        return ;
+        return;
     }
 
 
@@ -177,16 +179,18 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
                 .eq(Announce::getProjectId, projectId)
                 .eq(Announce::getIsRead, AnnounceReadConstant.ANNOUNCE_UNREAD);
         // 如果更新错误
-        if(!this.update(updateWrapper)) {
+        if (!this.update(updateWrapper)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
-        };
+        }
+        ;
         return;
-     }
+    }
 
     /**
      * 学生已读当前消息
      * 要求：
      * 1，announce 的 projectId = current project
+     *
      * @param id
      */
     @Override
@@ -194,7 +198,8 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
         // 如果不是当前project的announce 报错
         if (this.getById(id).getProjectId() != baseService.getProjectIdByCurrentUser()) {
             throw new AuthenticationException(MessageConstant.AUTHENTICATION_FAILED);
-        };
+        }
+        ;
 
         LambdaUpdateWrapper<Announce> updateWrapper = new UpdateWrapper<Announce>()
                 .lambda()
@@ -202,15 +207,17 @@ public class AnnounceServiceImpl extends ServiceImpl<AnnounceMapper, Announce> i
                 .eq(Announce::getId, id);
 
         // 如果更新错误
-        if(!this.update(updateWrapper)) {
+        if (!this.update(updateWrapper)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
-        };
+        }
+        ;
         return;
     }
 
 
     /**
      * 老师获取发给学生的所有消息记录
+     *
      * @param projectId
      * @return
      */

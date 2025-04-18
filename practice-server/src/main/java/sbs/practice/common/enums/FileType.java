@@ -14,8 +14,8 @@ import lombok.Getter;
 public enum FileType {
     START(1, "立项材料"),
     MIDDLE(2, "中期材料"),
-    END(3,"结项材料"),
-;
+    END(3, "结项材料"),
+    ;
 
     @EnumValue
     private final Integer typeId;

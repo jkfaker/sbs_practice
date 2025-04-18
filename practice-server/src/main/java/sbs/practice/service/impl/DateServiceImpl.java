@@ -23,7 +23,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- *  服务实现类
+ * 服务实现类
  *
  * @author LiuQIDuo
  * @since 2024-06-29
@@ -33,27 +33,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements IDateService {
 
-    /**
-     * 要求：
-     * 1，date表，查找相同数据，避免反复打卡
-     * 2，非负责人打卡报错
-     * @param dateDTO
-     */
 
+    private final IProjectService projectService;
     private final ISecTeacherService secTeacherService;
     private final IBaseService baseService;
     private final DateMapper dateMapper;
 
 
-
-
+    /**
+     * 要求：
+     * 1，date表，查找相同数据，避免反复打卡
+     * 2，非负责人打卡报错
+     * 3, 如果为开始和结束，修改项目状态
+     *
+     * @param dateDTO
+     */
     @Override
     public void clockIn(DateDTO dateDTO) {
         // 查询和验证 projectId
         Integer projectId = baseService.getProjectIdByCurrentUser();
         // copy属性至Date类中
         Date date = new Date();
-        BeanUtil.copyProperties(dateDTO,date);
+        BeanUtil.copyProperties(dateDTO, date);
         date.setProjectId(projectId);
         // 查找相同数据，避免多次打卡
         LambdaQueryWrapper<Date> dateWrapper = new QueryWrapper<Date>()
@@ -66,9 +67,11 @@ public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements ID
             // 如果找到了重复记录，则直接抛出异常，无需再调用getId()引发不必要的错误处理
             throw new SelectException(MessageConstant.DATE_CONFLICT_ERROR);
         }
-        log.info("插入date数据:{}",date);
+        log.info("插入date数据:{}", date);
         if (!save(date))
             throw new InsertDatabaseException(MessageConstant.SELECT_FAILED);
+        // 如果打卡为‘开始’ 或‘结束’，则更改project.dateStatus
+        projectService.updateDateStatus(projectId, date.getDate(), date.getInfo());
     }
 
     /**
@@ -88,6 +91,7 @@ public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements ID
 
     /**
      * 要求：
+     *
      * @param date
      * @param subjectId
      * @return
@@ -95,7 +99,7 @@ public class DateServiceImpl extends ServiceImpl<DateMapper, Date> implements ID
     @Override
     public List<DateVO> teacher(LocalDate date, Integer subjectId) {
         Integer departId = secTeacherService.findDepartId();
-        // 联合查询： project + date，其中info check(0,1)
+        // 联合查询： project + date，其中info check(0,1, 2, 3)
         log.info("departId:{}", departId);
         List<DateVO> dateVOList = dateMapper.teacher(date, subjectId, departId);
         return dateVOList;

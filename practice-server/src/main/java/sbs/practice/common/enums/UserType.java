@@ -13,7 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserType {
     TEACHER(1, "老师"),
-    STUDENT(2,"学生");
+    STUDENT(2, "学生");
     @EnumValue
     @JsonValue
     private Integer code;

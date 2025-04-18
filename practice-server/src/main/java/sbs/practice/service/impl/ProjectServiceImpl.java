@@ -17,20 +17,19 @@ import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.context.BaseContext;
 import sbs.practice.common.enums.*;
 import sbs.practice.common.exception.InsertDatabaseException;
-import sbs.practice.common.exception.NotExistException;
 import sbs.practice.common.exception.SelectException;
+import sbs.practice.common.exception.UpdateException;
 import sbs.practice.common.utils.TokenUtils;
 import sbs.practice.mapper.ProjectMapper;
-import sbs.practice.pojo.dto.LabelDTO;
-import sbs.practice.pojo.dto.MemberDTO;
-import sbs.practice.pojo.dto.ProjectDTO;
-import sbs.practice.pojo.dto.UserDTO;
+import sbs.practice.pojo.dto.*;
 import sbs.practice.pojo.entity.Files;
 import sbs.practice.pojo.entity.Member;
 import sbs.practice.pojo.entity.Project;
 import sbs.practice.pojo.entity.Subject;
 import sbs.practice.pojo.vo.ProjectAndFileVO;
 import sbs.practice.pojo.vo.ProjectVO;
+import sbs.practice.service.IInstructorService;
+import sbs.practice.service.IMemberService;
 import sbs.practice.service.IProjectService;
 import sbs.practice.service.ISecTeacherService;
 
@@ -39,7 +38,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author author
@@ -53,24 +52,24 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     private final ProjectMapper projectMapper;
     private final FilesServiceImpl filesService;
     private final ISecTeacherService secTeacherService;
-
+    private final IMemberService memberService;
+    private final IInstructorService instructorService;
     /**
      * 组长立项上传
      * 要求：
      * 1，
+     *
      * @param membersDTO
      * @param projectDTO
      * @param file
      */
     @Override
     @Transactional
-    public void upload(List<MemberDTO> membersDTO, ProjectDTO projectDTO, MultipartFile file) {
+    public void upload(ProjectDTO projectDTO, List<MemberDTO> membersDTO, List<InstructorDTO> instructorsDTO, MultipartFile file) {
 
         // 获取负责人数据
         UserDTO user = BaseContext.getCurrentUser();
-
         DepartEnum depart = DepartEnum.getDepartByName(user.getUserDepart());
-
 
         // 1, insert project 数据库
         Project project = Project.builder()
@@ -84,29 +83,24 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .build();
-        log.info("project:{}",project);
+        log.info("project:{}", project);
         boolean result1 = save(project);
         if (!result1)
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         Integer projectId = project.getId();
 
-        // 3, insert member
+        // 2, insert member
         // 为每一个项目成员填一个projectId
-        for (MemberDTO memberDTO : membersDTO) {
-            Member member = new Member();
-            member.setProjectId(projectId);
-            BeanUtil.copyProperties(memberDTO, member);
-            member.setCreateTime(LocalDateTime.now());
-            boolean result3 = Db.save(member);
-            if (!result3)
-                throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
-        }
+        memberService.insertMemberList(projectId, membersDTO);
+        // 3, INSERT instructor
+        instructorService.insertInstructorList(projectId, instructorsDTO);
         // 上传文件
         filesService.uploadFile(file, FileType.START);
     }
 
     /**
      * 老师获得该学院所有项目信息
+     *
      * @return
      */
     @Override
@@ -125,6 +119,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     /**
      * 教师评判项目为 `院级` 还是 `校级`
+     *
      * @param labelDTO
      */
     @Override
@@ -141,6 +136,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     /**
      * 获取当前用户作为项目负责人所负责的项目名称
+     *
      * @return ProjectVO 包含项目名称和学科名称的对象
      * @throws SelectException 如果找不到项目，则抛出选择异常
      */
@@ -154,10 +150,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         Project project = Db.getOne(projectWrapper);
         String projectName;
         Integer subjectId;
+        ProjectLabel label;
         try {
             subjectId = project.getSubjectId();
             projectName = project.getTitle();
-        }catch (RuntimeException e) {
+            label = project.getLabel();
+        } catch (RuntimeException e) {
             throw new SelectException(MessageConstant.PROJECT_NOT_EXIST);
         }
         Subject subject = Db.getById(subjectId, Subject.class);
@@ -167,6 +165,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 .builder()
                 .projectName(projectName)
                 .subjectName(subjectName)
+                .label(label)
                 .build();
         return result;
     }
@@ -188,6 +187,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     /**
      * 从project中departId
+     *
      * @param departId
      * @return
      */
@@ -202,7 +202,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     public List<ProjectAndFileVO> getMidTerm(List<Project> projects, Integer fileType) {
-           return projects.stream()
+        return projects.stream()
                 .map(((project) -> {
                     LambdaQueryWrapper<Files> filesWrapper = Wrappers.lambdaQuery(Files.class)
                             .eq(Files::getProjectId, project.getId())
@@ -222,10 +222,10 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
-    public List<ProjectAndFileVO> getFiles(Integer subjectId, Integer fileType) {
+    public List<ProjectAndFileVO> getFiles(Integer subjectId, Integer fileType, String projectName) {
         // 查找教师学院
         Integer departId = secTeacherService.findDepartId();
-        return projectMapper.selectFiles(subjectId, fileType, departId);
+        return projectMapper.selectFiles(subjectId, fileType, departId, projectName);
     }
 
     /**
@@ -240,6 +240,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     /**
      * 老师查询单个的项目
+     *
      * @param projectId
      * @return
      */
@@ -248,5 +249,30 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         TokenUtils.verifyTeacher();
         Project project = this.getById(projectId);
         return project;
+    }
+
+
+    /**
+     * 根据 projectId 更新 dateStatus
+     *
+     * @param projectId 项目ID
+     */
+    @Override
+    public void updateDateStatus(Integer projectId, String date, DateInfo dateInfo) {
+        // 方式2：使用实体类更新（推荐，更符合 MyBatis Plus 习惯）
+        Project project = new Project();
+        project.setId(projectId);
+        // 判断是开始还是结束
+        if (dateInfo == DateInfo.SIGN_IN || dateInfo == DateInfo.NOT_SIGN) {
+            return;
+        } else if (dateInfo == DateInfo.START) {
+            project.setDateStartTime(date);
+        } else if (dateInfo == DateInfo.END) {
+            project.setDateEndTime(date);
+        }
+        // 数据库报错
+        if (!this.updateById(project)) {
+            throw new UpdateException(MessageConstant.UPDATE_FAILED);
+        }
     }
 }

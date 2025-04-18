@@ -15,7 +15,7 @@ file:
     filePath: /root/uploads/teacher/files/
 
 minio:
-  endpoint: http://172.100.48.84:9000
+  endpoint: http://118.190.148.176:9000
   accessKey: root
   secretKey: lqd31415926
   teacher-bucket: teacher

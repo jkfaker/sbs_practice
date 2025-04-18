@@ -38,25 +38,37 @@
 			{{ date }}
 		</view>
 		<view class="box">
-			<view v-if="!data.length" style="margin: auto; color: green;">
+			<view v-if="!data.length" style="margin: auto; color: green; padding: 20px;">
 				该学院暂无项目负责人
 			</view>
 			<view class="info">
-				<view class="item" @click="projectDetails(item)" v-for="(item, index) in data" :key="index"
-					@longpress="longpress(item)">
-					<view class="">
-						<image class="sign-img" mode="widthFix" :src="item.info === '已打卡' ? icon.signed : icon.unsign"
-							:alt="item.info === '已打卡' ? '已签到' : '未签到'" />
-					</view>
-					<view class="leader_name">
-						{{ item.leaderName }}
+				<!-- 遍历每个状态组 -->
+				<view v-for="(group, status) in groupedData" :key="status" class="status-group">
+					<!-- 组标题 -->
+					<view class="group-title">{{ status }}</view>
+
+					<!-- 项目容器 -->
+					<view class="items-container">
+						<!-- 有数据时显示项目 -->
+						<view v-if="group.length > 0" class="item-wrapper">
+							<view v-for="item in group" :key="item.projectId" class="item" @click="projectDetails(item)"
+								@longpress="longpress(item)">
+								<view class="icon-container">
+									<image class="sign-img" mode="widthFix" :src="getIconPath(status)" />
+								</view>
+								<view class="leader_name">{{ item.leaderName }}</view>
+							</view>
+						</view>
+
+						<!-- 无数据时显示提示 -->
+						<view v-else class="empty-tip">此数据为空</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="count">
-			<view class="">
-				已打卡：{{ data.filter((item) => item.info === '已打卡' ).length }} 人
+			<view v-for="(group, status) in groupedData" class="">
+				{{ status }}：{{ group.length }} 人
 			</view>
 			<view class="">
 				总计：{{ data.length }} 人
@@ -65,8 +77,8 @@
 
 		<view class="footer">
 			长按图标复制对应负责人电话
-
 		</view>
+		<u-gap height="5"> </u-gap>
 	</view>
 </template>
 
@@ -85,6 +97,8 @@
 				icon: {
 					unsign: require('@/static/icon/unsign.png'),
 					signed: require('@/static/icon/signed.png'),
+					unstart: require('@/static/icon/unstart.png'),
+					finished: require('@/static/icon/finished.png'),
 				},
 				info: {
 					lunar: true,
@@ -92,18 +106,73 @@
 					insert: false,
 					selected: []
 				},
-				data: {},
+				data: [],
 				// 项目详情
-				project: {
-
-				},
+				project: {},
 			}
 		},
 		onLoad() {
 			this.getDate();
 			this.getData();
 		},
+		computed: {
+			// 将数据按状态分组
+			groupedData() {
+				// 动态计算状态
+				const statusData = this.data.map(item => {
+					const currentDate = this.date ? new Date(this.date) : new Date();
+					const start = item.startTime ? new Date(item.startTime) : null;
+					const end = item.endTime ? new Date(item.endTime) : null;
+
+					let status = '未开始';
+
+					// 情况1：未设置时间（startTime和endTime都为null）
+					if (!start) {
+						status = '未开始';
+					}
+					// 情况2：已设置时间但当时未开始
+					else if (currentDate < start) {
+						status = '未开始';
+					}
+					// 情况3：进行中时间段
+					else if (!end || currentDate <= end) {
+						status = item.info ? '已打卡' : '未打卡';
+					}
+					// 情况4：已结束
+					else if (currentDate > end) {
+						status = '已结束';
+					}
+
+					// 兼容后端返回的结束状态
+					if (item.info === '结束') status = '已结束';
+
+					return {
+						...item,
+						_status: status
+					};
+				});
+
+				// 按状态分组
+				return {
+					'未开始': statusData.filter(item => item._status === '未开始'),
+					'未打卡': statusData.filter(item => item._status === '未打卡'),
+					'已打卡': statusData.filter(item => item._status === '已打卡'),
+					'已结束': statusData.filter(item => item._status === '已结束')
+				};
+			}
+		},
 		methods: {
+			// 根据状态返回图标路径
+			getIconPath(info) {
+				const icons = {
+					'未打卡': this.icon.unsign,
+					'已打卡': this.icon.signed,
+					'未开始': this.icon.unstart,
+					'已结束': this.icon.finished // 匹配后端返回的"结束"
+				};
+				return icons[info] || this.icon.unsign; // 未知状态默认未签到
+			},
+
 			projectDetails(item) {
 				const PATH = '/teacher/project/one';
 				uni.request({
@@ -222,28 +291,37 @@
 		align-items: center;
 	}
 
+
+
 	.box {
 		min-height: 70px;
 		background-color: white;
 		border-radius: 10px;
-		padding: 10px 15px;
+		// padding: 10px 15px;
 		box-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
 
 		.info {
+
 			display: flex;
-			align-items: center;
-			justify-content: start;
-			flex-wrap: wrap;
+			flex-direction: column;
 
 			.item {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				margin: 10px 5px;
+				// width: 50px;
+				/* 固定宽度保持整齐 */
+				margin: 6px;
 
+				// display: flex;
+				// flex-direction: column;
+				// align-items: center;
+				// margin: 10px 5px;
 				.sign-img {
 					width: 40px;
+					height: 40px;
 				}
+
 
 				.leader_name {
 					line-height: 5px;
@@ -253,6 +331,44 @@
 			}
 		}
 
+	}
+
+
+	.status-group {
+		background-color: #f8f8f8;
+		border-radius: 8px;
+		padding: 10px;
+	}
+
+	.group-title {
+		font-size: 16px;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 10px;
+		padding-left: 5px;
+	}
+
+	.items-container {
+		background-color: white;
+		border-radius: 8px;
+		padding: 10px;
+	}
+
+	.item-wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		/* 允许换行 */
+		// gap: 15px;
+		/* 项目间间距 */
+	}
+
+
+
+	.empty-tip {
+		color: #999;
+		font-size: 14px;
+		text-align: center;
+		padding: 10px;
 	}
 
 	.count {

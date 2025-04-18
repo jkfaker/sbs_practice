@@ -3,14 +3,22 @@
 <mapper namespace="sbs.practice.mapper.DateMapper">
     <select id="teacher" resultType="sbs.practice.pojo.vo.DateVO">
         select
-            project.id as projectId, project.leader_id, project.leader_name, project.leader_phone, date.info, date.date
+        project.id as projectId,
+        project.leader_id,
+        project.leader_name,
+        project.leader_phone,
+        project.date_start_time as startTime,
+        project.date_end_time as endTime,
+        date.info,
+        date.date
         from
-            sbs_practice.date
-        right outer join
-            sbs_practice.project
+        sbs_practice.project
+
+        left outer join
+        sbs_practice.date
         on
-            date.project_id = project.id
-            and date.date = #{date}
+        date.project_id = project.id
+        and date.date = #{date}
         <where>
 
             project.depart_id = #{departId}

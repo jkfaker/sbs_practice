@@ -9,14 +9,13 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import sbs.practice.common.enums.FileLabel;
 import sbs.practice.common.enums.FileType;
-import sbs.practice.common.enums.NewsLabel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,7 +28,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("files")
-@ApiModel(value="上传的材料", description="")
+@ApiModel(value = "上传的材料", description = "")
 public class Files implements Serializable {
 
     private static final long serialVersionUID = 1L;

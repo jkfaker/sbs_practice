@@ -5,12 +5,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sbs.practice.common.result.Result;
-import sbs.practice.mapper.NewsMapper;
 import sbs.practice.pojo.dto.NewsDTO;
-import sbs.practice.pojo.dto.NewsVerifyDTO;
 import sbs.practice.pojo.dto.PageDTO;
 import sbs.practice.pojo.dto.ShowDTO;
 import sbs.practice.pojo.entity.News;
@@ -23,7 +20,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author LiuQIDuo
@@ -41,16 +38,18 @@ public class NewsController {
     private final INewsService newsService;
     private final IBaseService baseService;
     private final ILeaderService leaderService;
+
     /**
      * 分页查询风采展示
+     *
      * @return
      */
     @ApiOperation("读取风采展示")
     @GetMapping("/shows")
     public Result<PageDTO<NewsVO>> getShows(ShowDTO showDTO) {
-        log.info("show.condition:{}",showDTO.getCondition());
+        log.info("show.condition:{}", showDTO.getCondition());
         PageDTO<NewsVO> results = newsService.getShows(showDTO);
-        log.info("results:{}",results);
+        log.info("results:{}", results);
         return Result.success(results);
     }
 
@@ -59,12 +58,13 @@ public class NewsController {
     @PostMapping("/upload")
     public Result<Integer> upload(@RequestBody NewsDTO newsDTO) {
         log.info("newsDTO:{}", newsDTO);
-        Integer newsId =  newsService.upload(newsDTO);
+        Integer newsId = newsService.upload(newsDTO);
         return Result.success(newsId);
     }
 
     /**
      * 所有人 查看已通过的风采详情
+     *
      * @param newsId
      * @return
      */
@@ -72,7 +72,7 @@ public class NewsController {
     @GetMapping("/detail")
     public Result<News> detail(@RequestParam(value = "id") Integer newsId) {
         News result = newsService.detail(newsId);
-        log.info("result:{}",result);
+        log.info("result:{}", result);
         return Result.success(result);
     }
 
@@ -90,12 +90,13 @@ public class NewsController {
         String userId = leaderService.getUserId();
         Integer projectId = baseService.getProjectId(userId);
         List<NewsVO> result = newsService.getMine(projectId);
-        log.info("result:{}" ,result);
+        log.info("result:{}", result);
         return Result.success(result);
     }
 
     /**
-     *  验证负责人是否已经存在新闻稿，如果已存在则跳转至finish界面
+     * 验证负责人是否已经存在新闻稿，如果已存在则跳转至finish界面
+     *
      * @return
      */
     @ApiOperation("判断是否为校级立项")

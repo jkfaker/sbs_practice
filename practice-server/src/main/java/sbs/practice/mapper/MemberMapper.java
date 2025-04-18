@@ -6,7 +6,7 @@ import sbs.practice.pojo.entity.Member;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author author

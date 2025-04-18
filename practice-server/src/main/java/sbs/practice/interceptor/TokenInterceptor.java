@@ -24,10 +24,10 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader(LoginConstant.TOKEN);
-        log.info("token: {}",token);
+        log.info("token: {}", token);
         // 访问api，获取数据
         String result = tokenToApi(token);
-        log.info("学生：{}",result);
+        log.info("学生：{}", result);
         Integer errorCode = JSON.parseObject(result).getIntValue(LoginConstant.ERROR_CODE);
         Result error = Result.error(LoginConstant.NOT_LOGIN);
         String notLogin = JSON.toJSONString(error);
@@ -41,7 +41,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             response.getWriter().write(notLogin);
             return false;
         }
-        log.info("当前用户学号：{}",user.getCampusId());
+        log.info("当前用户学号：{}", user.getCampusId());
         BaseContext.setCurrentUser(user);
         return true;
     }

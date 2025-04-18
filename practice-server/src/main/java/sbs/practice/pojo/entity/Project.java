@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("project")
-@ApiModel(value="项目", description="")
+@ApiModel(value = "项目", description = "")
 public class Project implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,5 +50,8 @@ public class Project implements Serializable {
     private ProjectLabel label;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-
+    @ApiModelProperty("打卡开始日期")
+    private String dateStartTime;
+    @ApiModelProperty("打卡结束日期")
+    private String dateEndTime;
 }

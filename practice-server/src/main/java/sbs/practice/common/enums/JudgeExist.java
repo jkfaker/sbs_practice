@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum JudgeExist {
     EXIST(1, "已存在"),
-    NOT_EXIST(2,"不存在"),
+    NOT_EXIST(2, "不存在"),
     ;
     @JsonValue
     @EnumValue

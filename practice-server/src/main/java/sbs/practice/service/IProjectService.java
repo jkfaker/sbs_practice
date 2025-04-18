@@ -2,7 +2,9 @@ package sbs.practice.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
+import sbs.practice.common.enums.DateInfo;
 import sbs.practice.common.enums.JudgeExist;
+import sbs.practice.pojo.dto.InstructorDTO;
 import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.dto.MemberDTO;
 import sbs.practice.pojo.dto.ProjectDTO;
@@ -14,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author author
@@ -22,11 +24,9 @@ import java.util.List;
  */
 public interface IProjectService extends IService<Project> {
 
-    void upload(List<MemberDTO> members, ProjectDTO project, MultipartFile file);
-
+    void upload(ProjectDTO project, List<MemberDTO> members, List<InstructorDTO> instructorsDTO, MultipartFile file);
 
     List<Project> getAllInDepart(Integer subjectId);
-
 
     void labelUpdate(LabelDTO labelDTO);
 
@@ -38,10 +38,11 @@ public interface IProjectService extends IService<Project> {
 
     List<ProjectAndFileVO> getMidTerm(List<Project> projects, Integer fileType);
 
-    List<ProjectAndFileVO> getFiles(Integer subjectId , Integer fileType);
+    List<ProjectAndFileVO> getFiles(Integer subjectId, Integer fileType, String projectName);
 
     boolean isSchoolLabel(Integer projectId);
 
-
     Project getByProjectId(Integer projectId);
+
+    void updateDateStatus(Integer projectId, String date, DateInfo dateInfo);
 }

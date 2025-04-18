@@ -15,8 +15,9 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
+ *
  * @author Liu Qiduo
  * @since 2024-06-26
  */
@@ -31,6 +32,7 @@ public class FilesController {
 
     /**
      * 后端提供文件下载路径
+     *
      * @return
      */
     @ApiOperation("教师批量下载文件")

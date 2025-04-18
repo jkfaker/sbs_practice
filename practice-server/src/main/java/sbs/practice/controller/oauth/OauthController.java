@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import sbs.practice.common.result.Result;
-import sbs.practice.pojo.dto.OauthTokenRes;
+import sbs.practice.common.properties.OauthTokenRes;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -31,9 +31,10 @@ public class OauthController {
     private final String oauthUrl = "https://api.campushoy.com";
 
 
-/**
+    /**
      * 获取用户的token，根据此token可以调用今日校园接口
      * 真实业务场景需要对token进行缓存
+     *
      * @param code
      * @param redirect_uri
      * @return

@@ -1,8 +1,5 @@
 package sbs.practice.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -17,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="NoticeVO", description="")
+@ApiModel(value = "NoticeVO", description = "")
 public class NoticeVO implements Serializable {
 
     private static final long serialVersionUID = 1L;

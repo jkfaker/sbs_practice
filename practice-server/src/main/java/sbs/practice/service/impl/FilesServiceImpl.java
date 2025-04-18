@@ -26,19 +26,16 @@ import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.entity.Files;
 import sbs.practice.service.IBaseService;
 import sbs.practice.service.IFilesService;
-import sbs.practice.service.IProjectService;
 import sbs.practice.service.ISecTeacherService;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author author
@@ -57,10 +54,10 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
 
     /**
      * 老师 打包所有文件 (某学院，某类型)
+     *
      * @param subjectId
      * @param fileType
-     * @return
-     * 要求： 将
+     * @return 要求： 将
      */
     @Override
     public String selectFilename(Integer subjectId, Integer fileType) {
@@ -90,11 +87,8 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
         }
 
 
-
 //        return FileConstant.ZIP_FILE_NAME;
     }
-
-
 
 
     /**
@@ -102,6 +96,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
      * 要求：
      * 1,系统无储存空间报错
      * 2，project中 leaderId要存在，否则报错
+     *
      * @param file
      */
 
@@ -123,7 +118,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
         try {
             // 录入files表
             isSave = this.save(files);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
         if (!isSave)
@@ -135,6 +130,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
      * 要求：
      * 1，如果负责人不存在返回空
      * 2，按照时间倒序
+     *
      * @return
      */
     @Override
@@ -152,6 +148,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
 
     /**
      * 老师 更新file标签
+     *
      * @param labelDTO
      */
     @Override
@@ -161,7 +158,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
         TokenUtils.verifyTeacher();
 
         LambdaUpdateWrapper<Files> filesWrapper = new LambdaUpdateWrapper<Files>();
-        log.info("labelDTO：{}",labelDTO);
+        log.info("labelDTO：{}", labelDTO);
         filesWrapper
                 .set(Files::getLabel, labelDTO.getLabel())
                 .set(Files::getExamineTime, LocalDateTime.now())
@@ -171,6 +168,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
 
     /**
      * 获取某个人所有文件
+     *
      * @param projectId
      * @return
      */

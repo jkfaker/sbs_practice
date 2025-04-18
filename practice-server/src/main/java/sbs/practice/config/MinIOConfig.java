@@ -1,11 +1,11 @@
 package sbs.practice.config;
 
 
+import io.minio.MinioClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
-import io.minio.MinioClient;
 
 
 @Configuration

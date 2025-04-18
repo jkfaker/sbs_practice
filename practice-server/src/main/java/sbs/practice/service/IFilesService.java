@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author author
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface IFilesService extends IService<Files> {
 
-    String selectFilename(Integer subjectId,  Integer fileType);
+    String selectFilename(Integer subjectId, Integer fileType);
 
     void uploadFile(MultipartFile file, FileType type);
 

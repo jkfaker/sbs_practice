@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author LiuQIDuo
@@ -23,7 +23,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("subject")
-@ApiModel(value="Subject对象", description="")
+@ApiModel(value = "Subject对象", description = "")
 public class Subject implements Serializable {
 
     private static final long serialVersionUID = 1L;

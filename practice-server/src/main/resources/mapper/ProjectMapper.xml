@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sbs.practice.mapper.ProjectMapper">
-    <select id="selectFiles"  resultType="sbs.practice.pojo.vo.ProjectAndFileVO">
+    <select id="selectFiles" resultType="sbs.practice.pojo.vo.ProjectAndFileVO">
         select
-            files.label as fileLabel, files.id as fileId,
-            files.type, files.file_name, files.upload_time,files.examine_time,
-            project.*
+        files.label as fileLabel, files.id as fileId,
+        files.type, files.file_name, files.upload_time, files.examine_time,
+        project.*
         from
-            sbs_practice.files
+        sbs_practice.files
         inner join
-            sbs_practice.project
+        sbs_practice.project
         on
-            files.project_id = project.id
-            and files.type = #{fileType}
-            and project.depart_id = #{departId}
-            and project.subject_id = #{subjectId}
+        files.project_id = project.id
+        and files.type = #{fileType}
+        <where>
+            project.depart_id = #{departId}
+            <if test="subjectId != null">
+                and project.subject_id = #{subjectId}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and project.title like concat('%', #{projectName}, '%')
+            </if>
+        </where>
         order by
-            files.label asc,
-            files.upload_time asc,
-            files.examine_time desc
+        files.label asc,
+        files.upload_time asc,
+        files.examine_time desc
     </select>
 </mapper>

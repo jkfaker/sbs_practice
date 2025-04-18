@@ -1,8 +1,8 @@
 <script>
 	export default {
 		globalData: {
-			URL: '/practice/api',
-			// URL: 'http://127.0.0.1:8080',
+			// URL: '/practice/api',
+			URL: 'http://127.0.0.1:8080',
 			// TEACHER_MINIO: 'http://localhost:9000/data/teacher/',
 			TEACHER_MINIO: 'http://localhost:9000/teacher/',
 			STUDENT_MINIO: 'http://localhost:9000/data/user/',
@@ -14,6 +14,7 @@
 			teacherFilePath: '/static/uploads/teacher/files/',
 			// Oauth2 回调地址
 			redirectUrl: 'https://yzs.sbs.edu.cn/practice/pages/login/login',
+			// redirectUrl: 'https://118.190.148.176:443/practice/pages/login/login',
 			// Oauth2 api调用地址
 			api: 'https://api.campushoy.com',
 			// Oauth2 clientId 应用id
@@ -62,12 +63,14 @@
 
 			// const token = 'bccg0-n-WYF8m-2qGYMUmv1730254660';
 
-			// const url3 = 'http://127.0.0.1:8080';
-			const url3 = '/practice/api';
+			const url3 = 'http://127.0.0.1:8080';
+			// const url3 = '/practice/api';
 			const teacherPage = '/pages/teacher/tIndex/tIndex';
 			const studentPage = '/pages/student/index/index';
-			// TODO: 上线删除 KSt3vtR17x0Q6MsgykDQWs1740549732
-			// uni.setStorageSync('token', 'fqEfjt9hIKqeJxPe7dh57N1734755511');
+			// TODO: 上线删除 陈 KSt3vtR17x0Q6MsgykDQWs1740549732
+			// 刘 fqEfjt9hIKqeJxPe7dh57N1734755511
+			// XVeP--V44qS-zI6WCjK5d81744598147 黄雯翔
+			uni.setStorageSync('token', 'fqEfjt9hIKqeJxPe7dh57N1734755511');
 		}
 	}
 </script>

@@ -13,7 +13,7 @@ import sbs.practice.service.ISubjectService;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author LiuQIDuo
@@ -25,7 +25,7 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     @Override
     public void add(Subject subject) {
         TokenUtils.verifyTeacher();
-        if(!this.save(subject)){
+        if (!this.save(subject)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
     }

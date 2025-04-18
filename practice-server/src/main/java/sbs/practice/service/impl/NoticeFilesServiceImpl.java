@@ -2,24 +2,24 @@ package sbs.practice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.constant.StudentOrTeacherConstant;
 import sbs.practice.common.exception.InsertDatabaseException;
 import sbs.practice.common.utils.FileIO;
 import sbs.practice.common.utils.TokenUtils;
-import sbs.practice.pojo.entity.NoticeFiles;
 import sbs.practice.mapper.NoticeFilesMapper;
+import sbs.practice.pojo.entity.NoticeFiles;
 import sbs.practice.service.INoticeFilesService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author LiuQIDuo
@@ -33,6 +33,7 @@ public class NoticeFilesServiceImpl extends ServiceImpl<NoticeFilesMapper, Notic
 
     /**
      * 老师上传通知附件
+     *
      * @param file
      * @return fileName
      */
@@ -45,6 +46,7 @@ public class NoticeFilesServiceImpl extends ServiceImpl<NoticeFilesMapper, Notic
 
     /**
      * 老师 将通知附件保存到数据库
+     *
      * @param fileName, noticeId
      */
     @Override
@@ -55,7 +57,7 @@ public class NoticeFilesServiceImpl extends ServiceImpl<NoticeFilesMapper, Notic
                 .fileName(fileName)
                 .uploadTime(LocalDateTime.now())
                 .build();
-        if (!this.save(noticeFiles)){
+        if (!this.save(noticeFiles)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
     }
@@ -80,6 +82,7 @@ public class NoticeFilesServiceImpl extends ServiceImpl<NoticeFilesMapper, Notic
     /**
      * 学生/老师 获取附件名
      * 要求： 如果没有查到数据，则返回null
+     *
      * @param notice_id
      * @return
      */

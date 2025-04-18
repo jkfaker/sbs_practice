@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author LiuQIDuo
@@ -25,7 +25,7 @@ import java.util.List;
 @RestController("teacherNoticeController")
 @RequestMapping("/teacher/notice")
 @Slf4j
-@Api(tags="通知接口")
+@Api(tags = "通知接口")
 @RequiredArgsConstructor
 public class NoticeController {
 
@@ -49,7 +49,7 @@ public class NoticeController {
     @ApiOperation("老师 删除通知")
     @PostMapping("/delete")
     public Result<String> delete(@RequestBody Notice notice) {
-        log.info("deleting notice:{}",notice);
+        log.info("deleting notice:{}", notice);
         noticeService.delete(notice);
         return Result.success();
     }
@@ -57,7 +57,7 @@ public class NoticeController {
     @ApiOperation("学生/老师 获取通告详情")
     @GetMapping("/detail")
     public Result<NoticeVO> getDetail(@RequestParam Integer id) {
-        log.info("getting detail notice:{}",id);
+        log.info("getting detail notice:{}", id);
         NoticeVO detail = noticeService.getDetail(id);
         return Result.success(detail);
     }

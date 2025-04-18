@@ -3,7 +3,7 @@
 <mapper namespace="sbs.practice.mapper.FilesMapper">
     <select id="selectFileName" resultType="java.lang.String">
         select
-            file_name
+        file_name
         from
         sbs_practice.project
         join

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author LiuQIDuo
@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("news")
-@ApiModel(value="News对象", description="新闻稿实体")
+@ApiModel(value = "News对象", description = "新闻稿实体")
 public class News implements Serializable {
 
     private static final long serialVersionUID = 1L;

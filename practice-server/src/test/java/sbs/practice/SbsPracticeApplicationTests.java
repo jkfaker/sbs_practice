@@ -8,11 +8,11 @@ import sbs.practice.service.IProjectService;
 @SpringBootTest
 class SbsPracticeApplicationTests {
 
-	@Autowired
-	private IProjectService projectService;
+    @Autowired
+    private IProjectService projectService;
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

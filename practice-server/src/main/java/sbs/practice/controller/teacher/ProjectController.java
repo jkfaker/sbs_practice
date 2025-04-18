@@ -1,30 +1,22 @@
 package sbs.practice.controller.teacher;
 
 
-import com.alibaba.fastjson2.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import sbs.practice.common.constant.MessageConstant;
-import sbs.practice.common.enums.JudgeExist;
-import sbs.practice.common.exception.ParseObjectException;
 import sbs.practice.common.result.Result;
 import sbs.practice.pojo.dto.LabelDTO;
-import sbs.practice.pojo.dto.MemberDTO;
-import sbs.practice.pojo.dto.ProjectDTO;
 import sbs.practice.pojo.entity.Project;
 import sbs.practice.pojo.vo.ProjectAndFileVO;
-import sbs.practice.pojo.vo.ProjectVO;
 import sbs.practice.service.IProjectService;
 
 import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author LiuQiDuo
@@ -40,35 +32,42 @@ public class ProjectController {
 
     /**
      * 老师是哪个学院的就是哪个
+     *
      * @return
      */
 
     @ApiOperation("老师查询项目")
     @GetMapping("/select")
-    public Result<List<Project>> getByDepart(@RequestParam(required = false) Integer subjectId){
+    public Result<List<Project>> getByDepart(@RequestParam(required = false) Integer subjectId) {
         List<Project> projects = projectService.getAllInDepart(subjectId);
         return Result.success(projects);
     }
 
     @ApiOperation("老师查询某个人的项目")
     @GetMapping("/one")
-    public Result<Project> getByProjectId(@RequestParam(value = "id") Integer projectId){
+    public Result<Project> getByProjectId(@RequestParam(value = "id") Integer projectId) {
         Project project = projectService.getByProjectId(projectId);
         return Result.success(project);
     }
 
-
+    /**
+     * @param fileType    立项，中期，结项文件
+     * @param subjectId   用于定位主题
+     * @param projectName 用于模糊查询
+     * @return
+     */
     @ApiOperation("老师查询当前专题所有项目及文件")
     @GetMapping("/files")
-    public Result<List<ProjectAndFileVO>> getFiles(@RequestParam(required = false) Integer subjectId, @RequestParam Integer fileType){
+    public Result<List<ProjectAndFileVO>> getFiles(@RequestParam Integer fileType, @RequestParam(required = false) Integer subjectId, @RequestParam(required = false) String projectName) {
         // 将Project join files
-        List<ProjectAndFileVO> results = projectService.getFiles(subjectId, fileType);
+        List<ProjectAndFileVO> results = projectService.getFiles(subjectId, fileType, projectName);
         log.info("projectAndFile:{}", results);
         return Result.success(results);
     }
 
     /**
      * 立项时老师打标签
+     *
      * @param labelDTO
      * @return
      */
@@ -78,7 +77,4 @@ public class ProjectController {
         projectService.labelUpdate(labelDTO);
         return Result.success();
     }
-
-
-
 }

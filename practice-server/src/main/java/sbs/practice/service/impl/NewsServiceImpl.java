@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author LiuQIDuo
@@ -57,7 +57,8 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
 
     /**
      * 分页查询风采展示的项目。
-     *要求： 1，label为已通过
+     * 要求： 1，label为已通过
+     *
      * @param showDTO
      * @return
      */
@@ -88,7 +89,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
                 newsWrapper = new QueryWrapper<News>()
                         .lambda()
                         .eq(News::getLabel, NewsLabel.PASSED)
-                        .and(i-> i
+                        .and(i -> i
                                 .like(News::getTitle, showDTO.getCondition())
                                 .or()
                                 .in(News::getProjectId, projectIds));
@@ -103,12 +104,12 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
         //  1.4 分页查询
         Page<News> p = this.page(page, newsWrapper);
         // 2，总条数
-        log.info("total="+ p.getTotal());
+        log.info("total=" + p.getTotal());
         // 3，总页数
-        log.info("pages="+ p.getPages());
+        log.info("pages=" + p.getPages());
         // 4，分类数据
         List<News> records = p.getRecords();
-        log.info("records:{}",records);
+        log.info("records:{}", records);
         List<NewsVO> list = new ArrayList<>();
         for (News recode : records) {
             Project project = Db.getById(recode.getProjectId(), Project.class);
@@ -135,7 +136,8 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
     /**
      * 处理学生上传新闻稿
      * 要求： 1，返回newsId
-     *2， 必须是校级立项才可上传
+     * 2， 必须是校级立项才可上传
+     *
      * @param newsDTO
      * @return
      */
@@ -164,6 +166,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
     /**
      * 查询新闻稿详情
      * 要求： 1，本人 或 已审核
+     *
      * @param newsId
      * @return
      */
@@ -196,6 +199,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
     /**
      * 教师查询新闻稿详情
      * 要求：
+     *
      * @param newsId
      * @return
      */
@@ -213,6 +217,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
 
     /**
      * TODO
+     *
      * @return
      */
     @Override
@@ -295,15 +300,15 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
         Page<News> p = this.page(page, newsWrapper);
 
         // 2，总条数
-        log.info("total="+ p.getTotal());
+        log.info("total=" + p.getTotal());
 
         // 3，总页数
-        log.info("pages="+ p.getPages());
+        log.info("pages=" + p.getPages());
 
         // 4，分类数据
         List<News> records = p.getRecords();
 
-        log.info("records:{}",records);
+        log.info("records:{}", records);
         List<NewsVO> list = new ArrayList<>();
         for (News recode : records) {
             Project project = Db.getById(recode.getProjectId(), Project.class);
@@ -331,6 +336,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
 
     /**
      * 老师 审核新闻稿
+     *
      * @param newsVerifyDTO
      */
     @SystemMessage(AnnounceLabel.NEWS)
@@ -348,6 +354,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
 
     /**
      * 学生查找自己新闻稿
+     *
      * @return
      */
     @Override
@@ -364,6 +371,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
 
     /**
      * 通过projectId查找新闻稿
+     *
      * @param projectId
      * @return
      */

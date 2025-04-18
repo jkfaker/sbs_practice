@@ -10,7 +10,9 @@
 					<uni-icons type="checkbox" color="white" size="36"></uni-icons>
 				</view>
 				<view class="title">
-					提交成功，待老师审核！
+					<text v-if="!project.label">提交成功，待老师审核！</text>
+					<text v-else-if="project.label == '驳回'"> 你的项目已被 {{ project.label }}，不要灰心哦，下次再来 </text>
+					<text v-else>你的项目已被评为 {{ project.label }}</text>
 				</view>
 			</view>
 			<u-gap height="20"></u-gap>
@@ -19,7 +21,7 @@
 				<view class="projects">
 					<u-gap height="20"></u-gap>
 					<view class="subject">
-						{{ project.subjectName }} -- 2024暑期社会实践
+						{{ project.subjectName }} -- 2025暑期社会实践
 					</view>
 					<u-gap height="15"></u-gap>
 					<view class="title">

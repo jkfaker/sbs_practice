@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author LiuQIDuo
@@ -40,6 +40,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
      * 学生老师 获取通告列表
      * 要求：1，列表只取text前14个字符
      * 2, 用正则 提出html的标签
+     *
      * @return notice
      */
     @Override
@@ -53,7 +54,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
                     Pattern pattern1 = Pattern.compile("<[^>]*>");
                     String tempText = pattern1.matcher(originalText).replaceAll("").trim();
                     // 使用正则表达式匹配前14个包含标点符号的字符
-                    log.info("tempText:{}",tempText);
+                    log.info("tempText:{}", tempText);
                     // 直接截取前14个字符
                     if (tempText.length() > 14) {
                         truncatedText = tempText.substring(0, 30);
@@ -89,25 +90,27 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
                 .createTime(now)
                 .updateTime(now)
                 .build();
-        if (!this.save(notice)){
+        if (!this.save(notice)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
         Integer noticeId = notice.getId();
-        if (noticeDTO.getFileName() != null && noticeDTO.getFileName().length() != 0){
+        if (noticeDTO.getFileName() != null && noticeDTO.getFileName().length() != 0) {
             noticeFilesService.insertFiles(noticeDTO.getFileName(), noticeId);
         }
         return noticeId;
     }
+
     /**
      * 教师删除通告
      * 要求：1，数据未删除时抛出异常
      * 2, 先删除文件（如果有）
+     *
      * @param notice
      */
     @Override
     public void delete(Notice notice) {
         TokenUtils.verifyTeacher();
-        log.info("deleting notice:{}",notice);
+        log.info("deleting notice:{}", notice);
         boolean delete = noticeFilesService.delete(notice.getId());
         if (!this.removeById(notice)) {
             throw new DeleteException(MessageConstant.DELETE_FAILED);
@@ -116,6 +119,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
 
     /**
      * 页面详情
+     *
      * @param id
      * @return NoticeVO
      */

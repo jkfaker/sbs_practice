@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author LiuQIDuo
@@ -30,7 +30,8 @@ public class SubjectController {
 
     /**
      * 老师/学生 获取所有主题
-      * @return
+     *
+     * @return
      */
     @GetMapping
     @ApiOperation("获取所有主题")
@@ -53,6 +54,7 @@ public class SubjectController {
 
     /**
      * 老师新增主题
+     *
      * @param subject
      * @return
      */
@@ -67,7 +69,7 @@ public class SubjectController {
     @PostMapping("/delete")
     @ApiOperation("删除主题")
     public Result<String> delete(@RequestBody Subject subject) {
-        log.info("subject:{}",subject);
+        log.info("subject:{}", subject);
         subjectService.delete(subject);
         return Result.success();
     }

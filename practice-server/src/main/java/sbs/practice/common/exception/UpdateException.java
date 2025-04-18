@@ -1,6 +1,6 @@
 package sbs.practice.common.exception;
 
-public class UpdateException extends BaseException{
+public class UpdateException extends BaseException {
     public UpdateException() {
 
     }

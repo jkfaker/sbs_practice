@@ -27,4 +27,8 @@ public class DateVO {
     private DateInfo info;
     @ApiModelProperty("打卡时间")
     private String date;
+    @ApiModelProperty("打卡开始时间")
+    private String startTime;
+    @ApiModelProperty("打卡结束时间")
+    private String endTime;
 }

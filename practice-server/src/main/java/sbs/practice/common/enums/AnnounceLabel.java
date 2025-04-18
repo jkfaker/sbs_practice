@@ -11,8 +11,7 @@ public enum AnnounceLabel {
     SET_UP_PROJECT(1, "立项申请"),
     MID_TERM_PROJECT(2, "项目中期文件"),
     END_TERM_PROJECT(3, "项目结项"),
-    NEWS(4, "新闻稿审核")
-    ;
+    NEWS(4, "新闻稿审核");
     @EnumValue
     private Integer code;
     @JsonValue

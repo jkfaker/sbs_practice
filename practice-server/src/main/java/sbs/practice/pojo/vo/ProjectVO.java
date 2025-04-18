@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sbs.practice.common.enums.ProjectLabel;
 
 import java.io.Serializable;
 
@@ -20,4 +21,6 @@ public class ProjectVO implements Serializable {
     private String subjectName;
     @ApiModelProperty("项目名称")
     private String projectName;
+    @ApiModelProperty("项目标签")
+    private ProjectLabel label;
 }

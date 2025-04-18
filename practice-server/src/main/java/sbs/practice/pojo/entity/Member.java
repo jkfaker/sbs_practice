@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author LiuQIDuo
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("member")
-@ApiModel(value="参与项目的成员", description="")
+@ApiModel(value = "参与项目的成员", description = "")
 public class Member implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,15 +1,15 @@
 package sbs.practice.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import sbs.practice.pojo.dto.AnnounceDTO;
 import sbs.practice.pojo.entity.Announce;
-import com.baomidou.mybatisplus.extension.service.IService;
 import sbs.practice.pojo.vo.AnnounceVO;
 
 import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author LiuQIDuo

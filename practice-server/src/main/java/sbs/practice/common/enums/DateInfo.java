@@ -11,8 +11,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum DateInfo {
+    NOT_SIGN(0, "未打卡"),
     SIGN_IN(1, "已打卡"),
-    NOT_SIGN(0, "未打卡");
+    START(2, "开始"),
+    END(3, "结束");
     @EnumValue
     private Integer code;
     @JsonValue

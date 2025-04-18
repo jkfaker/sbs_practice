@@ -22,6 +22,8 @@
 		</uni-popup>
 		<uni-segmented-control @clickItem="clickSegment($event)" :values="items" styleType="text"
 			activeColor="#dd524d"></uni-segmented-control>
+		<uni-search-bar style="width: 90%;margin: auto;" color="#FFFFFF" radius="10" placeholder="请输入标题或负责人姓名"
+			v-model="searchText"></uni-search-bar>
 		<view class="content">
 			<!--  empty  -->
 			<view v-if="!data.length" class="">
@@ -94,6 +96,7 @@
 		},
 		data() {
 			return {
+				searchText: '',
 				data: '',
 				// 控制分段栏
 				subjects: [],
@@ -107,6 +110,7 @@
 		async onLoad() {
 			await this.getSubject();
 			this.subjectId = this.subjects[0].id;
+			this.searchText = '';
 			this.getData();
 		},
 		computed: {
@@ -178,7 +182,7 @@
 			getData() {
 				const PATH = '/teacher/project/files';
 				uni.request({
-					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=3`,
+					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=3&projectName=${this.searchText}`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -239,6 +243,17 @@
 					duration: 1000 * 3,
 					fontSize: 20,
 				})
+			}
+		},
+		watch: {
+			// 处理搜索框的搜索功能
+			async searchText(value) {
+				clearTimeout(this.timer);
+				this.timer = setTimeout(async () => {
+					this.page = {};
+					await this.getData();
+				}, 1000)
+
 			}
 		}
 	}

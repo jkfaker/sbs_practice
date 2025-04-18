@@ -14,18 +14,15 @@ import java.io.Serializable;
 
 
 /**
- * <p>
- * 
- * </p>
- *
  * @author LiuQIDuo
  * @since 2024-06-29
  */
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("date")
-@ApiModel(value="Date对象", description="")
+@ApiModel(value = "Date对象", description = "")
 public class Date implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,6 +34,4 @@ public class Date implements Serializable {
     private String date;
     @ApiModelProperty("打卡状态")
     private DateInfo info;
-
-
 }

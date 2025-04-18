@@ -9,15 +9,19 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import sbs.practice.annotation.SystemMessage;
 import sbs.practice.common.constant.SystemMessageConstant;
 import sbs.practice.common.enums.AnnounceLabel;
 import sbs.practice.common.enums.FileLabel;
 import sbs.practice.common.enums.NewsLabel;
 import sbs.practice.common.enums.ProjectLabel;
+import sbs.practice.common.properties.MessageSendingProperties;
+import sbs.practice.common.utils.MessageSendingUtils;
 import sbs.practice.pojo.dto.AnnounceDTO;
 import sbs.practice.pojo.dto.LabelDTO;
 import sbs.practice.pojo.dto.NewsVerifyDTO;
+import sbs.practice.pojo.entity.Project;
 import sbs.practice.service.IAnnounceService;
 import sbs.practice.service.IFilesService;
 import sbs.practice.service.INewsService;
@@ -32,15 +36,19 @@ import sbs.practice.service.IProjectService;
  */
 public class SystemMessageAspect {
 
+    private final IProjectService projectService;
     private final IAnnounceService announceService;
     private final IFilesService filesService;
     private final INewsService newsService;
+    private final MessageSendingUtils messageSendingUtils;
 
     @Pointcut("execution(* sbs.practice.service.*.*(..)) && @annotation(sbs.practice.annotation.SystemMessage)")
-    public void systemMessagePointCut(){}
+    public void systemMessagePointCut() {
+    }
 
+    @Transactional
     @After("systemMessagePointCut()")
-    public void systemMessage(JoinPoint joinPoint){
+    public void systemMessage(JoinPoint joinPoint) {
         log.info("systemMessage执行...");
 
         //获取到当前被拦截的方法上的操作类型
@@ -51,7 +59,7 @@ public class SystemMessageAspect {
 
         //获取到当前被拦截的方法的参数--实体对象
         Object[] args = joinPoint.getArgs();
-        if(args == null || args.length == 0){
+        if (args == null || args.length == 0) {
             return;
         }
 
@@ -61,10 +69,12 @@ public class SystemMessageAspect {
         if (type == AnnounceLabel.SET_UP_PROJECT) {
             LabelDTO labelDTO = (LabelDTO) entity;
             Integer projectId = labelDTO.getId();
+            // 获取leaderId
+            String leaderId = projectService.getById(projectId).getLeaderId();
+
             Integer label = labelDTO.getLabel();
 
             // 教师立项审核已完成，你的项目已被评为 校级立项 / 院级立项
-
             String text = SystemMessageConstant.SET_UP_REVIEW + ProjectLabel.getInfoByLabel(label);
 
             // 添加到Announce表
@@ -76,6 +86,8 @@ public class SystemMessageAspect {
 
             // 发送消息 / 添加到announce数据库中
             announceService.sentSystemMessage(announceDTO);
+            String subjectAndContent = MessageSendingProperties.SUBJECT_TEXT_HEAD + text;
+            messageSendingUtils.sendSystemMessage(subjectAndContent, subjectAndContent, leaderId);
         }
         // 中期文件上传
         else if (type == AnnounceLabel.MID_TERM_PROJECT) {
@@ -84,6 +96,8 @@ public class SystemMessageAspect {
             Integer fileId = labelDTO.getId();
             Integer label = labelDTO.getLabel();
             Integer projectId = filesService.getById(fileId).getProjectId();
+            // 获取leaderId
+            String leaderId = projectService.getById(projectId).getLeaderId();
             String text = SystemMessageConstant.MID_TERM_REVIEW + FileLabel.getInfoByCode(label);
 
             AnnounceDTO announceDTO = AnnounceDTO.builder()
@@ -91,16 +105,33 @@ public class SystemMessageAspect {
                     .text(text)
                     .label(AnnounceLabel.MID_TERM_PROJECT.getCode())
                     .build();
-
+            // 发送消息 / 添加到announce数据库中
             announceService.sentSystemMessage(announceDTO);
+            String subjectAndContent = MessageSendingProperties.SUBJECT_TEXT_HEAD + text;
+            messageSendingUtils.sendSystemMessage(subjectAndContent, subjectAndContent, leaderId);
         }
         // 结项
         else if (type == AnnounceLabel.END_TERM_PROJECT) {
-            // TODO
+            LabelDTO labelDTO = (LabelDTO) entity;
+            Integer fileId = labelDTO.getId();
+            Integer label = labelDTO.getLabel();
+            Integer projectId = filesService.getById(fileId).getProjectId();
+            // 获取leaderId
+            String leaderId = projectService.getById(projectId).getLeaderId();
+            String text = SystemMessageConstant.END_TERM_REVIEW + FileLabel.getInfoByCode(label);
+
+            AnnounceDTO announceDTO = AnnounceDTO.builder()
+                    .projectId(projectId)
+                    .text(text)
+                    .label(AnnounceLabel.END_TERM_PROJECT.getCode())
+                    .build();
+            // 发送消息 / 添加到announce数据库中
+            announceService.sentSystemMessage(announceDTO);
+            String subjectAndContent = MessageSendingProperties.SUBJECT_TEXT_HEAD + text;
+            messageSendingUtils.sendSystemMessage(subjectAndContent, subjectAndContent, leaderId);
         }
 
         // 新闻稿审核
-
         else if (type == AnnounceLabel.NEWS) {
             NewsVerifyDTO newsVerifyDTO = (NewsVerifyDTO) entity;
             Integer newsId = newsVerifyDTO.getId();
@@ -108,7 +139,8 @@ public class SystemMessageAspect {
             String rejectReason = newsVerifyDTO.getRejectReason();
 
             Integer projectId = newsService.getById(newsId).getProjectId();
-
+            // 获取leaderId
+            String leaderId = projectService.getById(projectId).getLeaderId();
             String text = SystemMessageConstant.NEWS_REVIEW + NewsLabel.getInfoByCode(label);
 
             AnnounceDTO announceDTO = AnnounceDTO.builder()
@@ -116,10 +148,10 @@ public class SystemMessageAspect {
                     .text(text)
                     .label(AnnounceLabel.NEWS.getCode())
                     .build();
-
+            // 添加到announce数据库中 / 发送消息
             announceService.sentSystemMessage(announceDTO);
+            String subjectAndContent = MessageSendingProperties.SUBJECT_TEXT_HEAD + text;
+            messageSendingUtils.sendSystemMessage(subjectAndContent, subjectAndContent, leaderId);
         }
     }
-
-
 }

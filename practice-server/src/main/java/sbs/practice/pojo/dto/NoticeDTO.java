@@ -1,6 +1,5 @@
 package sbs.practice.pojo.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="NoticeDTO", description="")
+@ApiModel(value = "NoticeDTO", description = "")
 public class NoticeDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

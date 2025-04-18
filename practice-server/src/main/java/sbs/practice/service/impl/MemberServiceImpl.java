@@ -1,28 +1,31 @@
 package sbs.practice.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sbs.practice.common.constant.MessageConstant;
 import sbs.practice.common.context.BaseContext;
+import sbs.practice.common.exception.InsertDatabaseException;
 import sbs.practice.mapper.MemberMapper;
+import sbs.practice.pojo.dto.MemberDTO;
 import sbs.practice.pojo.dto.UserDTO;
 import sbs.practice.pojo.entity.Member;
 import sbs.practice.pojo.vo.MemberVO;
 import sbs.practice.service.IBaseService;
 import sbs.practice.service.IMemberService;
-import sbs.practice.service.IProjectService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
- *
  * @author author
  * @since 2024-06-26
  */
@@ -31,6 +34,8 @@ import java.util.List;
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> implements IMemberService {
 
     private final IBaseService baseService;
+
+    private final MemberMapper memberMapper;
     /**
      * 负责人 获取队伍成员信息
      * @return
@@ -55,6 +60,27 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
                 .toList();
         results.addAll(membersVO);
         return results;
-
     }
+
+    /**
+        * 批量插入成员列表
+        * @param projectId 项目ID
+        * @param membersDTO 成员DTO列表
+        */
+    @Override
+    public void insertMemberList( Integer projectId ,List<MemberDTO> membersDTO) {
+        List<Member> memberList = new ArrayList<>();
+        for (MemberDTO memberDTO : membersDTO) {
+            Member member = new Member();
+            BeanUtil.copyProperties(memberDTO, member);
+            member.setProjectId(projectId);
+            member.setCreateTime(LocalDateTime.now());
+            memberList.add(member);
+        }
+        boolean isSave = this.saveBatch(memberList);
+        if (!isSave) {
+            throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
+        }
+    }
+
 }

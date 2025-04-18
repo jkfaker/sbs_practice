@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- *
  * @author author
  * @since 2024-06-26
  */
@@ -20,7 +19,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sec_teacher")
-@ApiModel(value="二级学院老师", description="")
+@ApiModel(value = "二级学院老师", description = "")
 public class SecTeacher implements Serializable {
 
     private static final long serialVersionUID = 1L;

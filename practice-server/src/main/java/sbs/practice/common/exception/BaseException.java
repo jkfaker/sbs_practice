@@ -1,6 +1,6 @@
 package sbs.practice.common.exception;
 
-public class BaseException extends RuntimeException{
+public class BaseException extends RuntimeException {
     public BaseException() {
 
     }

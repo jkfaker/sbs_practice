@@ -13,7 +13,7 @@ import sbs.practice.service.INoticeFilesService;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author LiuQIDuo
@@ -29,6 +29,7 @@ public class NoticeFilesController {
 
     /**
      * 教师上传通知附件
+     *
      * @param file
      * @return fileName
      */

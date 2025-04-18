@@ -18,7 +18,7 @@ import sbs.practice.service.ISecTeacherService;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author author
@@ -45,7 +45,7 @@ public class SecTeacherServiceImpl extends ServiceImpl<SecTeacherMapper, SecTeac
     @Override
     public void add(SecTeacher secTeacher) {
         TokenUtils.verifyTeacher();
-        if (!this.save(secTeacher)){
+        if (!this.save(secTeacher)) {
             throw new InsertDatabaseException(MessageConstant.INSERT_DATABASE_FAILED);
         }
 
@@ -54,7 +54,7 @@ public class SecTeacherServiceImpl extends ServiceImpl<SecTeacherMapper, SecTeac
     @Override
     public void delete(SecTeacher secTeacher) {
         TokenUtils.verifyTeacher();
-        if (!this.removeById(secTeacher)){
+        if (!this.removeById(secTeacher)) {
             throw new DeleteException(MessageConstant.DELETE_FAILED);
         }
     }
@@ -62,13 +62,14 @@ public class SecTeacherServiceImpl extends ServiceImpl<SecTeacherMapper, SecTeac
     @Override
     public void renew(SecTeacher secTeacher) {
         TokenUtils.verifyTeacher();
-        if(!this.saveOrUpdate(secTeacher)){
+        if (!this.saveOrUpdate(secTeacher)) {
             throw new UpdateException(MessageConstant.UPDATE_FAILED);
         }
     }
 
     /**
      * 获取当前教师工号
+     *
      * @return 教师工号
      */
     @Override
@@ -91,6 +92,7 @@ public class SecTeacherServiceImpl extends ServiceImpl<SecTeacherMapper, SecTeac
 
     /**
      * 通过teacherId获取老师姓名
+     *
      * @return TeacherName
      */
     @Override
@@ -101,6 +103,7 @@ public class SecTeacherServiceImpl extends ServiceImpl<SecTeacherMapper, SecTeac
 
     /**
      * 获取教师工号 姓名、部门
+     *
      * @return
      */
     @Override

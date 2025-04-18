@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author LiuQiDuo
@@ -18,5 +18,5 @@ import java.util.List;
 @Mapper
 public interface ProjectMapper extends BaseMapper<Project> {
 
-    List<ProjectAndFileVO> selectFiles(Integer subjectId ,Integer fileType, Integer departId);
+    List<ProjectAndFileVO> selectFiles(Integer subjectId, Integer fileType, Integer departId, String projectName);
 }

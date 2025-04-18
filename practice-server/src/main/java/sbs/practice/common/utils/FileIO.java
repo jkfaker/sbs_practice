@@ -3,14 +3,12 @@ package sbs.practice.common.utils;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
-import io.minio.errors.*;
 import io.minio.http.Method;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import sbs.practice.common.constant.FileConstant;
@@ -20,17 +18,11 @@ import sbs.practice.common.constant.StudentOrTeacherConstant;
 import sbs.practice.common.exception.FileStorageException;
 import sbs.practice.config.MinIOInfo;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,6 +38,7 @@ public class FileIO {
 
     /**
      * 文件上传
+     *
      * @param file
      * @return
      */
@@ -80,7 +73,7 @@ public class FileIO {
         try {
             //获取原始文件名
             String originalFilename = file.getOriginalFilename();
-            log.info("originalFilename:{}",originalFilename);
+            log.info("originalFilename:{}", originalFilename);
             String newFileName;
             try {
                 // 查看文件类型是否合法
@@ -104,6 +97,7 @@ public class FileIO {
 
     /**
      * 将文件压缩成zip文件，并保存到本地
+     *
      * @param files
      * @param zipFilePath
      * @throws IOException
@@ -130,7 +124,7 @@ public class FileIO {
     /**
      * 将一组文件压缩成 ZIP 文件，并上传到 MinIO 的指定 bucket 中。
      *
-     * @param files 要压缩的文件列表
+     * @param files       要压缩的文件列表
      * @param zipFileName 在 MinIO 中存储的 ZIP 文件名
      * @throws IOException 如果发生 I/O 错误
      */

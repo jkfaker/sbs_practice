@@ -1,6 +1,7 @@
 package sbs.practice.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import sbs.practice.pojo.dto.MemberDTO;
 import sbs.practice.pojo.entity.Member;
 import sbs.practice.pojo.vo.MemberVO;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author author
@@ -18,4 +19,5 @@ public interface IMemberService extends IService<Member> {
 
     List<MemberVO> getByLeader();
 
+    void insertMemberList(Integer projectId, List<MemberDTO> membersDTO);
 }

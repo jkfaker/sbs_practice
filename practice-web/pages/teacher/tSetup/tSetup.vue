@@ -8,6 +8,15 @@
 			<!-- :rightText=" multi===0 ? '批量审核': '取消'" -->
 
 		</uniNavBar>
+		<uni-popup ref="instructors" background-color="#fff" borderRadius="10px" @change="change">
+			<view v-for="(item, index) in instructors" class="popup-content">
+				<view> 老师{{ index + 1 }}: {{ item.name }}</view>
+				<view> 电话： {{ item.phone }} </view>
+				<view> 职称： {{ item.title  }}</view>
+				<view> 部门： {{ item.departName  }}</view>
+				<u-gap height="10"></u-gap>
+			</view>
+		</uni-popup>
 		<uni-popup ref="popup" background-color="#fff" borderRadius="10px" @change="change">
 			<view class="popup-content">
 				<view class="">
@@ -24,13 +33,16 @@
 		</uni-popup>
 		<uni-segmented-control @clickItem="clickSegment($event)" :values="items" styleType="text"
 			activeColor="#dd524d"></uni-segmented-control>
+
+		<uni-search-bar style="width: 90%;margin: auto;" color="#FFFFFF" radius="10" placeholder="请输入标题或负责人姓名"
+			v-model="searchText"></uni-search-bar>
 		<view class="content">
 			<!--  empty  -->
 			<view v-if="!data.length" class="">
 				<u-empty mode="data" textSize="20" height="300" width="300" icon="/static/icon/empty.png">
 				</u-empty>
 			</view>
-			<u-gap height="10"></u-gap>
+			<u-gap height="5"></u-gap>
 			<view class="list" v-for="(item, index) in data" :key="index">
 				<view class="item">
 					<view class="info">
@@ -46,6 +58,10 @@
 						<view class="leader-phone">
 							联系电话：<text selectable>{{ item.leaderPhone }}</text>
 						</view>
+						<view class="instructor">
+							指导老师：<text @click="showInstructors(item)" style="color: green; text-decoration: underline;">
+								点击查看 </text>
+						</view>
 						<view class="file">
 							项目文件：<uni-link color="green" :href="fileUrl(item)" :text="item.fileName"></uni-link>
 						</view>
@@ -60,6 +76,9 @@
 						</view>
 						<view @click="changeLabel(item, 2)"
 							:style="item.label === '院级立项' ? 'backgroundColor: rgb(238, 189, 161)' : ''">院级
+						</view>
+						<view @click="changeLabel(item, 3)" :style="item.label === '驳回' ? 'backgroundColor: red' : ''">
+							驳回
 						</view>
 					</view>
 				</view>
@@ -93,6 +112,7 @@
 		},
 		data() {
 			return {
+				searchText: '',
 				data: '',
 				// 控制分段栏
 				subjects: [],
@@ -101,12 +121,14 @@
 				multi: 0,
 				// 下载文件地址
 				// fileUrl: '',
+				instructors: [], // 指导老师列表
 				fileName: ''
 			}
 		},
 		async onLoad() {
 			await this.getSubject();
 			this.subjectId = this.subjects[0].id;
+			this.searchText = '';
 			this.getData();
 		},
 		computed: {
@@ -129,7 +151,7 @@
 			showPopup() {
 				const PATH = '/teacher/files/download';
 				uni.request({
-					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=1`,
+					url: `${getApp().globalData.URL}${PATH}?fileType=1&subjectId=${this.subjectId}`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -149,6 +171,33 @@
 						this.notify('error', '网络异常！');
 					}
 				})
+			},
+			// 显示指导老师
+			showInstructors(item) {
+				const projectId = item.id;
+				const PATH = '/teacher/instructor/list/projectId';
+				uni.request({
+					url: `${getApp().globalData.URL}${PATH}?projectId=${projectId}`,
+					method: 'GET',
+					header: {
+						'token': uni.getStorageSync('token'),
+					},
+					success: (res) => {
+						if (res.data.code === 0) {
+							this.notify('error', res.data.msg);
+							return;
+						}
+						console.log(res);
+						this.instructors = res.data.data;
+						// 显示弹出层
+						this.$refs.instructors.open();
+					},
+					fail: (error) => {
+						console.log(error);
+						this.notify('error', '网络异常！');
+					}
+				})
+
 			},
 			// 单个文件下载链接
 			fileUrl(item) {
@@ -190,7 +239,7 @@
 				})
 				const PATH = '/teacher/project/files';
 				uni.request({
-					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=1`,
+					url: `${getApp().globalData.URL}${PATH}?subjectId=${this.subjectId}&fileType=1&projectName=${this.searchText}`,
 					method: 'GET',
 					header: {
 						'token': uni.getStorageSync('token'),
@@ -244,6 +293,17 @@
 			// 处理点击下载事件
 			download() {
 				return this.fileName;
+			}
+		},
+		watch: {
+			// 处理搜索框的搜索功能
+			async searchText(value) {
+				clearTimeout(this.timer);
+				this.timer = setTimeout(async () => {
+					this.page = {};
+					await this.getData();
+				}, 1000)
+
 			}
 		}
 	}
@@ -302,6 +362,7 @@
 				.leader-class,
 				.leader-phone,
 				.create-time,
+				.instructor,
 				.file {
 					font-size: 12px;
 				}
@@ -321,7 +382,7 @@
 				view {
 					border-radius: 10px;
 					background-color: rgba(0, 0, 0, 0.15);
-					width: 35%;
+					width: 30%;
 					text-align: center;
 					text-indent: 14px;
 					letter-spacing: 14px;

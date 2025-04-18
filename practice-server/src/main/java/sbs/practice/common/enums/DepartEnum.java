@@ -21,7 +21,6 @@ public enum DepartEnum {
     BUSINESS(7, "工商管理学院");
 
 
-
     @EnumValue
     private final Integer departId;
     @JsonValue

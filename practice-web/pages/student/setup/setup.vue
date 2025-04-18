@@ -111,45 +111,93 @@
 					</image>
 				</view>
 			</view>
+			<u-gap height="10"></u-gap>
+			<!-- 指导老师信息 -->
+			<view class="instructor">
+				<!-- 单个指导老师 -->
+				<view v-for="(item, index) in instructorNumber" :key="index">
+					<view class="person">
+						<!-- 指导老师姓名 -->
+						<u-row class="name">
+							<u-col span="6" class="id">
+								<u-input placeholder="姓名" v-model="project.instructors[index].name" border="none"
+									type="text">
+									<u-text size="14" align="center" line-height="30px" margin="0 0 0 0"
+										:text="`老师 ${index + 1}:`" slot="prefix"></u-text>
+								</u-input>
+							</u-col>
 
-			<u-gap height="10"></u-gap>
-			<view class="upload-text">
-				{{ uploadText }}
-			</view>
-			<u-gap height="10"></u-gap>
-			<!-- 文件上传 -->
-			<view class="upload" @click="fileChoice = true">
-				<view class="box">
-					<image mode="widthFix" class="upload-img" src="/static/uploads/upload.png" alt="点击上传"></image>
-					<view class="upload-title">
-						点击上传
+							<!-- 指导老师职称 -->
+							<u-col span="6" class="phone">
+								<uni-data-select v-model="project.instructors[index].title" :localdata="academicTitle"
+									@change="change" label="职称"></uni-data-select>
+							</u-col>
+						</u-row>
+						<!-- 指导老师部门 -->
+						<u-row class="id_phone">
+							<u-col span="5" class="id">
+								<u-input maxlength="11" v-model="project.instructors[index].departName" border="none"
+									type="text">
+									<u-text size="14" align="center" line-height="30px" margin="0 0 0 0" text="部门 :"
+										slot="prefix"></u-text>
+								</u-input>
+							</u-col>
+							<!-- 垂直分割线 -->
+							<u-col customStyle="height: 20px" span="1">
+								<u-line direction="col" color="black"></u-line>
+							</u-col>
+							<!-- 指导老师电话 -->
+							<u-col span="6" class="phone">
+								<u-input border="none" maxlength="11" v-model="project.instructors[index].phone"
+									type="tel">
+									<u-text size="14" align="center" line-height="30px" margin="0 0 0 0" text="电话 :"
+										slot="prefix"></u-text>
+								</u-input>
+							</u-col>
+						</u-row>
 					</view>
+					<u-gap height="20"></u-gap>
 				</view>
-				<u-gap height="20"></u-gap>
-			</view>
-			<u-gap height="100"></u-gap>
-			<!-- bottom -->
 
+				<!-- 增加指导老师按钮 -->
+				<view class="add-button-view" v-if="instructorNumber < 3">
+					<image class="add-button" @click="handleAddInstructor()" src="/static/icon/add-button.png"
+						mode="widthFix">
+					</image>
+				</view>
+			</view>
 		</view>
+		<u-gap height="10"></u-gap>
+		<view class="upload-text">
+			{{ uploadText }}
+		</view>
+		<u-gap height="10"></u-gap>
+		<!-- 文件上传 -->
+		<view class="upload" @click="fileChoice = true">
+			<view class="box">
+				<image mode="widthFix" class="upload-img" src="/static/uploads/upload.png" alt="点击上传"></image>
+				<view class="upload-title">
+					点击上传
+				</view>
+			</view>
+			<u-gap height="20"></u-gap>
+		</view>
+		<u-gap height="100"></u-gap>
+		<!-- bottom -->
 		<button @click="handleClickButton()" class="submit-button"> 提 交 </button>
 	</view>
 </template>
 
 <script>
+	import uniDataSelect from '@/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue';
 	export default {
+		components: {
+			uniDataSelect
+		},
 		data() {
 			return {
 				// 可选主题列表
-				subjects: [
-					/* {
-											id: 1,
-											name: '知行杯',
-										},
-										{
-											id: 2,
-											name: '青春绽放',
-										} */
-				],
+				subjects: [],
 				// 已经选择的主题
 				subject: {},
 				// 文件上传的两个选项
@@ -178,20 +226,28 @@
 				leader: {}, // leaderId，leaderName，leaderDepart
 				// 项目信息
 				project: {
-					members: [{
-						memberId: '',
-						memberName: '',
-						memberPhone: ''
-					}], // memberId,memberName,memberPhone
+
 					project: {
 						// 选择的主题
 						subjectId: '',
 						leaderPhone: '',
 						title: '',
 					},
+					members: [{
+						memberId: '',
+						memberName: '',
+						memberPhone: ''
+					}], // memberId,memberName,memberPhone
+					instructors: [{
+						name: '',
+						phone: '',
+						departName: '',
+						title: ''
+					}]
 
 				},
 				peopleNumber: 1, // 队员人数
+				instructorNumber: 1, // 指导老师数量
 				file: '', // 文件路径
 				fileChoice: false, // 文件选择菜单
 				addButtonPath: '', // 添加按钮的贴图
@@ -285,6 +341,18 @@
 				this.subject = subject;
 				this.project.project.subjectId = subject.id;
 			},
+			// 点击添加指导老师按钮触发
+			handleAddInstructor() {
+				this.instructorNumber += 1;
+				// 向成员列表中添加对象
+				const newInstructor = {
+					name: '',
+					phone: '',
+					departName: '',
+					title: ''
+				};
+				this.project.instructors.push(newInstructor);
+			},
 			// 点击添加成员按钮触发
 			handleAddPeople() {
 				this.peopleNumber += 1;
@@ -345,21 +413,18 @@
 			handleClickButton() {
 				// 判断各字段是否存在
 				if (this.project.project.subjectId === '') {
-					console.log("字段请填写完整");
 					this.notify('error', '字段请填写完整');
 					return;
 				}
 
 				// 项目标题
 				if (this.project.project.title === '') {
-					console.log("字段请填写完整");
 					this.notify('error', '字段请填写完整');
 					return;
 				}
 
 				// 负责人手机号
 				if (!uni.$u.test.mobile(this.project.project.leaderPhone)) {
-					console.log("负责人手机号错误");
 					this.notify('error', '负责人手机号错误');
 					return;
 				}
@@ -368,16 +433,22 @@
 				for (let i = 0; i < this.peopleNumber; i++) {
 					if ((this.project.members[i].memberId === '') || (this.project.members[i].memberName === '') ||
 						(!uni.$u.test.mobile(this.project.members[i].memberPhone))) {
-						console.log(i);
-						console.log(this.peopleNumber);
-						console.log(this.project.members[i].memberId);
-						console.log(this.project.members[i].memberPhone);
-						console.log(this.project.members[i].memberName);
 						console.log("成员信息错误");
 						this.notify('error', '成员信息错误');
 						return;
 					}
 				}
+
+				// 遍历指导老师
+				for (let i = 0; i < this.peopleNumber; i++) {
+					if ((this.project.instructors[i].name === '') || (this.project.instructors[i].departName === '') || (
+							this.project.instructors[i].title === '') ||
+						(!uni.$u.test.mobile(this.project.instructors[i].phone))) {
+						this.notify('error', '指导老师信息错误');
+						return;
+					}
+				}
+
 				// 文件是否存在
 				if (this.file === '') {
 					console.log("请上传文件");
@@ -408,7 +479,8 @@
 					},
 					formData: {
 						'project': JSON.stringify(this.project.project),
-						'members': JSON.stringify(this.project.members)
+						'members': JSON.stringify(this.project.members),
+						'instructors': JSON.stringify(this.project.instructors)
 					},
 					success: (res) => {
 						this.loading = false;
@@ -419,9 +491,6 @@
 							return;
 						}
 						// 跳转到~~~~~~~~~~~
-						const leader = this.leader.leaderName;
-						const title = this.project.project.title;
-						const members = this.project.members;
 						uni.redirectTo({
 							url: getApp().globalData.pagePath.finish,
 						});
@@ -445,6 +514,18 @@
 					duration: 1000 * 3,
 					fontSize: 20,
 				})
+			}
+		},
+		computed: {
+			academicTitle() {
+				// 基础职称数组
+				const titles = ['助教', '讲师', '副教授', '教授'];
+				// 通过map生成需要的格式
+				return titles.map(title => ({
+					text: title,
+					value: title,
+					disable: false
+				}));
 			}
 		}
 	}
@@ -478,16 +559,44 @@
 	.project-name,
 	.leader,
 	.teammate,
-	.upload,
-	{
-	background-color: white;
-	border-radius: 10px;
+	.instructor,
+	.upload {
+		background-color: white;
+		border-radius: 10px;
 	}
 
 
 	// 队员
 	.teammate {
 		min-height: 200px;
+		padding-top: 20px;
+
+		.person {
+			width: 90%;
+			margin: auto;
+			border-bottom: 1px solid black;
+		}
+
+		.id_phone {
+			display: flex;
+			flex-direction: row;
+
+		}
+
+		// 添加按钮
+		.add-button-view {
+			width: 90%;
+			margin: auto;
+		}
+
+		.add-button {
+			border-radius: 50%;
+			width: 30px;
+		}
+	}
+
+	.instructor {
+		min-height: 150px;
 		padding-top: 20px;
 
 		.person {

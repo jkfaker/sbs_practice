@@ -14,7 +14,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum FileLabel {
     PENDING(1, "待审核"),
-    PASSED(2,"已通过"),
+    PASSED(2, "已通过"),
     FAILED(3, "已被驳回"),
     ;
     @JsonValue

@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(description="参与项目的成员")
+@ApiModel(description = "参与项目的成员")
 public class MemberVO implements Serializable {
     @ApiModelProperty("成员id")
     private String memberId;
